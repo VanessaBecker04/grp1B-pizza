@@ -82,7 +82,7 @@ object Users extends Controller {
     }.getOrElse(NotFound)
   }
 
-  private case class Username(name: String)
+  private case class Username(forename: String, name: String, address: String, zipcode: String, city: String, role: String)
   private implicit val usernameReads = Json.reads[Username]
 
   /**
@@ -102,7 +102,7 @@ object Users extends Controller {
       },
       username => {
         Ok(Json.obj("status" -> "OK",
-          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name)))))
+          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.forename, username.name, username.address, username.zipcode, username.city, username.role)))))
       }
     )
   }

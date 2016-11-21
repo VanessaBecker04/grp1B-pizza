@@ -18,7 +18,13 @@ object UserController extends Controller {
    */
   val userForm = Form(
     mapping(
-      "Name" -> text)(CreateUserForm.apply)(CreateUserForm.unapply))
+      "Vorname" -> text,
+      "Name" -> text,
+      "Straße und Hausnummer" -> text,
+      "Postleitzahl" -> text,
+      "Stadt" -> text,
+      "Rolle" -> text
+    )(CreateUserForm.apply)(CreateUserForm.unapply))
 
   /**
    * Adds a new user with the given data to the system.
@@ -31,8 +37,8 @@ object UserController extends Controller {
         BadRequest(views.html.index(formWithErrors))
       },
       userData => {
-        val newUser = services.UserService.addUser(userData.name)
-        Redirect(routes.UserController.welcomeUser(newUser.name)).
+        val newUser = services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
+        Redirect(routes.UserController.welcomeUser(newUser.forename, newUser.name)).
           flashing("success" -> "User saved!")
       })
   }
@@ -40,8 +46,8 @@ object UserController extends Controller {
   /**
    * Shows the welcome view for a newly registered user.
    */
-  def welcomeUser(username: String) : Action[AnyContent] = Action {
-    Ok(views.html.welcomeUser(username))
+  def welcomeUser(forename: String, name: String) : Action[AnyContent] = Action {
+    Ok(views.html.welcomeUser(forename, name))
   }
 
   /**

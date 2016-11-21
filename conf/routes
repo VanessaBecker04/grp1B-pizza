@@ -4,9 +4,10 @@
 
 # Home page
 GET         /                    controllers.Application.index
+GET         /register            controllers.Application.register
 
 POST        /addUser             controllers.UserController.addUser
-GET         /welcomeUser         controllers.UserController.welcomeUser(username)
+GET         /welcomeUser         controllers.UserController.welcomeUser(forename, name)
 GET         /showUsers           controllers.UserController.showUsers
 
 # REST API

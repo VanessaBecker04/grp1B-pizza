@@ -18,4 +18,8 @@ object Application extends Controller {
     Ok(views.html.index(controllers.UserController.userForm))
   }
 
+  def register: Action[AnyContent] = Action {
+    Ok(views.html.register(controllers.UserController.userForm))
+  }
+
 }
