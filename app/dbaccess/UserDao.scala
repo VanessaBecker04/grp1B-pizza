@@ -46,10 +46,19 @@ trait UserDaoT {
    */
   def registeredUsers: List[User] = {
     DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select id, forename, name, address, zipcode, city, role from Users;")
+      val selectUsers = SQL("Select id, forename, name, address, zipcode, city, role from Users")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val users = selectUsers().map(row => User(row[Long]("id"), row[String]("forename"), row[String]("name"), row[String]("address"), row[String]("zipcode"), row[String]("city"), row[String]("role"))).toList
       users
+    }
+  }
+
+  def loginUser(namegiven: String, zipcodegiven: String): List[Long] = {
+    DB.withConnection { implicit c =>
+      val selectUser = SQL("Select id from Users WHERE (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
+        'zipcodegiven -> zipcodegiven, 'namegiven -> namegiven)
+      val selectedUser = selectUser().map(row => row[Long]("id")).toList
+      selectedUser
     }
   }
 

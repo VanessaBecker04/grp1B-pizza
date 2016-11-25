@@ -2,9 +2,9 @@ package controllers
 
 import play.api.mvc.{Action, AnyContent, Controller}
 import play.api.data.Form
-import play.api.data.Forms.{mapping,text}
+import play.api.data.Forms.{mapping, text}
 import services.UserService
-import forms.CreateUserForm
+import forms.{CreateUserForm, LoginUserForm}
 
 /**
  * Controller for user specific operations.
@@ -57,4 +57,24 @@ object UserController extends Controller {
     Ok(views.html.users(UserService.registeredUsers))
   }
 
+  val loginForm = Form(
+    mapping(
+      "Nachname" -> text,
+      "Postleitzahl" -> text
+    )(LoginUserForm.apply)(LoginUserForm.unapply))
+
+  def loginUser : Action[AnyContent] = Action { implicit request =>
+    loginForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.login(formWithErrors))
+      },
+      loginData => {
+        val logginginUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
+        if (logginginUser.nonEmpty) {
+          Redirect(routes.UserController.welcomeUser(loginData.name, loginData.name))
+        } else {
+          Redirect(routes.UserController.welcomeUser("Login", "Fehlgeschlagen"))
+        }
+      })
+  }
 }

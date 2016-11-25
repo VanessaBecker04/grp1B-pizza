@@ -1,0 +1,17 @@
+@(loginForm: Form[forms.LoginUserForm])
+
+@import views.html.helper
+
+@main(models.Company.name) {
+    <h1>Login:</h1>
+    <p>
+        @helper.form(action = routes.UserController.loginUser()) {
+            @helper.inputText(loginForm("Nachname"))
+            @helper.inputText(loginForm("Postleitzahl"))
+            <input type="submit" value="Speichern" />
+        }
+	</p>
+
+    <p><a href="/showUsers">Bereits registrierte Benutzer</a></p>
+
+}

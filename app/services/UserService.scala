@@ -39,6 +39,10 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
+  def loginUser(name: String, zipcode: String): List[Long] = {
+    userDao.loginUser(name, zipcode)
+  }
+
 }
 
 object UserService extends UserServiceT

@@ -22,4 +22,8 @@ object Application extends Controller {
     Ok(views.html.register(controllers.UserController.userForm))
   }
 
+  def login: Action[AnyContent] = Action {
+    Ok(views.html.login(controllers.UserController.loginForm))
+  }
+
 }
