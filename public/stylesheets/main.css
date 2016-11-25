@@ -11,3 +11,111 @@ p {
     font-family: "Times New Roman";
     font-size: 20px;
 }
+
+#h1ForEditMenu {
+    color: red;
+}
+
+#bodyForEditMenu {
+    background-image: url("../images/aceite_de_oliva_y_olivas_20130222_1207855933.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#editMenuInterface {
+    font-size: 20px;
+    color: greenyellow;
+    position: absolute;
+    right: 150px;
+    top: 100px;
+    list-style-type: none;
+    font-weight: bold;
+}
+
+#linkToShowMenu {
+    position: absolute;
+    right: 60px;
+    top: 700px;
+    font-size: 30px;
+}
+
+#linkToShowMenu2 {
+    color: white;
+}
+
+#pizzaList {
+    position: relative;
+    top: 120px;
+}
+
+#selectMenuList {
+    font-size: 20px;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+#bevarageList {
+    position: absolute;
+    right: 700px;
+    top: 150px;
+}
+
+#dessertList {
+    position: relative;
+    right: -900px;
+    top: -230px;
+}
+
+#pizzaLabel {
+    color: white;
+    position: absolute;
+    top: 100px;
+    font-size: 30px;
+}
+
+#getränkeLabel {
+    color: white;
+    position: absolute;
+    top: 120px;
+    left: 440px;
+    font-size: 30px;
+}
+
+#dessertLabel {
+    color: white;
+    position: absolute;
+    top: 120px;
+    left: 905px;
+    font-size: 30px;
+}
+
+#bodyShowMenu {
+    background-image: url("../images/981124-blackboard.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#sizeChoicePizza {
+    position: absolute;
+    top: 500px;
+    left: 100px;
+    color: white;
+}
+
+#sizeChoiceBeverage {
+    position: absolute;
+    right: 820px;
+    top: 500px;
+    color: white;
+}
+
+#orderConfirmButton {
+    position: absolute;
+    right: 230px;
+    top: 600px;
+    font-size: 30px;
+}
+
