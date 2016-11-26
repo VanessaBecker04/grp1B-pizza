@@ -39,7 +39,7 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
-  def loginUser(name: String, zipcode: String): List[Long] = {
+  def loginUser(name: String, zipcode: String): String = {
     userDao.loginUser(name, zipcode)
   }
 

@@ -5,6 +5,7 @@ import play.api.Play.current
 import play.api.db.DB
 import anorm.NamedParameter.symbol
 import models.User
+import anorm.SqlParser._
 
 /**
  * Data access object for user related operations.
@@ -53,14 +54,19 @@ trait UserDaoT {
     }
   }
 
-  def loginUser(namegiven: String, zipcodegiven: String): List[Long] = {
+  def loginUser(namegiven: String, zipcodegiven: String): String = {
     DB.withConnection { implicit c =>
       val selectUser = SQL("Select id from Users WHERE (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
-        'zipcodegiven -> zipcodegiven, 'namegiven -> namegiven)
-      val selectedUser = selectUser().map(row => row[Long]("id")).toList
-      selectedUser
+        'zipcodegiven -> zipcodegiven, 'namegiven -> namegiven).as(scalar[Long].singleOpt)
+      val selectedUser = selectUser.toString
+      if (selectedUser.equals("None")) {
+        ""
+      } else {
+        selectedUser
+      }
     }
   }
+
 
 }
 

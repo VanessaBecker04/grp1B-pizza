@@ -71,7 +71,7 @@ object UserController extends Controller {
       loginData => {
         val logginginUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
         if (logginginUser.nonEmpty) {
-          Redirect(routes.UserController.welcomeUser(loginData.name, loginData.name))
+          Redirect(routes.UserController.welcomeUser(logginginUser, loginData.name))
         } else {
           Redirect(routes.UserController.welcomeUser("Login", "Fehlgeschlagen"))
         }
