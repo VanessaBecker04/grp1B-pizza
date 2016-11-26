@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc.{Action, AnyContent, Controller}
-import play.api.data.Form
+import play.api.data.{Form, Forms}
 import play.api.data.Forms.{mapping, text}
 import services.UserService
 import forms.{CreateUserForm, LoginUserForm}
@@ -21,7 +21,7 @@ object UserController extends Controller {
       "Vorname" -> text,
       "Name" -> text,
       "Straße und Hausnummer" -> text,
-      "Postleitzahl" -> text,
+      "Postleitzahl" -> Forms.number,
       "Stadt" -> text,
       "Rolle" -> text
     )(CreateUserForm.apply)(CreateUserForm.unapply))
@@ -60,7 +60,7 @@ object UserController extends Controller {
   val loginForm = Form(
     mapping(
       "Nachname" -> text,
-      "Postleitzahl" -> text
+      "Postleitzahl" -> Forms.number
     )(LoginUserForm.apply)(LoginUserForm.unapply))
 
   def loginUser : Action[AnyContent] = Action { implicit request =>
@@ -70,8 +70,8 @@ object UserController extends Controller {
       },
       loginData => {
         val logginginUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
-        if (logginginUser.nonEmpty) {
-          Redirect(routes.UserController.welcomeUser(logginginUser, loginData.name))
+        if (logginginUser != -1) {
+          Redirect(routes.UserController.welcomeUser(logginginUser.toString, loginData.name))
         } else {
           Redirect(routes.UserController.welcomeUser("Login", "Fehlgeschlagen"))
         }
