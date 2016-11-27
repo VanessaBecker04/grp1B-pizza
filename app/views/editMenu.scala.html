@@ -1,0 +1,24 @@
+@(menuForm: Form[forms.CreateMenuForm])
+
+@main("Speisekarte bearbeiten") {
+
+    <body id="bodyForEditMenu">
+
+        <h1 id="h1ForEditMenu">Hallo "Hier der Name des zukünftigen Mitarbeiters"</h1>
+        <b>
+
+        </b>
+
+        <ul id="editMenuInterface">Speise/Getränk zum Menu hinzufügen:
+            @helper.form(action = routes.EditMenuController.addToMenu()) {
+                <li>@helper.inputText(menuForm("Name"))</li>
+                <li>@helper.inputText(menuForm("Price"))</li>
+                <li>@helper.inputText(menuForm("Category"))</li>
+                <li><input type="submit" value="Hinzufügen"/></li>
+            }
+        </ul>
+
+        <p id="linkToShowMenu"><a id="linkToShowMenu2" href="/showMenu">Zur Speisekarte</a></p>
+
+    </body>
+}

@@ -43,11 +43,6 @@ p {
     color: white;
 }
 
-#pizzaList {
-    position: relative;
-    top: 120px;
-}
-
 #selectMenuList {
     font-size: 20px;
     width: 300px;
@@ -57,22 +52,29 @@ p {
     overflow-x: scroll;
 }
 
+#pizzaList {
+    position: absolute;
+    left: 50px;
+    top: 150px;
+}
+
 #bevarageList {
     position: absolute;
-    right: 700px;
+    right: 500px;
     top: 150px;
 }
 
 #dessertList {
-    position: relative;
-    right: -900px;
-    top: -230px;
+    position: absolute;
+    right: 100px;
+    top: 150px;
 }
 
 #pizzaLabel {
     color: white;
     position: absolute;
-    top: 100px;
+    top: 120px;
+    left: 50px;
     font-size: 30px;
 }
 
@@ -80,7 +82,7 @@ p {
     color: white;
     position: absolute;
     top: 120px;
-    left: 440px;
+    left: 480px;
     font-size: 30px;
 }
 
@@ -88,7 +90,7 @@ p {
     color: white;
     position: absolute;
     top: 120px;
-    left: 905px;
+    left: 878px;
     font-size: 30px;
 }
 
@@ -101,21 +103,21 @@ p {
 #sizeChoicePizza {
     position: absolute;
     top: 500px;
-    left: 100px;
+    left: 150px;
     color: white;
 }
 
 #sizeChoiceBeverage {
     position: absolute;
-    right: 820px;
+    left: 600px;
     top: 500px;
     color: white;
 }
 
 #orderConfirmButton {
     position: absolute;
-    right: 230px;
-    top: 600px;
+    left:700px;
+    top: 400px;
     font-size: 30px;
 }
 

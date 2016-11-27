@@ -5,14 +5,14 @@
 @main(models.Company.name) {
 
     <h1>Willkommen bei @models.Company.name</h1>
-    
+
     <p>Registrieren:
-    	@helper.form(action = routes.UserController.addUser()) {
-  		@helper.inputText(userForm("Name"))
-		<input type="submit" value="Speichern" />
-	}
-	</p>
-    
+        @helper.form(action = routes.UserController.addUser()) {
+            @helper.inputText(userForm("Name"))
+            <input type="submit" value="Speichern" />
+        }
+    </p>
+
     <p><a href="/showUsers">Registrierte Benutzer</a></p>
 
 }

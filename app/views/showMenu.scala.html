@@ -1,0 +1,66 @@
+@(prodcuts: List[models.Menu], billForm: Form[forms.CreateBillForm])
+
+
+
+@main("Speisekarte") {
+
+    <body id="bodyShowMenu">
+
+        <h1 style="color: white">Willkommen zur Speisekarte</h1>
+
+        <form id="pizzaList" style="position: absolute right = 0px
+            top: 150px;">
+            <label>
+                <select id="selectMenuList" name="pizza" size="5">
+                @for(menu <- prodcuts) {
+                    @if(menu.category.equals("Pizza")) {
+                        <option>@menu.name</option>
+                    }
+                }
+                </select>
+            </label>
+        </form>
+
+        <form id="bevarageList">
+            <label>
+                <select id="selectMenuList" name="getränke" size="5">
+                @for(menu <- prodcuts) {
+                    @if(menu.category.equals("Getränk")) {
+                        <option>@menu.name</option>
+                    }
+                }
+                </select>
+            </label>
+        </form>
+
+        <form id="dessertList">
+            <label>
+                <select id="selectMenuList" name="desserts" size="5">
+                @for(menu <- prodcuts) {
+                    @if(menu.category.equals("Dessert")) {
+                        <option>@menu.name</option>
+                    }
+                }
+                </select>
+            </label>
+        </form>
+
+        <form id="sizeChoicePizza">
+            <input id="pizzaMedium" name="sizePizza" type="radio">medium<br>
+            <input id="pizzaLarge" name="sizePizza" type="radio">large<br>
+            <input id="pizzaXl" name="sizePizza" type="radio">xl<br>
+        </form>
+
+        <form id="sizeChoiceBeverage">
+            <input id="beverageMedium" name="sizeBeverage" type="radio">medium<br>
+            <input id="beverageLarge" name="sizeBeverage" type="radio">large<br>
+            <input id="beverageXl" name="sizeBeverage" type="radio">xl<br>
+        </form>
+
+
+        <label id="pizzaLabel">Pizza</label>
+        <label id="getränkeLabel">Getränk</label>
+        <label id="dessertLabel">Dessert</label>
+
+    </body>
+}

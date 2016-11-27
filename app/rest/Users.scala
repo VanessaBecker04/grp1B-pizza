@@ -1,13 +1,13 @@
 package rest
 
 import models.User
-import play.api.libs.json.{JsValue, JsError, Json, Writes}
-import play.api.mvc.{Action, AnyContent, BodyParsers, Controller, RequestHeader}
+import play.api.libs.json.{JsError, JsValue, Json, Writes}
+import play.api.mvc._
 import services.UserService
 
 /**
- * REST API for the User Class.
- */
+  * REST API for the User Class.
+  */
 object Users extends Controller {
 
   private case class HateoasUser(user: User, url: String)
@@ -39,12 +39,13 @@ object Users extends Controller {
   }
 
   /**
-   * Get all users.
-   * {{{
-   * curl --include http://localhost:9000/api/users
-   * }}}
-   * @return all users in a JSON representation.
-   */
+    * Get all users.
+    * {{{
+    * curl --include http://localhost:9000/api/users
+    * }}}
+    *
+    * @return all users in a JSON representation.
+    */
   def users: Action[AnyContent] = Action { implicit request =>
     val users = UserService.registeredUsers
     Ok(Json.obj(
@@ -66,14 +67,15 @@ object Users extends Controller {
   }
 
   /**
-   * Gets a user by id.
-   * Use for example
-   * {{{
-   * curl --include http://localhost:9000/api/user/1
-   * }}}
-   * @param id user id.
-   * @return user info in a JSON representation.
-   */
+    * Gets a user by id.
+    * Use for example
+    * {{{
+    * curl --include http://localhost:9000/api/user/1
+    * }}}
+    *
+    * @param id user id.
+    * @return user info in a JSON representation.
+    */
   def user(id: Long): Action[AnyContent] = Action { implicit request =>
     UserService.registeredUsers.find {
       _.id == id
@@ -83,17 +85,19 @@ object Users extends Controller {
   }
 
   private case class Username(name: String)
+
   private implicit val usernameReads = Json.reads[Username]
 
   /**
-   * Create a new user by a POST request including the user name as JSON content.
-   * Use for example
-   * {{{
-   * curl --include --request POST --header "Content-type: application/json"
-   *      --data '{"name" : "WieAuchImmer"}' http://localhost:9000/api/user
-   * }}}
-   * @return info about the new user in a JSON representation
-   */
+    * Create a new user by a POST request including the user name as JSON content.
+    * Use for example
+    * {{{
+    * curl --include --request POST --header "Content-type: application/json"
+    *      --data '{"name" : "WieAuchImmer"}' http://localhost:9000/api/user
+    * }}}
+    *
+    * @return info about the new user in a JSON representation
+    */
   def addUser: Action[JsValue] = Action(BodyParsers.parse.json) { implicit request =>
     val username = request.body.validate[Username]
     username.fold(
@@ -108,13 +112,14 @@ object Users extends Controller {
   }
 
   /**
-   * Delete a user by id using a DELETE request.
-   * {{{
-   * curl --include --request DELETE http://localhost:9000/api/user/1
-   * }}}
-   * @param id the user id.
-   * @return success info or NotFound
-   */
+    * Delete a user by id using a DELETE request.
+    * {{{
+    * curl --include --request DELETE http://localhost:9000/api/user/1
+    * }}}
+    *
+    * @param id the user id.
+    * @return success info or NotFound
+    */
   def rmUser(id: Long): Action[AnyContent] = Action { implicit request =>
     val success = UserService.rmUser(id)
     if (success)
