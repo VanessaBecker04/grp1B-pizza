@@ -1,0 +1,59 @@
+@(prodcuts: List[models.Menu], billForm: Form[forms.CreateBillForm])
+
+
+
+@main("Speisekarte") {
+
+        <body id="bodyShowMenu">
+
+            <label id="pizzaLabel">Pizza</label>
+            <label id="getränkeLabel">Getränk</label>
+            <label id="dessertLabel">Dessert</label>
+
+            <h1 style="color: white">Willkommen zur Speisekarte</h1>
+
+
+            @helper.form(action = routes.BillController.createBill()) {
+
+                @helper.inputText(billForm("CostumerID"))
+
+                <ul id="pizzaList">
+                    @helper.select(billForm("Pizza"), prodcuts.map(p => if(p.category.equals("Pizza")) {
+                        p.name -> p.name
+                    } else {
+                        "" -> ""
+                    }))
+                </ul>
+
+                <ul id="bevarageList">
+                    @helper.select(billForm("Beverage"), prodcuts.map(b => if(b.category.equals("Getränk")) {
+                        b.name -> b.name
+                    } else {
+                        "" -> ""
+                    }))
+                </ul>
+
+                <ul id="dessertList">
+                    @helper.select(billForm("Dessert"), prodcuts.map(s => if(s.category.equals("Dessert")) {
+                        s.name -> s.name
+                    }else {
+                        "" -> ""
+                    }))
+                </ul>
+
+                <ul id="sizeChoicePizza">
+                    @helper.inputRadioGroup(billForm("PizzaSize"), options = Seq("medium" -> "medium",
+                        "large" -> "large", "xl" -> "xl"))
+                </ul>
+
+                <ul id="sizeChoiceBeverage">
+                    @helper.inputRadioGroup(billForm("BeverageSize"), options = Seq("medium" -> "medium",
+                        "large" -> "large", "xl" -> "xl"))
+                </ul>
+
+                <input id="MenuConfirmButton" type="submit" value="Zur Kasse" />
+            }
+
+            <p><a href="/showFaktura">Zur Rechnung</a></p>
+        </body>
+}
