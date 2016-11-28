@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateBillForm, CreateMenuForm}
+import forms.CreateMenuForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -24,31 +24,6 @@ object EditMenuController extends Controller {
     * @return welcome page for new user
     */
 
-  val billForm = Form(
-    mapping(
-      "Pizza" -> text, "Beverage" -> text, "Dessert" -> text, "PizzaSize" -> boolean, "BeverageSize" -> boolean)
-    (CreateBillForm.apply)(CreateBillForm.unapply))
-
-
-  def createBill: Action[AnyContent] = Action { implicit c =>
-    billForm.bindFromRequest.fold(
-      formWithErrors => {
-        BadRequest(views.html.showBill(formWithErrors))
-      },
-      userData => {
-        val newBill = bill(userData.pizza, userData.beverage, userData.dessert,
-          userData.pizzaSize, userData.beverageSize)
-        Redirect(routes.EditMenuController.createBill())
-      }
-    )
-  }
-
-
-  def bill(pizza: String, beverage: String, dessert: String, pizzaSize: Boolean, beverageSize: Boolean):
-  (String, String, String, Boolean, Boolean) = {
-    val tuple = (pizza, beverage, dessert, pizzaSize, beverageSize)
-    tuple
-  }
 
   def addToMenu: Action[AnyContent] = Action { implicit request =>
     menuForm.bindFromRequest.fold(
@@ -67,7 +42,7 @@ object EditMenuController extends Controller {
   }
 
   def showMenu: Action[AnyContent] = Action {
-    Ok(views.html.showMenu(MenuService.addedToMenu, controllers.EditMenuController.billForm))
+    Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billForm))
   }
 
 }

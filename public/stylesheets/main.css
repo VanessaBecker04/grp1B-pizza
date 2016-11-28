@@ -54,7 +54,7 @@ p {
 
 #pizzaList {
     position: absolute;
-    left: 50px;
+    left: 40px;
     top: 150px;
 }
 
@@ -74,7 +74,7 @@ p {
     color: white;
     position: absolute;
     top: 120px;
-    left: 50px;
+    left: 75px;
     font-size: 30px;
 }
 
@@ -98,6 +98,7 @@ p {
     background-image: url("../images/981124-blackboard.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+
 }
 
 #sizeChoicePizza {
@@ -109,15 +110,15 @@ p {
 
 #sizeChoiceBeverage {
     position: absolute;
-    left: 600px;
+    left: 550px;
     top: 500px;
     color: white;
 }
 
-#orderConfirmButton {
+#MenuConfirmButton {
     position: absolute;
-    left:700px;
-    top: 400px;
-    font-size: 30px;
+    right:200px;
+    top: 500px;
+    font-size: 20px;
 }
 

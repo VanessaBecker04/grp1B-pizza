@@ -7,12 +7,11 @@ GET         /                    controllers.Application.index
 GET         /editMenu            controllers.EditMenuController.editMenu
 POST        /addToMenu           controllers.EditMenuController.addToMenu
 POST        /addUser             controllers.UserController.addUser
-POST        /createBill        controllers.EditMenuController.createBill
+POST        /createBill          controllers.BillController.createBill
 
 GET         /showMenu            controllers.EditMenuController.showMenu
 GET         /welcomeUser         controllers.UserController.welcomeUser(username)
 GET         /showUsers           controllers.UserController.showUsers
-
 # REST API
 GET         /api                 rest.Api.api
 GET         /api/users           rest.Users.users

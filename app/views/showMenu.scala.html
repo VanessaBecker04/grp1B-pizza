@@ -4,63 +4,56 @@
 
 @main("Speisekarte") {
 
-    <body id="bodyShowMenu">
+        <body id="bodyShowMenu">
 
-        <h1 style="color: white">Willkommen zur Speisekarte</h1>
+            <label id="pizzaLabel">Pizza</label>
+            <label id="getränkeLabel">Getränk</label>
+            <label id="dessertLabel">Dessert</label>
 
-        <form id="pizzaList" style="position: absolute right = 0px
-            top: 150px;">
-            <label>
-                <select id="selectMenuList" name="pizza" size="5">
-                @for(menu <- prodcuts) {
-                    @if(menu.category.equals("Pizza")) {
-                        <option>@menu.name</option>
-                    }
-                }
-                </select>
-            </label>
-        </form>
-
-        <form id="bevarageList">
-            <label>
-                <select id="selectMenuList" name="getränke" size="5">
-                @for(menu <- prodcuts) {
-                    @if(menu.category.equals("Getränk")) {
-                        <option>@menu.name</option>
-                    }
-                }
-                </select>
-            </label>
-        </form>
-
-        <form id="dessertList">
-            <label>
-                <select id="selectMenuList" name="desserts" size="5">
-                @for(menu <- prodcuts) {
-                    @if(menu.category.equals("Dessert")) {
-                        <option>@menu.name</option>
-                    }
-                }
-                </select>
-            </label>
-        </form>
-
-        <form id="sizeChoicePizza">
-            <input id="pizzaMedium" name="sizePizza" type="radio">medium<br>
-            <input id="pizzaLarge" name="sizePizza" type="radio">large<br>
-            <input id="pizzaXl" name="sizePizza" type="radio">xl<br>
-        </form>
-
-        <form id="sizeChoiceBeverage">
-            <input id="beverageMedium" name="sizeBeverage" type="radio">medium<br>
-            <input id="beverageLarge" name="sizeBeverage" type="radio">large<br>
-            <input id="beverageXl" name="sizeBeverage" type="radio">xl<br>
-        </form>
+            <h1 style="color: white">Willkommen zur Speisekarte</h1>
 
 
-        <label id="pizzaLabel">Pizza</label>
-        <label id="getränkeLabel">Getränk</label>
-        <label id="dessertLabel">Dessert</label>
+            @helper.form(action = routes.BillController.createBill()) {
 
-    </body>
+                @helper.inputText(billForm("CostumerID"))
+
+                <ul id="pizzaList">
+                    @helper.select(billForm("Pizza"), prodcuts.map(p => if(p.category.equals("Pizza")) {
+                        p.name -> p.name
+                    } else {
+                        "" -> ""
+                    }))
+                </ul>
+
+                <ul id="bevarageList">
+                    @helper.select(billForm("Beverage"), prodcuts.map(b => if(b.category.equals("Getränk")) {
+                        b.name -> b.name
+                    } else {
+                        "" -> ""
+                    }))
+                </ul>
+
+                <ul id="dessertList">
+                    @helper.select(billForm("Dessert"), prodcuts.map(s => if(s.category.equals("Dessert")) {
+                        s.name -> s.name
+                    }else {
+                        "" -> ""
+                    }))
+                </ul>
+
+                <ul id="sizeChoicePizza">
+                    @helper.inputRadioGroup(billForm("PizzaSize"), options = Seq("medium" -> "medium",
+                        "large" -> "large", "xl" -> "xl"))
+                </ul>
+
+                <ul id="sizeChoiceBeverage">
+                    @helper.inputRadioGroup(billForm("BeverageSize"), options = Seq("medium" -> "medium",
+                        "large" -> "large", "xl" -> "xl"))
+                </ul>
+
+                <input id="MenuConfirmButton" type="submit" value="Zur Kasse" />
+            }
+
+            <p><a href="/showFaktura">Zur Rechnung</a></p>
+        </body>
 }
