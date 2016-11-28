@@ -1,4 +1,4 @@
-@(prodcuts: List[models.Menu], billForm: Form[forms.CreateBillForm])
+@(products: List[models.Menu], billForm: Form[forms.CreateBillForm])
 
 
 
@@ -10,7 +10,7 @@
             <label id="getränkeLabel">Getränk</label>
             <label id="dessertLabel">Dessert</label>
 
-            <h1 style="color: white">Willkommen zur Speisekarte</h1>
+            <h1>Willkommen zur Speisekarte</h1>
 
 
             @helper.form(action = routes.BillController.createBill()) {
@@ -18,7 +18,7 @@
                 @helper.inputText(billForm("CostumerID"))
 
                 <ul id="pizzaList">
-                    @helper.select(billForm("Pizza"), prodcuts.map(p => if(p.category.equals("Pizza")) {
+                    @helper.select(billForm("Pizza"), products.map(p => if(p.category.equals("Pizza")) {
                         p.name -> p.name
                     } else {
                         "" -> ""
@@ -26,7 +26,7 @@
                 </ul>
 
                 <ul id="bevarageList">
-                    @helper.select(billForm("Beverage"), prodcuts.map(b => if(b.category.equals("Getränk")) {
+                    @helper.select(billForm("Beverage"), products.map(b => if(b.category.equals("Getränk")) {
                         b.name -> b.name
                     } else {
                         "" -> ""
@@ -34,7 +34,7 @@
                 </ul>
 
                 <ul id="dessertList">
-                    @helper.select(billForm("Dessert"), prodcuts.map(s => if(s.category.equals("Dessert")) {
+                    @helper.select(billForm("Dessert"), products.map(s => if(s.category.equals("Dessert")) {
                         s.name -> s.name
                     }else {
                         "" -> ""

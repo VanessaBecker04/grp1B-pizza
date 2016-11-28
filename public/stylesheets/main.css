@@ -17,9 +17,10 @@ p {
 }
 
 #bodyForEditMenu {
-    background-image: url("../images/aceite_de_oliva_y_olivas_20130222_1207855933.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 100% auto;
+    background-image: url("../images/body_bg.png");
 }
 
 #editMenuInterface {
@@ -95,10 +96,10 @@ p {
 }
 
 #bodyShowMenu {
-    background-image: url("../images/981124-blackboard.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 100% auto;
+    background-image: url("../images/body_bg.png");
 }
 
 #sizeChoicePizza {

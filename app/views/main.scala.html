@@ -1,5 +1,4 @@
 @(title: String)(content: Html)
-@import views.html.helper
 
 <!DOCTYPE html>
 
@@ -13,7 +12,7 @@
     <body>
         <ul class="topnav" id="topnavbar">
             <li style="float:left"><a href="/">Home</a></li>
-            <li style="float:left"><a href="/products">Produkte</a></li>
+            <li style="float:left"><a href="/showMenu">Produkte</a></li>
             <li style="float:left"><a href="/login">Login</a></li>
                 <!--<li style="float:left">Pizza Suez</li>/-->
             <li style="float:right"><a href="/register">Registrieren</a></li>
@@ -23,7 +22,7 @@
         <style>
         body {
                  background-position: top left;
-                 background.repeat: no-repeat;
+                 background-repeat: repeat;
                  background-size: 100% auto;
                  background-image: url(@routes.Assets.at("images/body_bg.png"));
              }
