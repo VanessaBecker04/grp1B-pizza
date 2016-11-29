@@ -15,10 +15,10 @@ trait OrderServiceT {
     *
     * @return the new user.
     */
-  def addToOrder(costumerId: Long, pizzaName: String, pizzaNumber: Int, pizzaSize: String, beverageName: String,
+  def addToOrder(customerId: Long, pizzaName: String, pizzaNumber: Int, pizzaSize: String, beverageName: String,
                  beverageNumber: Int, beverageSize: String, dessertName: String, dessertNumber: Int): Bill = {
     // create User
-    val newOrder = Bill(-1, costumerId, pizzaName, pizzaNumber, pizzaSize, beverageName,
+    val newOrder = Bill(-1, customerId, pizzaName, pizzaNumber, pizzaSize, beverageName,
       beverageNumber, beverageSize, dessertName, dessertNumber)
     // persist and return User
     orderDao.addToOrder(newOrder)

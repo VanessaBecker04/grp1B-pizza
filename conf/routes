@@ -6,15 +6,17 @@
 GET         /                    controllers.Application.index
 GET         /register            controllers.Application.register
 GET         /login               controllers.Application.login
-GET         /showMenu            controllers.EditMenuController.showMenu
-GET         /editMenu            controllers.EditMenuController.editMenu
-POST        /addToMenu           controllers.EditMenuController.addToMenu
-POST        /createBill          controllers.BillController.createBill
-
 POST        /addUser             controllers.UserController.addUser
 GET         /welcomeUser         controllers.UserController.welcomeUser(forename, name)
 GET         /showUsers           controllers.UserController.showUsers
 GET         /loginUser           controllers.UserController.loginUser
+
+
+GET         /showMenu            controllers.EditMenuController.showMenu
+GET         /editMenu            controllers.EditMenuController.editMenu
+POST        /addToMenu           controllers.EditMenuController.addToMenu
+POST        /addToBill           controllers.BillController.addToBill
+GET         /showBill            controllers.BillController.showBill
 
 # REST API
 GET         /api                 rest.Api.api

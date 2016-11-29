@@ -11,7 +11,7 @@ import play.api.mvc.{Action, AnyContent, Controller}
   * Created by Hasi on 28.11.2016.
   */
 object BillController extends Controller {
-
+  var userID : Long = _
   val billform = Form(
     mapping(
       "CustomerID" -> longNumber, "PizzaName" -> text, "PizzaNumber" -> number,
@@ -26,10 +26,10 @@ object BillController extends Controller {
         BadRequest(views.html.showMenu(List.empty,formWithErrors))
       },
       userData => {
-        val newOrder = services.OrderService.addToOrder(userData.costumerId, userData.pizzaName, userData.pizzaNumber,
+        val newOrder = services.OrderService.addToOrder(userData.customerId, userData.pizzaName, userData.pizzaNumber,
           userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
           userData.dessertName, userData.dessertNumber)
-        Redirect(routes.EditMenuController.showMenu())
+        Redirect(routes.BillController.showBill())
       })
   }
 
@@ -37,4 +37,12 @@ object BillController extends Controller {
     Ok(views.html.showBill(services.OrderService.addedToOrder))
   }
 
+  def setUserID(userIDgiven : Long) = {
+    userID = userIDgiven
+  }
+
+  def getuserID : Long = userID
+
+
 }
+

@@ -1,4 +1,4 @@
-@(prodcuts: List[models.Menu], billForm : Form[forms.CreateBillForm])
+@(products: List[models.Menu], billForm : Form[forms.CreateBillForm])
 
 
 
@@ -11,8 +11,8 @@
             @helper.form(action = routes.BillController.addToBill()) {
 
                 <ul>
-                    <li>@helper.inputText(billForm("CostumerID"))</li>
-                    <li>@helper.select(billForm("PizzaName"), prodcuts.map(p => if(p.category.equals("Pizza")) {
+                    <li>@helper.inputText(billForm("CustomerID"))</li>
+                    <li>@helper.select(billForm("PizzaName"), products.map(p => if(p.category.equals("Pizza")) {
                         p.name -> p.name
                     } else {
                         "" -> ""
@@ -20,7 +20,7 @@
                     <li>@helper.select(billForm("PizzaSize"), options = Seq("medium" -> "medium", "large" -> "large",
                         "xl" -> "xl"))</li>
                     <li>@helper.inputText(billForm("PizzaNumber"))</li>
-                    <li>@helper.select(billForm("BeverageName"), prodcuts.map(b => if(b.category.equals("Getränk")) {
+                    <li>@helper.select(billForm("BeverageName"), products.map(b => if(b.category.equals("Getränk")) {
                         b.name -> b.name
                     } else {
                         "" -> ""
@@ -28,13 +28,13 @@
                     <li> @helper.select(billForm("BeverageSize"), options = Seq("medium" -> "medium", "large" -> "large",
                         "xl" -> "xl"))</li>
                     <li>@helper.inputText(billForm("BeverageNumber"))</li>
-                    <li>@helper.select(billForm("DessertName"), prodcuts.map(s => if(s.category.equals("Dessert")) {
+                    <li>@helper.select(billForm("DessertName"), products.map(s => if(s.category.equals("Dessert")) {
                         s.name -> s.name
                     }else {
                         "" -> ""
                     }))</li>
                     <li>@helper.inputText(billForm("DessertNumber"))</li>
-                    <li><input type="submit" value="Zur Kasse" /></li>
+                    <li><input type="submit" value="Zur Kasse"/></li>
                 </ul>
             }
         </body>

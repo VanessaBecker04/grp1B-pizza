@@ -10,6 +10,8 @@ CREATE TABLE Users (
     city varchar(255) NOT NULL,
     role varchar(255) NOT NULL
 );
+INSERT INTO Users(id, forename, name, address, zipcode, city, role) VALUES(1, 'Herbert', 'Padrone', 'Zoxelstr. 34', 81479, 'München', 'Mitarbeiter');
+
 
 # --- !Downs
 DROP TABLE Users,
@@ -20,13 +22,19 @@ DROP TABLE Users,
 CREATE TABLE Menu (
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
-    price int,
+    price int NOT NULL,
     category varchar(255) NOT NULL
 );
+INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 5, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 5, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(201, 'Sprite', 3, 'Getränk');
+INSERT INTO Menu(id, name, price, category) VALUES(202, 'Cola', 3, 'Getränk');
+INSERT INTO Menu(id, name, price, category) VALUES(301, 'Schokokuchen', 2, 'Dessert');
+INSERT INTO Menu(id, name, price, category) VALUES(302, 'Schokoeis', 2, 'Dessert');
 
 # --- !Downs
 
-# BillForOrder schema
+# Orderbill schema
 
 # --- !Ups
 CREATE TABLE Orderbill (
@@ -42,6 +50,5 @@ CREATE TABLE Orderbill (
     dessertNumber int,
 );
 
-# --- "Downs
-
+# --- !Downs
 DROP TABLE Orderbill;

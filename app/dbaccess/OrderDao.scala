@@ -21,14 +21,9 @@ trait OrderDaoT {
   def addToOrder(bill: Bill): Bill = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into BillForOrder(customerId, pizzaName, pizzaNumber, pizzaSize, beverageName, beverageNumber, " +
-          "beverageSize, dessertName, dessertNumber) values ({customerId}, {pizzaName},{pizzaNumber}, " +
-          "{pizzaSize}, {beverageName), {beverageNumber}, {beverageSize}, {dessertName}, {dessertNumber}").on(
-          'customerId -> bill.costumerId, 'pizzaName -> bill.pizzaName, 'pizzaNumber -> bill.pizzaNumber,
-          'pizzaSize -> bill.pizzaSize, 'beverageName -> bill.beverageName, 'beverageNumber -> bill.beverageNumber,
-          'beverageSize -> bill.beverageSize, 'dessertName -> bill.dessertName, 'dessertNumber -> bill.dessertNumber
-        ).executeInsert()
-      bill.id = id.get
+        SQL("insert into Orderbill(customerId, pizzaName, pizzaNumber, pizzaSize, beverageName, beverageNumber, beverageSize, dessertName, dessertNumber) values ({customerId},{pizzaName},{pizzaNumber},{pizzaSize},{beverageName},{beverageNumber},{beverageSize},{dessertName},{dessertNumber})").on(
+          'customerId -> bill.customerId, 'pizzaName -> bill.pizzaName, 'pizzaNumber -> bill.pizzaNumber, 'pizzaSize -> bill.pizzaSize, 'beverageName -> bill.beverageName, 'beverageNumber -> bill.beverageNumber, 'beverageSize -> bill.beverageSize, 'dessertName -> bill.dessertName, 'dessertNumber -> bill.dessertNumber).executeInsert()
+      bill.id = id.get;
     }
     bill
   }
@@ -41,7 +36,7 @@ trait OrderDaoT {
     */
   def rmFromOrder(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val rowsCount = SQL("delete from BillForOrder where id = ({id})").on('id -> id).executeUpdate()
+      val rowsCount = SQL("delete from Orderbill where id = ({id})").on('id -> id).executeUpdate()
       rowsCount > 0
     }
   }
@@ -54,7 +49,7 @@ trait OrderDaoT {
   def addedToOrder: List[Bill] = {
     DB.withConnection { implicit c =>
       val selectFromBill = SQL("Select id, customerId, pizzaName, pizzaNumber, pizzaSize," +
-        " beverageName, beverageNumber, beverageSize, dessertName, dessertNumber from BillForOrder;")
+        " beverageName, beverageNumber, beverageSize, dessertName, dessertNumber from Orderbill;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val order = selectFromBill().map(row => Bill(row[Long]("id"), row[Long]("customerId"), row[String]("pizzaName"),
         row[Int]("pizzaNumber"), row[String]("pizzaSize"), row[String]("beverageName"),
