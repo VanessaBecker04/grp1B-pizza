@@ -1,10 +1,10 @@
 package controllers
 
 import forms.CreateBillForm
-import models.{Bill, User}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
+
 
 
 /**
@@ -12,22 +12,29 @@ import play.api.mvc.{Action, AnyContent, Controller}
   */
 object BillController extends Controller {
 
-  val billForm = Form(mapping(
-    "CustomerID" -> longNumber, "Pizza" -> text, "Beverage" -> text, "Dessert" -> text,
-    "PizzaSize" -> boolean, "BeverageSize" -> boolean) (CreateBillForm.apply) (CreateBillForm.unapply)
-  )
+  val billform = Form(
+    mapping(
+      "CustomerID" -> longNumber, "PizzaName" -> text, "PizzaNumber" -> number,
+      "PizzaSize" -> text, "BeverageName" -> text, "BeverageNumber" -> number, "BeverageSize" -> text,
+      "DessertName" -> text, "DessertNumber" -> number)(CreateBillForm.apply)(CreateBillForm.unapply))
 
-  def createBill: Action[AnyContent] = Action { implicit c =>
-    billForm.bindFromRequest.fold(
+
+
+  def addToBill: Action[AnyContent] = Action { implicit request =>
+    billform.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.showMenu(List.empty,formWithErrors))
       },
       userData => {
-        val newbill = forms.CreateBillForm(userData.customerID, userData.pizza,
-          userData.beverage, userData.dessert, userData.pizzaSize, userData.pizzaSize)
-        Redirect(routes.BillController.createBill())
-      }
-    )
+        val newOrder = services.OrderService.addToOrder(userData.costumerId, userData.pizzaName, userData.pizzaNumber,
+          userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
+          userData.dessertName, userData.dessertNumber)
+        Redirect(routes.EditMenuController.showMenu())
+      })
+  }
+
+  def showBill : Action[AnyContent] = Action {
+    Ok(views.html.showBill(services.OrderService.addedToOrder))
   }
 
 }

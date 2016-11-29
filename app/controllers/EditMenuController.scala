@@ -17,7 +17,6 @@ object EditMenuController extends Controller {
   val menuForm = Form(
     mapping(
       "Name" -> text, "Price" -> number, "Category" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
-
   /**
     * Adds a new user with the given data to the system.
     *
@@ -42,7 +41,7 @@ object EditMenuController extends Controller {
   }
 
   def showMenu: Action[AnyContent] = Action {
-    Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billForm))
+    Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
 
 }

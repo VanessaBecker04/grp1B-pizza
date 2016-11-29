@@ -1,4 +1,4 @@
-@(products: List[models.Menu], billForm: Form[forms.CreateBillForm])
+@(prodcuts: List[models.Menu], billForm : Form[forms.CreateBillForm])
 
 
 
@@ -6,54 +6,36 @@
 
         <body id="bodyShowMenu">
 
-            <label id="pizzaLabel">Pizza</label>
-            <label id="getränkeLabel">Getränk</label>
-            <label id="dessertLabel">Dessert</label>
+            <h1 style="color: white">Willkommen zur Speisekarte</h1>
 
-            <h1>Willkommen zur Speisekarte</h1>
+            @helper.form(action = routes.BillController.addToBill()) {
 
-
-            @helper.form(action = routes.BillController.createBill()) {
-
-                @helper.inputText(billForm("CostumerID"))
-
-                <ul id="pizzaList">
-                    @helper.select(billForm("Pizza"), products.map(p => if(p.category.equals("Pizza")) {
+                <ul>
+                    <li>@helper.inputText(billForm("CostumerID"))</li>
+                    <li>@helper.select(billForm("PizzaName"), prodcuts.map(p => if(p.category.equals("Pizza")) {
                         p.name -> p.name
                     } else {
                         "" -> ""
-                    }))
-                </ul>
-
-                <ul id="bevarageList">
-                    @helper.select(billForm("Beverage"), products.map(b => if(b.category.equals("Getränk")) {
+                    }))</li>
+                    <li>@helper.select(billForm("PizzaSize"), options = Seq("medium" -> "medium", "large" -> "large",
+                        "xl" -> "xl"))</li>
+                    <li>@helper.inputText(billForm("PizzaNumber"))</li>
+                    <li>@helper.select(billForm("BeverageName"), prodcuts.map(b => if(b.category.equals("Getränk")) {
                         b.name -> b.name
                     } else {
                         "" -> ""
-                    }))
-                </ul>
-
-                <ul id="dessertList">
-                    @helper.select(billForm("Dessert"), products.map(s => if(s.category.equals("Dessert")) {
+                    }))</li>
+                    <li> @helper.select(billForm("BeverageSize"), options = Seq("medium" -> "medium", "large" -> "large",
+                        "xl" -> "xl"))</li>
+                    <li>@helper.inputText(billForm("BeverageNumber"))</li>
+                    <li>@helper.select(billForm("DessertName"), prodcuts.map(s => if(s.category.equals("Dessert")) {
                         s.name -> s.name
                     }else {
                         "" -> ""
-                    }))
+                    }))</li>
+                    <li>@helper.inputText(billForm("DessertNumber"))</li>
+                    <li><input type="submit" value="Zur Kasse" /></li>
                 </ul>
-
-                <ul id="sizeChoicePizza">
-                    @helper.inputRadioGroup(billForm("PizzaSize"), options = Seq("medium" -> "medium",
-                        "large" -> "large", "xl" -> "xl"))
-                </ul>
-
-                <ul id="sizeChoiceBeverage">
-                    @helper.inputRadioGroup(billForm("BeverageSize"), options = Seq("medium" -> "medium",
-                        "large" -> "large", "xl" -> "xl"))
-                </ul>
-
-                <input id="MenuConfirmButton" type="submit" value="Zur Kasse" />
             }
-
-            <p><a href="/showFaktura">Zur Rechnung</a></p>
         </body>
 }
