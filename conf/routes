@@ -7,8 +7,9 @@ GET         /                    controllers.Application.index
 GET         /editMenu            controllers.EditMenuController.editMenu
 POST        /addToMenu           controllers.EditMenuController.addToMenu
 POST        /addUser             controllers.UserController.addUser
-POST        /createBill          controllers.BillController.createBill
+POST        /addToBill           controllers.BillController.addToBill
 
+GET         /showBill            controllers.BillController.showBill
 GET         /showMenu            controllers.EditMenuController.showMenu
 GET         /welcomeUser         controllers.UserController.welcomeUser(username)
 GET         /showUsers           controllers.UserController.showUsers
