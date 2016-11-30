@@ -4,10 +4,10 @@
 
 @main("Rechnung") {
 
-    <ul>Rechnung:
+    <h1>Rechnung zur
         @for(c <- bill) {
             @if(c.customerId.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
-                <ul>Bestell-ID @c.id von Kunden-ID @c.customerId:</ul>
+                <h1>Bestellungs-ID @c.id von Kunden-ID @c.customerId:</h1>
                 @if(c.pizzaName != null) {
                     <li>@c.pizzaNumber x @c.pizzaName (@c.pizzaSize)</li>
                     @for(m <- menu) {
@@ -65,7 +65,7 @@
                 <li>Gesamtsumme: @math.round(wholeSum)€</li>
             }
         }
-    </ul>
+    </h1>
 
 }
 
