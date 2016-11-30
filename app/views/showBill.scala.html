@@ -14,15 +14,15 @@
                         @if(m.name.equals(c.pizzaName)) {
                             @if(c.pizzaSize.equals("medium")) {
                                 @(pizzaSum += m.price)
-                                @(pizzaSum = ((pizzaSum / 10) * 27) * c.pizzaNumber)
+                                @(pizzaSum = pizzaSum * c.pizzaNumber)
                             }
                             @if(c.pizzaSize.equals("large")) {
                                 @(pizzaSum += m.price)
-                                @(pizzaSum = ((pizzaSum / 10) * 32) * c.pizzaNumber)
+                                @(pizzaSum = ((pizzaSum / 10) * 13) * c.pizzaNumber)
                             }
                             @if(c.pizzaSize.equals("xl")) {
                                 @(pizzaSum += m.price)
-                                @(pizzaSum = ((pizzaSum / 10) * 37) * c.pizzaNumber)
+                                @(pizzaSum = ((pizzaSum / 10) * 15) * c.pizzaNumber)
                             }
                         }
                     }
@@ -35,15 +35,15 @@
                         @if(m.name.equals(c.beverageName)) {
                             @if(c.beverageSize.equals("medium")) {
                                 @(beverageSum += m.price)
-                                @(beverageSum = ((beverageSum / 100) * 50) * c.beverageNumber)
+                                @(beverageSum = beverageSum * c.beverageNumber)
                             }
                             @if(c.beverageSize.equals("large")) {
                                 @(beverageSum += m.price)
-                                @(beverageSum = ((beverageSum / 100) * 100) * c.beverageNumber)
+                                @(beverageSum = ((beverageSum / 10) * 13) * c.beverageNumber)
                             }
                             @if(c.beverageSize.equals("xl")) {
                                 @(beverageSum += m.price)
-                                @(beverageSum = ((beverageSum / 100) * 150) * c.beverageNumber)
+                                @(beverageSum = ((beverageSum / 10) * 15) * c.beverageNumber)
                             }
                         }
                     }
@@ -62,7 +62,7 @@
                     <li>--------------</li>
                 }
                 @(wholeSum += (pizzaSum + beverageSum + dessertSum))
-                <li>Gesamtsumme: @wholeSum</li>
+                <li>Gesamtsumme: @math.round(wholeSum)€</li>
             }
         }
     </ul>
