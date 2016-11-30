@@ -1,11 +1,70 @@
-@(bill: List[models.Bill])
+@(bill: List[models.Bill], menu: List[models.Menu])
+
+@import scala.Predef; var pizzaSum : Double = 0; var beverageSum: Double = 0; var dessertSum: Double = 0; var wholeSum: Double = 0;
 
 @main("Rechnung") {
 
-    <h1>Bestellungen:
-        @for(m <- bill) {
-        @m
-    }</h1>
+    <ul>Rechnung:
+        @for(c <- bill) {
+            <li>@c.customerId</li>
+            @if(c.pizzaName != null) {
+                <li>@c.pizzaNumber x @c.pizzaName (@c.pizzaSize)</li>
+                @for(m <- menu) {
+                    @if(m.name.equals(c.pizzaName)) {
+                        @if(c.pizzaSize.equals("medium")) {
+                            @(pizzaSum += m.price)
+                            @(pizzaSum = ((pizzaSum / 10) * 27) * c.pizzaNumber)
+                        }
+                        @if(c.pizzaSize.equals("large")) {
+                            @(pizzaSum += m.price)
+                            @(pizzaSum = ((pizzaSum / 10) * 32) * c.pizzaNumber)
+                        }
+                        @if(c.pizzaSize.equals("xl")) {
+                            @(pizzaSum += m.price)
+                            @(pizzaSum = ((pizzaSum / 10) * 37) * c.pizzaNumber)
+                        }
+                    }
+                }
+            } else {
+                <li>--------------</li>
+            }
+            @if(c.beverageName != null) {
+                <li>@c.beverageNumber x @c.beverageName (@c.beverageSize)</li>
+                @for(m <- menu) {
+                    @if(m.name.equals(c.beverageName)) {
+                        @if(c.beverageSize.equals("medium")) {
+                            @(beverageSum += m.price)
+                            @(beverageSum = ((beverageSum / 100) * 50) * c.beverageNumber)
+                        }
+                        @if(c.beverageSize.equals("large")) {
+                            @(beverageSum += m.price)
+                            @(beverageSum = ((beverageSum / 100) * 100) * c.beverageNumber)
+                        }
+                        @if(c.beverageSize.equals("xl")) {
+                            @(beverageSum += m.price)
+                            @(beverageSum = ((beverageSum / 100) * 150) * c.beverageNumber)
+                        }
+                    }
+                }
+            } else {
+                <li>--------------</li>
+            }
+            @if(c.dessertName != null) {
+                <li>@c.dessertNumber x @c.dessertName</li>
+                @for(m <- menu) {
+                    @if(m.name.equals(c.dessertName)) {
+                        @(dessertSum += m.price.toFloat)
+                        @(dessertSum = dessertSum * c.dessertNumber)
+                    }
+                }
+            } else {
+                <li>--------------</li>
+            }
+            @(wholeSum += (pizzaSum + beverageSum + dessertSum))
+            <li>Gesamtsumme: @wholeSum</li>
+        }
+    </ul>
 
 }
+
 
