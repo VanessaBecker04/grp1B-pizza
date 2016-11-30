@@ -26,7 +26,7 @@ object BillController extends Controller {
         BadRequest(views.html.showMenu(List.empty,formWithErrors))
       },
       userData => {
-        val newOrder = services.OrderService.addToOrder(getuserID, userData.pizzaName, userData.pizzaNumber,
+        val newOrder = services.OrderService.addToOrder(models.activeUser.id, userData.pizzaName, userData.pizzaNumber,
           userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
           userData.dessertName, userData.dessertNumber)
         Redirect(routes.BillController.showBill())
@@ -36,13 +36,5 @@ object BillController extends Controller {
   def showBill : Action[AnyContent] = Action {
     Ok(views.html.showBill(services.OrderService.addedToOrder, services.MenuService.addedToMenu))
   }
-
-  def setUserID(userIDgiven : Long) = {
-    userID = userIDgiven
-  }
-
-  def getuserID : Long = userID
-
-
 }
 

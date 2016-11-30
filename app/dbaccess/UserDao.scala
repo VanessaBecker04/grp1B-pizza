@@ -25,6 +25,7 @@ trait UserDaoT {
         SQL("insert into Users(forename, name, address, zipcode, city, role) values ({forename},{name},{address},{zipcode},{city},{role})").on(
           'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role).executeInsert()
       user.id = id.get;
+      models.activeUser.id = id.get;
     }
     user
   }
@@ -61,12 +62,11 @@ trait UserDaoT {
       if (selectUser.isEmpty) {
         -1
       } else {
+        models.activeUser.id = selectUser.get
         selectUser.get
       }
     }
   }
-
-
 }
 
 object UserDao extends UserDaoT

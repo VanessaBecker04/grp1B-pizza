@@ -11,7 +11,7 @@
             @helper.form(action = routes.BillController.addToBill()) {
 
                 <ul>
-                    <li>@helper.inputText(billForm("CustomerID"))</li>
+                    <li>@helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)))</li>
                     <li>@helper.select(billForm("PizzaName"), products.map(p => if(p.category.equals("Pizza")) {
                         p.name -> p.name
                     } else {

@@ -38,8 +38,7 @@ object UserController extends Controller {
       },
       userData => {
         val newUser = services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
-        Redirect(routes.UserController.welcomeUser(newUser.forename, newUser.name)).
-          flashing("success" -> "User saved!")
+        Redirect(routes.EditMenuController.showMenu())
       })
   }
 
@@ -71,7 +70,6 @@ object UserController extends Controller {
       loginData => {
         val logginginUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
         if (logginginUser != -1) {
-          BillController.setUserID(logginginUser)
           Redirect(routes.EditMenuController.showMenu())
         } else {
           Redirect(routes.UserController.welcomeUser("Login", "Fehlgeschlagen"))
