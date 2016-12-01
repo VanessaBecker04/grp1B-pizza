@@ -11,7 +11,6 @@ import play.api.mvc.{Action, AnyContent, Controller}
   * Created by Hasi on 28.11.2016.
   */
 object BillController extends Controller {
-  var userID : Long = _
   val billform = Form(
     mapping(
       "CustomerID" -> longNumber, "PizzaName" -> text, "PizzaNumber" -> number,
