@@ -41,5 +41,4 @@ object EditMenuController extends Controller {
   def showMenu: Action[AnyContent] = Action {
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
-
 }
