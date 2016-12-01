@@ -23,7 +23,6 @@ object EditMenuController extends Controller {
     * @return welcome page for new user
     */
 
-
   def addToMenu: Action[AnyContent] = Action { implicit request =>
     menuForm.bindFromRequest.fold(
       formWithErrors => {
@@ -34,7 +33,6 @@ object EditMenuController extends Controller {
         Redirect(routes.EditMenuController.showMenu())
       })
   }
-
 
   def editMenu: Action[AnyContent] = Action {
     Ok(views.html.editMenu(controllers.EditMenuController.menuForm))

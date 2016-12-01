@@ -5,8 +5,6 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
 
-
-
 /**
   * Created by Hasi on 28.11.2016.
   */
@@ -16,8 +14,6 @@ object BillController extends Controller {
       "CustomerID" -> longNumber, "PizzaName" -> text, "PizzaNumber" -> number,
       "PizzaSize" -> text, "BeverageName" -> text, "BeverageNumber" -> number, "BeverageSize" -> text,
       "DessertName" -> text, "DessertNumber" -> number)(CreateBillForm.apply)(CreateBillForm.unapply))
-
-
 
   def addToBill: Action[AnyContent] = Action { implicit request =>
     billform.bindFromRequest.fold(
