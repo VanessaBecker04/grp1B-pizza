@@ -1,10 +1,8 @@
-@(userForm: Form[forms.CreateUserForm])
-
 @main(models.Company.name) {
-
     <h1>@models.Company.name</h1>
     <h1>@models.Company.subtitle</h1>
-
-    <p><a href="/showUsers">Registrierte Benutzer</a></p>
-
+    @if(models.activeUser.id != 0) {
+        <p>Sie sind bereits eingeloggt. Klicken Sie auf den unteren Link, um ihre Benutzerkontenübersicht aufzurufen.</p>
+        <p><a href="/welcomeUser">Benutzerkonto</a></p>
+    }
 }

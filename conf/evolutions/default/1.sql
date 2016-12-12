@@ -10,7 +10,8 @@ CREATE TABLE Users (
     city varchar(255) NOT NULL,
     role varchar(255) NOT NULL
 );
-INSERT INTO Users(id, forename, name, address, zipcode, city, role) VALUES(1, 'Herbert', 'Padrone', 'Zoxelstr. 34', 81479, 'München', 'Mitarbeiter');
+INSERT INTO Users(id, forename, name, address, zipcode, city, role) VALUES(1, 'Herbert', 'Padrone', 'Werdenfelsstr. 10', 81377, 'München', 'Mitarbeiter');
+INSERT INTO Users(id, forename, name, address, zipcode, city, role) VALUES(2, 'Susanne', 'Emil', 'Rodensteinstr. 3 ', 81375, 'München', 'Kunde');
 
 
 # --- !Downs

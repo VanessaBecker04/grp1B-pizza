@@ -4,8 +4,9 @@ import anorm.SQL
 import play.api.Play.current
 import play.api.db.DB
 import anorm.NamedParameter.symbol
-import models.User
+import models.{User, setUser}
 import anorm.SqlParser._
+import anorm._
 
 /**
  * Data access object for user related operations.
@@ -24,8 +25,8 @@ trait UserDaoT {
       val id: Option[Long] =
         SQL("insert into Users(forename, name, address, zipcode, city, role) values ({forename},{name},{address},{zipcode},{city},{role})").on(
           'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role).executeInsert()
-      user.id = id.get;
-      models.activeUser.id = id.get;
+      user.id = id.get
+      models.activeUser.id = id.get
     }
     user
   }
@@ -55,16 +56,21 @@ trait UserDaoT {
     }
   }
 
-  def loginUser(namegiven: String, zipcodegiven: Int): Long = {
+  def loginUser(namegiven: String, zipcodegiven: Int): Unit = {
     DB.withConnection { implicit c =>
-      val selectUser = SQL("Select id from Users WHERE (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
-        'zipcodegiven -> zipcodegiven, 'namegiven -> namegiven).as(scalar[Long].singleOpt)
+      val selectUser = SQL("Select id from Users where (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
+        'namegiven -> namegiven, 'zipcodegiven -> zipcodegiven).as(scalar[Long].singleOpt)
       if (selectUser.isEmpty) {
         -1
       } else {
-        models.activeUser.id = selectUser.get
-        selectUser.get
+        setActiveUser(selectUser.get)
       }
+    }
+  }
+  def setActiveUser(idgiven: Long): Unit = {
+    DB.withConnection { implicit c =>
+      val selectedUser = SQL("Select id, forename, name, address, zipcode, city, role from Users where id = {idgiven}").on('idgiven -> idgiven)
+      selectedUser().map(row => setUser(row[Long]("id"), row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role")))
     }
   }
 }

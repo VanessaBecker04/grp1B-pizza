@@ -1,7 +1,8 @@
 package services
 
 import dbaccess.{UserDao, UserDaoT}
-import models.User
+import models.{User, activeUser}
+import play.api.libs.openid.Errors.AUTH_CANCEL
 
 /**
  * Service class for user related operations.
@@ -39,8 +40,13 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
-  def loginUser(name: String, zipcode: Int): Long = {
+  def loginUser(name: String, zipcode: Int): Unit = {
     userDao.loginUser(name, zipcode)
+  }
+
+  def logoutUser() : Unit = {
+    activeUser.id = 0
+    activeUser.orderID = 0
   }
 
 }

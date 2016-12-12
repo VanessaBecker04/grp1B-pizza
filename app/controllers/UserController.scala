@@ -34,19 +34,19 @@ object UserController extends Controller {
   def addUser : Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.index(formWithErrors))
+        BadRequest(views.html.register(formWithErrors))
       },
       userData => {
         val newUser = services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
-        Redirect(routes.EditMenuController.showMenu())
+        Redirect(routes.UserController.welcomeUser())
       })
   }
 
   /**
-   * Shows the welcome view for a newly registered user.
+   * Shows the welcome view.
    */
-  def welcomeUser(forename: String, name: String) : Action[AnyContent] = Action {
-    Ok(views.html.welcomeUser(forename, name))
+  def welcomeUser : Action[AnyContent] = Action {
+    Ok(views.html.welcomeUser())
   }
 
   /**
@@ -68,12 +68,13 @@ object UserController extends Controller {
         BadRequest(views.html.login(formWithErrors))
       },
       loginData => {
-        val logginginUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
-        if (logginginUser != -1) {
-          Redirect(routes.EditMenuController.showMenu())
-        } else {
-          Redirect(routes.UserController.welcomeUser("Login", "Fehlgeschlagen"))
-        }
+        services.UserService.loginUser(loginData.name, loginData.zipcode)
+        Redirect(routes.UserController.welcomeUser())
       })
+  }
+
+  def logoutUser : Action[AnyContent] = Action {
+    services.UserService.logoutUser()
+    Redirect(routes.Application.index())
   }
 }
