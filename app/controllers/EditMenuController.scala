@@ -5,6 +5,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
+import play.api.data.format.Formats._
 
 /**
   * Created by Hasi on 21.11.2016.
@@ -16,7 +17,7 @@ object EditMenuController extends Controller {
     */
   val menuForm = Form(
     mapping(
-      "Name" -> text, "Price" -> number, "Category" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
+      "Name" -> text, "Price" -> of[Double], "Category" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
   /**
     * Adds a new user with the given data to the system.
     *

@@ -59,5 +59,6 @@ trait OrderDaoT {
       order
     }
   }
+
 }
 object OrderDao extends OrderDaoT

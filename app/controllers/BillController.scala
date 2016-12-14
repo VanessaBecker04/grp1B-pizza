@@ -1,9 +1,12 @@
 package controllers
 
+import dbaccess.OrderDao
 import forms.CreateBillForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
+
+
 
 /**
   * Created by Hasi on 28.11.2016.
@@ -24,12 +27,13 @@ object BillController extends Controller {
         val newOrder = services.OrderService.addToOrder(models.activeUser.id, userData.pizzaName, userData.pizzaNumber,
           userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
           userData.dessertName, userData.dessertNumber)
+        services.OrderService.doCalculationForBill()
         Redirect(routes.BillController.showBill())
       })
   }
 
   def showBill : Action[AnyContent] = Action {
-    Ok(views.html.showBill(services.OrderService.addedToOrder, services.MenuService.addedToMenu))
+    Ok(views.html.showBill(controllers.CustomerOrderHistoryController.cohform))
   }
 }
 

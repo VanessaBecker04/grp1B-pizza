@@ -17,7 +17,7 @@ trait MenuServiceT {
     * @param name name of the new user.
     * @return the new user.
     */
-  def addToMenu(name: String, price: Int, category: String): Menu = {
+  def addToMenu(name: String, price: Double, category: String): Menu = {
     // create User
     val newMenu = Menu(-1, name, price, category)
     // persist and return User

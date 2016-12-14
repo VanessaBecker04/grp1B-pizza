@@ -51,7 +51,7 @@ trait MenuDaoT {
       val selectFromMenu = SQL("Select id, name, price, category from Menu;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
-        row[Int]("price"), row[String]("category"))).toList
+        row[Double]("price"), row[String]("category"))).toList
       products
     }
   }

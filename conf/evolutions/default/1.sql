@@ -23,15 +23,15 @@ DROP TABLE Users,
 CREATE TABLE Menu (
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
-    price int NOT NULL,
+    price double NOT NULL,
     category varchar(255) NOT NULL
 );
-INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 5, 'Pizza');
-INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 5, 'Pizza');
-INSERT INTO Menu(id, name, price, category) VALUES(201, 'Sprite', 3, 'Getränk');
-INSERT INTO Menu(id, name, price, category) VALUES(202, 'Cola', 3, 'Getränk');
-INSERT INTO Menu(id, name, price, category) VALUES(301, 'Schokokuchen', 2, 'Dessert');
-INSERT INTO Menu(id, name, price, category) VALUES(302, 'Schokoeis', 2, 'Dessert');
+INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 0.5, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 0.5, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(201, 'Sprite', 0.3, 'Getränk');
+INSERT INTO Menu(id, name, price, category) VALUES(202, 'Cola', 0.3, 'Getränk');
+INSERT INTO Menu(id, name, price, category) VALUES(301, 'Schokokuchen', 2.0, 'Dessert');
+INSERT INTO Menu(id, name, price, category) VALUES(302, 'Schokoeis', 2.0, 'Dessert');
 
 # --- !Downs
 
@@ -53,3 +53,17 @@ CREATE TABLE Orderbill (
 
 # --- !Downs
 DROP TABLE Orderbill;
+
+# Customerorderhistory schema
+
+# --- !Ups
+Create Table Customerorderhistory (
+    customerId serial NOT NULL PRIMARY KEY,
+    customerData varchar(255),
+    orderedProducts varchar(255),
+    sumOfOrder double,
+    orderDate DATE,
+);
+
+# --- !Downs
+DROP TABLE Customerorderhistory;

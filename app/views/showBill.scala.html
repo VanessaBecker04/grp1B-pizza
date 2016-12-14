@@ -1,72 +1,27 @@
-@(bill: List[models.Bill], menu: List[models.Menu])
+@(historyForm : Form[forms.CreateCustomerOrderHistoryForm])
 
-@import scala.Predef; var pizzaSum : Double = 0; var beverageSum: Double = 0; var dessertSum: Double = 0; var wholeSum: Double = 0;
 
 @main("Rechnung") {
 
-    <h1>Rechnung zur
-        @for(c <- bill) {
-            @if(c.customerId.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
-                <h1>Bestellungs-ID @c.id von Kunden-ID @c.customerId:</h1>
-                @if(c.pizzaName != null) {
-                    <li>@c.pizzaNumber x @c.pizzaName (@c.pizzaSize)</li>
-                    @for(m <- menu) {
-                        @if(m.name.equals(c.pizzaName)) {
-                            @if(c.pizzaSize.equals("medium")) {
-                                @(pizzaSum += m.price)
-                                @(pizzaSum = pizzaSum * c.pizzaNumber)
-                            }
-                            @if(c.pizzaSize.equals("large")) {
-                                @(pizzaSum += m.price)
-                                @(pizzaSum = ((pizzaSum / 10) * 13) * c.pizzaNumber)
-                            }
-                            @if(c.pizzaSize.equals("xl")) {
-                                @(pizzaSum += m.price)
-                                @(pizzaSum = ((pizzaSum / 10) * 15) * c.pizzaNumber)
-                            }
-                        }
-                    }
-                } else {
-                    <li>--------------</li>
-                }
-                @if(c.beverageName != null) {
-                    <li>@c.beverageNumber x @c.beverageName (@c.beverageSize)</li>
-                    @for(m <- menu) {
-                        @if(m.name.equals(c.beverageName)) {
-                            @if(c.beverageSize.equals("medium")) {
-                                @(beverageSum += m.price)
-                                @(beverageSum = beverageSum * c.beverageNumber)
-                            }
-                            @if(c.beverageSize.equals("large")) {
-                                @(beverageSum += m.price)
-                                @(beverageSum = ((beverageSum / 10) * 13) * c.beverageNumber)
-                            }
-                            @if(c.beverageSize.equals("xl")) {
-                                @(beverageSum += m.price)
-                                @(beverageSum = ((beverageSum / 10) * 15) * c.beverageNumber)
-                            }
-                        }
-                    }
-                } else {
-                    <li>--------------</li>
-                }
-                @if(c.dessertName != null) {
-                    <li>@c.dessertNumber x @c.dessertName</li>
-                    @for(m <- menu) {
-                        @if(m.name.equals(c.dessertName)) {
-                            @(dessertSum += m.price.toFloat)
-                            @(dessertSum = dessertSum * c.dessertNumber)
-                        }
-                    }
-                } else {
-                    <li>--------------</li>
-                }
-                @(wholeSum += (pizzaSum + beverageSum + dessertSum))
-                <li>Gesamtsumme: @math.round(wholeSum)€</li>
-            }
-        }
-    </h1>
 
+    <ul> Rechnung:
+        @helper.form(action = routes.CustomerOrderHistoryController.addToHistory()) {
+            <li>@helper.inputText(historyForm("CustomerId").copy(value =
+                    Some(String.valueOf(CustomerOrderProcessView.customerId))), 'readonly -> "readonly")</li>
+            <li>@helper.textarea(historyForm("CustomerData").copy(value = Some(CustomerOrderProcessView.customerData)),
+                'readonly -> "readonly")</li>
+            <li>@helper.textarea(historyForm("OrderedProducts").copy(value =
+                    Some(String.valueOf(CustomerOrderProcessView.orderedProducts))),
+                'readonly -> "readonly")</li>
+            <li>@helper.inputText(historyForm("SumOfOrder").copy(value =
+                    Some(String.valueOf(CustomerOrderProcessView.sumOfOrder))),
+                'readonly -> "readonly")</li>
+            <li>@helper.inputText(historyForm("OrderDate").copy(value =
+                    Some(String.valueOf(CustomerOrderProcessView.orderDate))),
+                'readonly -> "readonly")</li>
+            <li><input type="submit" value="Bestätigen"/></li>
+        }
+    </ul>
 }
 
 
