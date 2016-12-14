@@ -1,27 +1,15 @@
-@(historyForm : Form[forms.CreateCustomerOrderHistoryForm])
-
 
 @main("Rechnung") {
 
-
     <ul> Rechnung:
-        @helper.form(action = routes.CustomerOrderHistoryController.addToHistory()) {
-            <li>@helper.inputText(historyForm("CustomerId").copy(value =
-                    Some(String.valueOf(CustomerOrderProcessView.customerId))), 'readonly -> "readonly")</li>
-            <li>@helper.textarea(historyForm("CustomerData").copy(value = Some(CustomerOrderProcessView.customerData)),
-                'readonly -> "readonly")</li>
-            <li>@helper.textarea(historyForm("OrderedProducts").copy(value =
-                    Some(String.valueOf(CustomerOrderProcessView.orderedProducts))),
-                'readonly -> "readonly")</li>
-            <li>@helper.inputText(historyForm("SumOfOrder").copy(value =
-                    Some(String.valueOf(CustomerOrderProcessView.sumOfOrder))),
-                'readonly -> "readonly")</li>
-            <li>@helper.inputText(historyForm("OrderDate").copy(value =
-                    Some(String.valueOf(CustomerOrderProcessView.orderDate))),
-                'readonly -> "readonly")</li>
-            <li><input type="submit" value="Bestätigen"/></li>
-        }
+        <li>@CustomerOrderProcessView.customerId</li>
+        <li>@CustomerOrderProcessView.customerData</li>
+        <li>@CustomerOrderProcessView.orderedProducts</li>
+        <li>@CustomerOrderProcessView.sumOfOrder</li>
+        <li>@CustomerOrderProcessView.orderDate</li>
     </ul>
+
+    <p><a href="/addToHistory" >Zur Kasse</a></p>
 }
 
 

@@ -14,11 +14,10 @@ GET         /logoutUser          controllers.UserController.logoutUser
 
 
 GET         /showMenu            controllers.EditMenuController.showMenu
-GET         /orderConfirm        controllers.CustomerOrderHistoryController.orderConfirm
 GET         /editMenu            controllers.EditMenuController.editMenu
 POST        /addToMenu           controllers.EditMenuController.addToMenu
 POST        /addToBill           controllers.BillController.addToBill
-POST        /addToHistory        controllers.CustomerOrderHistoryController.addToHistory
+GET      /addToHistory        controllers.CustomerOrderHistoryController.addToHistory
 GET         /showBill            controllers.BillController.showBill
 
 # REST API

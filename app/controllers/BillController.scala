@@ -33,7 +33,7 @@ object BillController extends Controller {
   }
 
   def showBill : Action[AnyContent] = Action {
-    Ok(views.html.showBill(controllers.CustomerOrderHistoryController.cohform))
+    Ok(views.html.showBill())
   }
 }
 
