@@ -6,10 +6,12 @@
 GET         /                    controllers.Application.index
 GET         /register            controllers.Application.register
 GET         /login               controllers.Application.login
+
 POST        /addUser             controllers.UserController.addUser
 GET         /welcomeUser         controllers.UserController.welcomeUser
 GET         /welcomeEmployee     controllers.UserController.welcomeEmployee
-GET         /failedAttempt       controllers.UserController.failedAttempt
+GET         /attemptFailed       controllers.UserController.attemptFailed
+GET         /attemptSuccessful   controllers.UserController.attemptSuccessful
 GET         /showUsers           controllers.UserController.showUsers
 GET         /loginUser           controllers.UserController.loginUser
 GET         /logoutUser          controllers.UserController.logoutUser
@@ -19,8 +21,11 @@ GET         /showMenu            controllers.EditMenuController.showMenu
 GET         /editMenu            controllers.EditMenuController.editMenu
 POST        /addToMenu           controllers.EditMenuController.addToMenu
 POST        /addToBill           controllers.BillController.addToBill
-GET         /addToHistory        controllers.CustomerOrderHistoryController.addToHistory
 GET         /showBill            controllers.BillController.showBill
+
+GET         /addToHistory        controllers.OrderHistoryController.addToHistory
+GET         /showOrdersUser      controllers.OrderHistoryController.showOrdersUser
+GET         /showOrdersEmployee  controllers.OrderHistoryController.showOrdersEmployee
 
 # REST API
 GET         /api                 rest.Api.api

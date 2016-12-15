@@ -11,7 +11,7 @@ import play.api.Play.current
   * Created by Hasi on 14.12.2016.
   */
 
-trait CustomerOrderHistoryDaoT {
+trait OrderHistoryDaoT {
   /**
     * Creates the given user in the database.
     *
@@ -46,9 +46,18 @@ trait CustomerOrderHistoryDaoT {
     *
     * @return a list of user objects.
     */
-  def addedToHistory: List[CustomerOrderHistory] = {
+  def showOrdersEmployee: List[CustomerOrderHistory] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select customerId, customerData, orderedProducts, sumOfOrder, orderDate from Customerorderhistory;")
+      val selectFromMenu = SQL("Select customerId, customerData, orderedProducts, sumOfOrder, orderDate from Customerorderhistory")
+      // Transform the resulting Stream[Row] to a List[(String,String)]
+      val history = selectFromMenu().map(row => CustomerOrderHistory(row[Long]("customerId"), row[String]("customerData"),
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[Date]("orderDate"))).toList
+      history
+    }
+  }
+  def showOrdersUser(id: Long): List[CustomerOrderHistory] = {
+    DB.withConnection { implicit c =>
+      val selectFromMenu = SQL("Select customerId, customerData, orderedProducts, sumOfOrder, orderDate from Customerorderhistory where customerId = {id}").on('id -> id)
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val history = selectFromMenu().map(row => CustomerOrderHistory(row[Long]("customerId"), row[String]("customerData"),
         row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[Date]("orderDate"))).toList
@@ -56,4 +65,4 @@ trait CustomerOrderHistoryDaoT {
     }
   }
 }
-object CustomerOrderHistoryDao extends CustomerOrderHistoryDaoT
+object OrderHistoryDao extends OrderHistoryDaoT

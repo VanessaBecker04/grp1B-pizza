@@ -57,15 +57,19 @@ object UserController extends Controller {
     Ok(views.html.welcomeEmployee())
   }
 
-  def failedAttempt : Action[AnyContent] = Action {
-    Ok(views.html.failedAttempt())
+  def attemptFailed : Action[AnyContent] = Action {
+    Ok(views.html.attemptFailed())
+  }
+
+  def attemptSuccessful : Action[AnyContent] = Action {
+    Ok(views.html.attemptSuccessful())
   }
 
   /**
    * List all users currently available in the system.
    */
   def showUsers : Action[AnyContent] = Action {
-    Ok(views.html.users(UserService.registeredUsers))
+    Ok(views.html.showUsers(UserService.registeredUsers))
   }
 
   val loginForm = Form(
@@ -82,7 +86,7 @@ object UserController extends Controller {
       loginData => {
         val loggedinUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
         if(loggedinUser == -1) {
-          Redirect(routes.UserController.failedAttempt())
+          Redirect(routes.UserController.attemptFailed())
         } else {
             Redirect(routes.UserController.welcomeUser())
         }

@@ -2,16 +2,16 @@ package services
 
 import java.util.Date
 
-import dbaccess.{CustomerOrderHistoryDao, CustomerOrderHistoryDaoT, MenuDao, MenuDaoT}
+import dbaccess.{OrderHistoryDao, OrderHistoryDaoT, MenuDao, MenuDaoT}
 import models.{CustomerOrderHistory, Menu}
 
 /**
   * Created by Hasi on 14.12.2016.
   */
 
-trait CustomerOrderHistoryServiceT {
+trait OrderHistoryServiceT {
 
-  val customerOrderHistoryDao: CustomerOrderHistoryDaoT = CustomerOrderHistoryDao
+  val customerOrderHistoryDao: OrderHistoryDaoT = OrderHistoryDao
 
   /**
     * Adds a new user to the system.
@@ -40,9 +40,14 @@ trait CustomerOrderHistoryServiceT {
     *
     * @return list of users.
     */
-  def addedToHistory: List[CustomerOrderHistory] = {
-    customerOrderHistoryDao.addedToHistory
+
+  def showOrdersUser(id: Long): List[CustomerOrderHistory] = {
+    customerOrderHistoryDao.showOrdersUser(id)
+  }
+
+  def showOrdersEmployee: List[CustomerOrderHistory] = {
+    customerOrderHistoryDao.showOrdersEmployee
   }
 }
 
-object CustomerOrderHistoryService extends CustomerOrderHistoryServiceT
+object OrderHistoryService extends OrderHistoryServiceT
