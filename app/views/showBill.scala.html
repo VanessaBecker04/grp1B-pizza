@@ -1,15 +1,12 @@
-
 @main("Rechnung") {
 
     <ul> Rechnung:
-        <li>@CustomerOrderProcessView.customerId</li>
-        <li>@CustomerOrderProcessView.customerData</li>
-        <li>@CustomerOrderProcessView.orderedProducts</li>
-        <li>@CustomerOrderProcessView.sumOfOrder</li>
-        <li>@CustomerOrderProcessView.orderDate</li>
+        <li>@CustomerOrderProcess.customerId</li>
+        <li>@CustomerOrderProcess.customerData</li>
+        <li>@CustomerOrderProcess.orderedProducts</li>
+        <li>@CustomerOrderProcess.sumOfOrder</li>
+        <li>@CustomerOrderProcess.orderDate</li>
     </ul>
 
     <p><a href="/addToHistory" >Zur Kasse</a></p>
 }
-
-

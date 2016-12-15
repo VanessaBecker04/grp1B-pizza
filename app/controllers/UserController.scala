@@ -46,7 +46,19 @@ object UserController extends Controller {
    * Shows the welcome view.
    */
   def welcomeUser : Action[AnyContent] = Action {
-    Ok(views.html.welcomeUser())
+    if(models.activeUser.role.equals("Mitarbeiter")) {
+      Redirect(routes.UserController.welcomeEmployee())
+    } else {
+      Ok(views.html.welcomeUser())
+    }
+  }
+
+  def welcomeEmployee : Action[AnyContent] = Action {
+    Ok(views.html.welcomeEmployee())
+  }
+
+  def failedAttempt : Action[AnyContent] = Action {
+    Ok(views.html.failedAttempt())
   }
 
   /**
@@ -68,8 +80,12 @@ object UserController extends Controller {
         BadRequest(views.html.login(formWithErrors))
       },
       loginData => {
-        services.UserService.loginUser(loginData.name, loginData.zipcode)
-        Redirect(routes.UserController.welcomeUser())
+        val loggedinUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
+        if(loggedinUser == -1) {
+          Redirect(routes.UserController.failedAttempt())
+        } else {
+            Redirect(routes.UserController.welcomeUser())
+        }
       })
   }
 

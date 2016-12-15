@@ -56,7 +56,7 @@ trait UserDaoT {
     }
   }
 
-  def loginUser(namegiven: String, zipcodegiven: Int): Unit = {
+  def loginUser(namegiven: String, zipcodegiven: Int): Long = {
     DB.withConnection { implicit c =>
       val selectUser = SQL("Select id from Users where (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
         'namegiven -> namegiven, 'zipcodegiven -> zipcodegiven).as(scalar[Long].singleOpt)
@@ -64,6 +64,7 @@ trait UserDaoT {
         -1
       } else {
         setActiveUser(selectUser.get)
+        selectUser.get
       }
     }
   }

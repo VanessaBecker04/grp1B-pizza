@@ -1,13 +1,4 @@
 @main(models.Company.name) {
-    @if(models.activeUser.id == 0) {
-        <h1>Der Login ist fehlgeschlagen. Bitte versuchen Sie es erneut.</h1>
-    } else {
-        @if(models.activeUser.role.equals("Mitarbeiter")) {
-            <h1>Sie sind als Mitarbeiter @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
-            <p><a href="/showUsers">Registrierte Benutzer</a></p>
-        } else {
-            <h1>Sie sind als Kunde @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
-        }
-        <p><a href="/logoutUser">Ausloggen</a></p>
-    }
+    <h1>Sie sind als Kunde @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
+    <p><a href="/logoutUser">Ausloggen</a></p>
 }

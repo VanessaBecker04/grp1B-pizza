@@ -40,13 +40,12 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
-  def loginUser(name: String, zipcode: Int): Unit = {
+  def loginUser(name: String, zipcode: Int): Long = {
     userDao.loginUser(name, zipcode)
   }
 
   def logoutUser() : Unit = {
     activeUser.id = 0
-    activeUser.orderID = 0
   }
 
 }

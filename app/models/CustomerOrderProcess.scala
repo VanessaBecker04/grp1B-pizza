@@ -5,7 +5,7 @@ import java.util.Date
 /**
   * Created by Hasi on 13.12.2016.
   */
-object CustomerOrderProcessView {
+object CustomerOrderProcess {
 
   var customerId: Long = 0
   var customerData: String = ""
@@ -16,13 +16,13 @@ object CustomerOrderProcessView {
 }
 
 case class setView(customerId: Long, orderedProducts: StringBuilder, sumOfOrder: Double) {
-  CustomerOrderProcessView.customerId = customerId
+  CustomerOrderProcess.customerId = customerId
   val customerList = services.UserService.registeredUsers
   for(c <- customerList) {
     if (c.id == customerId) {
-      CustomerOrderProcessView.customerData = c.forename + " " + c.name + " " + c.address + " " + c.zipcode + " " + c.city
+      CustomerOrderProcess.customerData = c.forename + " " + c.name + " " + c.address + " " + c.zipcode + " " + c.city
     }
   }
-  CustomerOrderProcessView.orderedProducts = orderedProducts
-  CustomerOrderProcessView.sumOfOrder = sumOfOrder
+  CustomerOrderProcess.orderedProducts = orderedProducts
+  CustomerOrderProcess.sumOfOrder = sumOfOrder
 }
