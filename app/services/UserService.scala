@@ -2,7 +2,6 @@ package services
 
 import dbaccess.{UserDao, UserDaoT}
 import models.{User, activeUser}
-import play.api.libs.openid.Errors.AUTH_CANCEL
 
 /**
  * Service class for user related operations.

@@ -113,7 +113,7 @@ trait OrderServiceT {
         wholeSum += (pizzaSum + beverageSum + dessertSum)
       }
     }
-    models.setView(models.activeUser.id, orderedProducts, wholeSum)
+    models.setOrder(models.activeUser.id, orderedProducts, wholeSum)
   }
 }
 object OrderService extends OrderServiceT

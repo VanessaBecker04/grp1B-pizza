@@ -54,10 +54,10 @@ CREATE TABLE Orderbill (
 # --- !Downs
 DROP TABLE Orderbill;
 
-# Customerorderhistory schema
+# Orderhistory schema
 
 # --- !Ups
-Create Table Customerorderhistory (
+Create Table Orderhistory (
     customerId serial NOT NULL PRIMARY KEY,
     customerData varchar(255),
     orderedProducts varchar(255),
@@ -66,4 +66,4 @@ Create Table Customerorderhistory (
 );
 
 # --- !Downs
-DROP TABLE Customerorderhistory;
+DROP TABLE Orderhistory;
