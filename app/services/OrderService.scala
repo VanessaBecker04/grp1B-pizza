@@ -15,10 +15,10 @@ trait OrderServiceT {
     *
     * @return the new user.
     */
-  def addToOrder(customerId: Long, pizzaName: String, pizzaNumber: Int, pizzaSize: String, beverageName: String,
+  def addToOrder(customerID: Long, pizzaName: String, pizzaNumber: Int, pizzaSize: String, beverageName: String,
                  beverageNumber: Int, beverageSize: String, dessertName: String, dessertNumber: Int): Bill = {
     // create User
-    val newOrder = Bill(-1, customerId, pizzaName, pizzaNumber, pizzaSize, beverageName,
+    val newOrder = Bill(-1, customerID, pizzaName, pizzaNumber, pizzaSize, beverageName,
       beverageNumber, beverageSize, dessertName, dessertNumber)
     // persist and return User
     orderDao.addToOrder(newOrder)
@@ -54,7 +54,7 @@ trait OrderServiceT {
 
 
     for(c <- bill) {
-      if(c.customerId.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
+      if(c.customerID.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
         if(c.pizzaName != null) {
           orderedProducts.append(c.pizzaNumber + "x ")
           orderedProducts.append(c.pizzaName + " ")
@@ -113,7 +113,7 @@ trait OrderServiceT {
         wholeSum += (pizzaSum + beverageSum + dessertSum)
       }
     }
-    models.setOrder(models.activeUser.id, orderedProducts, wholeSum)
+    models.setOrder(models.activeUser.orderID, models.activeUser.id, orderedProducts, wholeSum)
   }
 }
 object OrderService extends OrderServiceT

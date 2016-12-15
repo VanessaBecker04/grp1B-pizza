@@ -21,8 +21,8 @@ trait OrderDaoT {
   def addToOrder(bill: Bill): Bill = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into Orderbill(customerId, pizzaName, pizzaNumber, pizzaSize, beverageName, beverageNumber, beverageSize, dessertName, dessertNumber) values ({customerId},{pizzaName},{pizzaNumber},{pizzaSize},{beverageName},{beverageNumber},{beverageSize},{dessertName},{dessertNumber})").on(
-          'customerId -> bill.customerId, 'pizzaName -> bill.pizzaName, 'pizzaNumber -> bill.pizzaNumber, 'pizzaSize -> bill.pizzaSize, 'beverageName -> bill.beverageName, 'beverageNumber -> bill.beverageNumber, 'beverageSize -> bill.beverageSize, 'dessertName -> bill.dessertName, 'dessertNumber -> bill.dessertNumber).executeInsert()
+        SQL("insert into Orderbill(customerID, pizzaName, pizzaNumber, pizzaSize, beverageName, beverageNumber, beverageSize, dessertName, dessertNumber) values ({customerId},{pizzaName},{pizzaNumber},{pizzaSize},{beverageName},{beverageNumber},{beverageSize},{dessertName},{dessertNumber})").on(
+          'customerId -> bill.customerID, 'pizzaName -> bill.pizzaName, 'pizzaNumber -> bill.pizzaNumber, 'pizzaSize -> bill.pizzaSize, 'beverageName -> bill.beverageName, 'beverageNumber -> bill.beverageNumber, 'beverageSize -> bill.beverageSize, 'dessertName -> bill.dessertName, 'dessertNumber -> bill.dessertNumber).executeInsert()
       bill.id = id.get
       models.activeUser.orderID = id.get
     }

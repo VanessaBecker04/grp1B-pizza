@@ -20,10 +20,10 @@ trait OrderHistoryDaoT {
     */
   def addToHistory(coh: OrderHistory): OrderHistory = {
     DB.withConnection { implicit c =>
-        SQL("insert into Orderhistory(customerId, customerData, orderedProducts, sumOfOrder, orderDate) " +
-          "values ({customerId}, {customerData}, {orderedProducts},{sumOfOrder}, {orderDate})").on(
-          'customerId -> coh.customerId, 'customerData -> coh.customerData,
-          'orderedProducts -> coh.orderedProducts, 'sumOfOrder -> coh.sumOfOrder, 'orderDate -> coh.orderDate).executeInsert()
+      val orderID: Option[Long] =
+        SQL("insert into Orderhistory(customerID, customerData, orderedProducts, sumOfOrder, orderDate) values ({customerId}, {customerData}, {orderedProducts},{sumOfOrder}, {orderDate})").on(
+          'customerId -> coh.customerID, 'customerData -> coh.customerData, 'orderedProducts -> coh.orderedProducts, 'sumOfOrder -> coh.sumOfOrder, 'orderDate -> coh.orderDate).executeInsert()
+      coh.orderID = orderID.get
     }
     coh
   }
@@ -48,18 +48,18 @@ trait OrderHistoryDaoT {
     */
   def showOrdersEmployee: List[OrderHistory] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select customerId, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory")
+      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val history = selectFromMenu().map(row => OrderHistory(row[Long]("customerId"), row[String]("customerData"),
+      val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
         row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[Date]("orderDate"))).toList
       history
     }
   }
   def showOrdersUser(id: Long): List[OrderHistory] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select customerId, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)
+      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val history = selectFromMenu().map(row => OrderHistory(row[Long]("customerId"), row[String]("customerData"),
+      val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
         row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[Date]("orderDate"))).toList
       history
     }

@@ -6,8 +6,8 @@ import java.util.Date
   * Created by Hasi on 13.12.2016.
   */
 object OrderProcess {
-
-  var customerId: Long = 0
+  var orderID: Long = 0
+  var customerID: Long = 0
   var customerData: String = ""
   var orderedProducts: StringBuilder = new StringBuilder
   var sumOfOrder: Double = 0
@@ -15,11 +15,12 @@ object OrderProcess {
 
 }
 
-case class setOrder(customerId: Long, orderedProducts: StringBuilder, sumOfOrder: Double) {
-  OrderProcess.customerId = customerId
+case class setOrder(orderID: Long, customerID: Long, orderedProducts: StringBuilder, sumOfOrder: Double) {
+  OrderProcess.orderID = orderID
+  OrderProcess.customerID = customerID
   val customerList = services.UserService.registeredUsers
   for(c <- customerList) {
-    if (c.id == customerId) {
+    if (c.id == customerID) {
       OrderProcess.customerData = c.forename + " " + c.name + " " + c.address + " " + c.zipcode + " " + c.city
     }
   }

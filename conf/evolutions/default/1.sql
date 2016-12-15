@@ -58,7 +58,8 @@ DROP TABLE Orderbill;
 
 # --- !Ups
 Create Table Orderhistory (
-    customerId serial NOT NULL PRIMARY KEY,
+    orderID serial NOT NULL PRIMARY KEY,
+    customerID serial NOT NULL,
     customerData varchar(255),
     orderedProducts varchar(255),
     sumOfOrder double,
