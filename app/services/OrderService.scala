@@ -32,6 +32,7 @@ trait OrderServiceT {
     */
   def rmFromOrder(id: Long): Boolean = orderDao.rmFromOrder(id)
 
+
   /**
     * Gets a list of all registered users.
     *
@@ -114,6 +115,10 @@ trait OrderServiceT {
       }
     }
     models.setOrder(models.activeUser.orderID, models.activeUser.id, orderedProducts, wholeSum)
+  }
+
+  def removeFromBillWhenOrderIsCanceled() = {
+    orderDao.removeFromBillWhenOrderIsCanceled()
   }
 }
 object OrderService extends OrderServiceT

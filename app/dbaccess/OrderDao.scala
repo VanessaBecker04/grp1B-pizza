@@ -60,5 +60,11 @@ trait OrderDaoT {
     }
   }
 
+  def removeFromBillWhenOrderIsCanceled() {
+    DB.withConnection { implicit c =>
+      val selectIdFromBill = SQL("Delete from Orderbill where id " +
+        "not in (select orderID from Orderhistory)").executeUpdate()
+    }
+  }
 }
 object OrderDao extends OrderDaoT

@@ -1,6 +1,7 @@
 package controllers
 
 import forms.CreateMenuForm
+import models.Menu
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -42,4 +43,5 @@ object EditMenuController extends Controller {
   def showMenu: Action[AnyContent] = Action {
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
+
 }

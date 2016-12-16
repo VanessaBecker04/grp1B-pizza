@@ -40,6 +40,7 @@ trait MenuServiceT {
   def addedToMenu: List[Menu] = {
     menuDao.addedToMenu
   }
+
 }
 
 object MenuService extends MenuServiceT

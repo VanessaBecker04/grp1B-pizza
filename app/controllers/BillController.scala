@@ -34,5 +34,10 @@ object BillController extends Controller {
   def showBill : Action[AnyContent] = Action {
     Ok(views.html.showBill())
   }
+
+  def showBillWhenOrderIsCanceled : Action[AnyContent] = Action {
+    services.OrderService.removeFromBillWhenOrderIsCanceled()
+    Redirect(routes.EditMenuController.showMenu)
+  }
 }
 

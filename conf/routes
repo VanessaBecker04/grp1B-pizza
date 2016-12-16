@@ -22,7 +22,7 @@ GET         /editMenu            controllers.EditMenuController.editMenu
 POST        /addToMenu           controllers.EditMenuController.addToMenu
 POST        /addToBill           controllers.BillController.addToBill
 GET         /showBill            controllers.BillController.showBill
-
+GET         /showBillWhenOrderIsCanceled    controllers.BillController.showBillWhenOrderIsCanceled
 GET         /addToHistory        controllers.OrderHistoryController.addToHistory
 GET         /showOrdersUser      controllers.OrderHistoryController.showOrdersUser
 GET         /showOrdersEmployee  controllers.OrderHistoryController.showOrdersEmployee
