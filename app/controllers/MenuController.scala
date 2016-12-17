@@ -11,7 +11,7 @@ import play.api.data.format.Formats._
 /**
   * Created by Hasi on 21.11.2016.
   */
-object EditMenuController extends Controller {
+object MenuController extends Controller {
 
   /**
     * Form object for user data.
@@ -32,15 +32,16 @@ object EditMenuController extends Controller {
       },
       userData => {
         val newProduct = services.MenuService.addToMenu(userData.name, userData.price, userData.category)
-        Redirect(routes.EditMenuController.showMenu())
+        Redirect(routes.MenuController.showMenu())
       })
   }
 
   def editMenu: Action[AnyContent] = Action {
-    Ok(views.html.editMenu(controllers.EditMenuController.menuForm))
+    Ok(views.html.editMenu(controllers.MenuController.menuForm))
   }
 
   def showMenu: Action[AnyContent] = Action {
+    services.OrderService.cancelOrder()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
 

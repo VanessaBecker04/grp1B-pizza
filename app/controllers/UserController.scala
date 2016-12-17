@@ -54,7 +54,7 @@ object UserController extends Controller {
   }
 
   def welcomeEmployee : Action[AnyContent] = Action {
-    Ok(views.html.welcomeEmployee())
+    Ok(views.html.welcomeEmployee(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
   }
 
   def attemptFailed : Action[AnyContent] = Action {

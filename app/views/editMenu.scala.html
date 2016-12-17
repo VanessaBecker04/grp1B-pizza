@@ -10,7 +10,7 @@
         </b>
 
         <ul id="editMenuInterface">Speise/Getränk zum Menu hinzufügen:
-            @helper.form(action = routes.EditMenuController.addToMenu()) {
+            @helper.form(action = routes.MenuController.addToMenu()) {
                 <li>@helper.inputText(menuForm("Name"))</li>
                 <li>@helper.inputText(menuForm("Price"))</li>
                 <li>@helper.inputText(menuForm("Category"))</li>

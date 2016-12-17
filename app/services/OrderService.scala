@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{OrderDao, OrderDaoT}
-import models.Bill
+import models.{Bill, activeUser, setOrder}
 
 /**
   * Created by Hasi on 28.11.2016.
@@ -117,8 +117,10 @@ trait OrderServiceT {
     models.setOrder(models.activeUser.orderID, models.activeUser.id, orderedProducts, wholeSum)
   }
 
-  def removeFromBillWhenOrderIsCanceled() = {
-    orderDao.removeFromBillWhenOrderIsCanceled()
+  def cancelOrder() = {
+    orderDao.cancelOrder()
+    setOrder(0, 0, null, 0)
+    activeUser.orderID = 0
   }
 }
 object OrderService extends OrderServiceT

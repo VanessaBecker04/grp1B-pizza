@@ -16,16 +16,18 @@ GET         /showUsers           controllers.UserController.showUsers
 GET         /loginUser           controllers.UserController.loginUser
 GET         /logoutUser          controllers.UserController.logoutUser
 
+GET         /showMenu            controllers.MenuController.showMenu
+GET         /editMenu            controllers.MenuController.editMenu
+POST        /addToMenu           controllers.MenuController.addToMenu
 
-GET         /showMenu            controllers.EditMenuController.showMenu
-GET         /editMenu            controllers.EditMenuController.editMenu
-POST        /addToMenu           controllers.EditMenuController.addToMenu
 POST        /addToBill           controllers.BillController.addToBill
 GET         /showBill            controllers.BillController.showBill
-GET         /showBillWhenOrderIsCanceled    controllers.BillController.showBillWhenOrderIsCanceled
+GET         /cancelOrder         controllers.BillController.cancelOrder
+
 GET         /addToHistory        controllers.OrderHistoryController.addToHistory
 GET         /showOrdersUser      controllers.OrderHistoryController.showOrdersUser
 GET         /showOrdersEmployee  controllers.OrderHistoryController.showOrdersEmployee
+GET         /showOrdersEmployeeU controllers.OrderHistoryController.showOrdersEmployeeU
 
 # REST API
 GET         /api                 rest.Api.api

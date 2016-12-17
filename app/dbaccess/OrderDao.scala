@@ -37,7 +37,7 @@ trait OrderDaoT {
     */
   def rmFromOrder(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val rowsCount = SQL("delete from Orderbill where id = ({id})").on('id -> id).executeUpdate()
+      val rowsCount = SQL("delete from Orderbill where id = {id}").on('id -> id).executeUpdate()
       rowsCount > 0
     }
   }
@@ -60,9 +60,9 @@ trait OrderDaoT {
     }
   }
 
-  def removeFromBillWhenOrderIsCanceled() {
+  def cancelOrder() {
     DB.withConnection { implicit c =>
-      val selectIdFromBill = SQL("Delete from Orderbill where id " +
+      SQL("Delete from Orderbill where id " +
         "not in (select orderID from Orderhistory)").executeUpdate()
     }
   }
