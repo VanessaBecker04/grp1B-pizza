@@ -17,6 +17,7 @@ object BillController extends Controller {
       "PizzaSize" -> text, "BeverageName" -> text, "BeverageNumber" -> number, "BeverageSize" -> text,
       "DessertName" -> text, "DessertNumber" -> number)(CreateBillForm.apply)(CreateBillForm.unapply))
 
+
   def addToBill: Action[AnyContent] = Action { implicit request =>
     billform.bindFromRequest.fold(
       formWithErrors => {

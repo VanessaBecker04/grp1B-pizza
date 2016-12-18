@@ -22,6 +22,7 @@ case class setOrder(orderID: Long, customerID: Long, orderedProducts: StringBuil
   for(c <- customerList) {
     if (c.id == customerID) {
       OrderProcess.customerData = c.forename + " " + c.name + " " + c.address + " " + c.zipcode + " " + c.city
+      calculateDeliveryTime(c.zipcode, c.name)
     }
   }
   OrderProcess.orderedProducts = orderedProducts
