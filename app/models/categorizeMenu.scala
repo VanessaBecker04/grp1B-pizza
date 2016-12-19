@@ -12,14 +12,14 @@ object categorizeMenu {
   val dessertList = new ListBuffer[String]
 
   val menuList = services.MenuService.addedToMenu
-  for(m <- menuList) {
-    if(m.category.equals("Pizza")) {
+  for (m <- menuList) {
+    if (m.category.equals("Pizza")) {
       categorizeMenu.pizzaList += m.name
     }
-    if(m.category.equals("Getränk")) {
+    if (m.category.equals("Getränk")) {
       categorizeMenu.beverageList += m.name
     }
-    if(m.category.equals("Dessert")) {
+    if (m.category.equals("Dessert")) {
       categorizeMenu.dessertList += m.name
     }
   }

@@ -3,13 +3,13 @@
 @main(models.Company.name) {
 
     <h1>Willkommen bei @models.Company.name</h1>
-    
+
     <p>Zur Zeit sind folgende Benutzer registriert:</p>
-    
+
     <ul>
     @for(user <- users) {
-    	<li>Name: @user.forename @user.name Adresse: @user.address @user.zipcode @user.city Rolle: @user.role</li>
-   	}
+        <li>Name: @user.forename @user.name Adresse: @user.address @user.zipcode @user.city Rolle: @user.role</li>
+    }
     </ul>
-    
+
 }

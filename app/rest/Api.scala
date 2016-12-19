@@ -1,7 +1,7 @@
 package rest
 
-import play.api.mvc.{Action, AnyContent, Controller}
 import play.api.libs.json.Json
+import play.api.mvc.{Action, AnyContent, Controller}
 
 /**
   * The root element of the REST API.
@@ -13,6 +13,7 @@ object Api extends Controller {
     * {{{
     * curl --include http://localhost:9000/api
     * }}}
+    *
     * @return just links.
     */
   def api: Action[AnyContent] = Action { implicit request =>

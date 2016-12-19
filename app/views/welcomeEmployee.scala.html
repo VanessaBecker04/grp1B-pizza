@@ -1,16 +1,18 @@
-@(users: List[User], userOrdersForm : Form[forms.ShowUserOrdersForm])
+@(users: List[User], userOrdersForm: Form[forms.ShowUserOrdersForm])
 @main(models.Company.name) {
     <h1>Sie sind als Mitarbeiter @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
     <p><a href="/showUsers">Registrierte Benutzer</a></p>
     <p><a href="/showOrdersEmployee">Alle Bestellungen ansehen</a></p>
     <li>Bestellungen eines bestimmten Kunden ansehen:</li>
     <p>
-        @helper.form(action = routes.OrderHistoryController.showOrdersEmployeeU()) {
-            @helper.select(userOrdersForm("CustomerID"), users.map(u => u.id.toString -> u.id.toString))
-            <input type="submit" value="Auswahl absenden" />
-        }
+    @helper.form(action = routes.OrderHistoryController.showOrdersEmployeeU()) {
+        @helper.select(userOrdersForm("CustomerID"), users.map(u => u.id.toString -> u.id.toString))
+        <input type="submit" value="Auswahl absenden" />
+    }
     </p>
     <p><a href="/showMenu">Bestellung aufgeben</a></p>
     <p><a href="/showOrdersUser">Deine bisherigen Bestellungen ansehen</a></p>
     <p><a href="/logoutUser">Ausloggen</a></p>
+    <p><a href="/editMenu">Speisekarte bearbeiten</a></p>
+
 }

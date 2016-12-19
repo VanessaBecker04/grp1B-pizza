@@ -15,7 +15,7 @@ object Application extends Controller {
     * @return main web page
     */
   def index: Action[AnyContent] = Action {
-    if(models.activeUser.id != 0) {
+    if (models.activeUser.id != 0) {
       Redirect(routes.UserController.welcomeUser())
     } else {
       Ok(views.html.index())

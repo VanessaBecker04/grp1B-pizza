@@ -7,6 +7,7 @@ GET         /                    controllers.Application.index
 GET         /register            controllers.Application.register
 GET         /login               controllers.Application.login
 
+POST        /rmFromMenu          controllers.MenuController.rmFromMenu
 GET         /deliveryTime        controllers.OrderHistoryController.showDeliveryTime
 POST        /addUser             controllers.UserController.addUser
 GET         /welcomeUser         controllers.UserController.welcomeUser

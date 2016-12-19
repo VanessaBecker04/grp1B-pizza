@@ -1,4 +1,5 @@
 package controllers
+
 import forms.ShowUserOrdersForm
 import play.api.data.Form
 import play.api.data.Forms._
@@ -9,6 +10,12 @@ import services.OrderHistoryService
   * Created by Hasi on 14.12.2016.
   */
 object OrderHistoryController extends Controller {
+
+  val userOrdersForm = Form {
+    mapping(
+      "CustomerID" -> longNumber
+    )(ShowUserOrdersForm.apply)(ShowUserOrdersForm.unapply)
+  }
 
   def addToHistory(): Action[AnyContent] = Action {
     services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.orderDate)
@@ -25,11 +32,6 @@ object OrderHistoryController extends Controller {
 
   def showDeliveryTime: Action[AnyContent] = Action {
     Ok(views.html.deliveryTime())
-  }
-  val userOrdersForm = Form {
-    mapping(
-      "CustomerID" -> longNumber
-    )(ShowUserOrdersForm.apply)(ShowUserOrdersForm.unapply)
   }
 
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>

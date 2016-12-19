@@ -19,7 +19,7 @@ case class setOrder(orderID: Long, customerID: Long, orderedProducts: StringBuil
   OrderProcess.orderID = orderID
   OrderProcess.customerID = customerID
   val customerList = services.UserService.registeredUsers
-  for(c <- customerList) {
+  for (c <- customerList) {
     if (c.id == customerID) {
       OrderProcess.customerData = c.forename + " " + c.name + " " + c.address + " " + c.zipcode + " " + c.city
       calculateDeliveryTime(c.zipcode, c.name)

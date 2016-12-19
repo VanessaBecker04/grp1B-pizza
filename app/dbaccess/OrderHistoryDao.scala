@@ -4,8 +4,8 @@ import java.util.Date
 
 import anorm._
 import models.OrderHistory
-import play.api.db.DB
 import play.api.Play.current
+import play.api.db.DB
 
 /**
   * Created by Hasi on 14.12.2016.
@@ -55,6 +55,7 @@ trait OrderHistoryDaoT {
       history
     }
   }
+
   def showOrdersUser(id: Long): List[OrderHistory] = {
     DB.withConnection { implicit c =>
       val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)
@@ -65,4 +66,5 @@ trait OrderHistoryDaoT {
     }
   }
 }
+
 object OrderHistoryDao extends OrderHistoryDaoT

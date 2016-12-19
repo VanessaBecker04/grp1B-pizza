@@ -32,16 +32,6 @@ trait OrderServiceT {
     */
   def rmFromOrder(id: Long): Boolean = orderDao.rmFromOrder(id)
 
-
-  /**
-    * Gets a list of all registered users.
-    *
-    * @return list of users.
-    */
-  def addedToOrder: List[Bill] = {
-    orderDao.addedToOrder
-  }
-
   def doCalculationForBill(): Unit = {
 
     val bill = addedToOrder
@@ -54,23 +44,23 @@ trait OrderServiceT {
     var orderedProducts: StringBuilder = new StringBuilder
 
 
-    for(c <- bill) {
-      if(c.customerID.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
-        if(c.pizzaName != null) {
+    for (c <- bill) {
+      if (c.customerID.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
+        if (c.pizzaName != null) {
           orderedProducts.append(c.pizzaNumber + "x ")
           orderedProducts.append(c.pizzaName + " ")
           orderedProducts.append("(" + c.pizzaSize + "), ")
-          for(m <- menu) {
-            if(m.name.equals(c.pizzaName)) {
-              if(c.pizzaSize.equals("medium")) {
+          for (m <- menu) {
+            if (m.name.equals(c.pizzaName)) {
+              if (c.pizzaSize.equals("medium")) {
                 pizzaSum += m.price
                 pizzaSum = (pizzaSum * 27) * c.pizzaNumber
               }
-              if(c.pizzaSize.equals("large")) {
+              if (c.pizzaSize.equals("large")) {
                 pizzaSum += m.price
                 pizzaSum = (pizzaSum * 32) * c.pizzaNumber
               }
-              if(c.pizzaSize.equals("xl")) {
+              if (c.pizzaSize.equals("xl")) {
                 pizzaSum += m.price
                 pizzaSum = (pizzaSum * 36) * c.pizzaNumber
               }
@@ -78,33 +68,33 @@ trait OrderServiceT {
           }
         } else {
         }
-        if(c.beverageName != null) {
+        if (c.beverageName != null) {
           orderedProducts.append(c.beverageNumber + "x ")
           orderedProducts.append(c.beverageName)
           orderedProducts.append("(" + c.beverageSize + "), ")
-          for(m <- menu) {
-            if(m.name.equals(c.beverageName)) {
-              if(c.beverageSize.equals("medium")) {
+          for (m <- menu) {
+            if (m.name.equals(c.beverageName)) {
+              if (c.beverageSize.equals("medium")) {
                 beverageSum += m.price
                 beverageSum = (beverageSum * 5) * c.beverageNumber
               }
-              if(c.beverageSize.equals("large")) {
+              if (c.beverageSize.equals("large")) {
                 beverageSum += m.price
                 beverageSum = (beverageSum * 7.5) * c.beverageNumber
               }
-              if(c.beverageSize.equals("xl")) {
+              if (c.beverageSize.equals("xl")) {
                 beverageSum += m.price
-                beverageSum = (beverageSum * 10 ) * c.beverageNumber
+                beverageSum = (beverageSum * 10) * c.beverageNumber
               }
             }
           }
         } else {
         }
-        if(c.dessertName != null) {
+        if (c.dessertName != null) {
           orderedProducts.append(c.dessertNumber + "x ")
           orderedProducts.append(c.dessertName)
-          for(m <- menu) {
-            if(m.name.equals(c.dessertName)) {
+          for (m <- menu) {
+            if (m.name.equals(c.dessertName)) {
               dessertSum += m.price
               dessertSum = dessertSum * c.dessertNumber
             }
@@ -117,10 +107,20 @@ trait OrderServiceT {
     models.setOrder(models.activeUser.orderID, models.activeUser.id, orderedProducts, wholeSum)
   }
 
+  /**
+    * Gets a list of all registered users.
+    *
+    * @return list of users.
+    */
+  def addedToOrder: List[Bill] = {
+    orderDao.addedToOrder
+  }
+
   def cancelOrder() = {
     orderDao.cancelOrder()
     setOrder(0, 0, null, 0)
     activeUser.orderID = 0
   }
 }
+
 object OrderService extends OrderServiceT

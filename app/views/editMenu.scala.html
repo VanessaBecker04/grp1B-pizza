@@ -1,20 +1,32 @@
-@(menuForm: Form[forms.CreateMenuForm])
+@(menuForm: Form[forms.CreateMenuForm], rmForm: Form[forms.CreateRemoveFromMenuForm])
 
 @main("Speisekarte bearbeiten") {
 
     <body id="bodyForEditMenu">
 
-        <h1 id="h1ForEditMenu">Hallo "Hier der Name des zukünftigen Mitarbeiters"</h1>
-        <b>
+        <h1>Hallo Herr/Frau @models.activeUser.name </h1>
 
-        </b>
 
-        <ul id="editMenuInterface">Speise/Getränk zum Menu hinzufügen:
+        <ul>Produkt zur Speisekarte hinzufügen:
             @helper.form(action = routes.MenuController.addToMenu()) {
                 <li>@helper.inputText(menuForm("Name"))</li>
                 <li>@helper.inputText(menuForm("Price"))</li>
                 <li>@helper.inputText(menuForm("Category"))</li>
                 <li><input type="submit" value="Hinzufügen"/></li>
+            }
+        </ul>
+
+        <ul>Produkt von der Speisekarte entfernen:
+            @helper.form(action = routes.MenuController.rmFromMenu()) {
+                <li>@helper.inputText(rmForm("Id"))</li>
+                <li><input type="submit" value="Löschen"></li>
+            }
+
+        </ul>
+
+        <ul> Bereits in der Speisekarte:
+            @for(m <- services.MenuService.addedToMenu) {
+                <li>@m.id @m.name @m.price @m.category</li>
             }
         </ul>
 

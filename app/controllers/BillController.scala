@@ -6,7 +6,6 @@ import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
 
 
-
 /**
   * Created by Hasi on 28.11.2016.
   */
@@ -21,7 +20,7 @@ object BillController extends Controller {
   def addToBill: Action[AnyContent] = Action { implicit request =>
     billform.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.showMenu(List.empty,formWithErrors))
+        BadRequest(views.html.showMenu(List.empty, formWithErrors))
       },
       userData => {
         val newOrder = services.OrderService.addToOrder(models.activeUser.id, userData.pizzaName, userData.pizzaNumber,
@@ -32,11 +31,11 @@ object BillController extends Controller {
       })
   }
 
-  def showBill : Action[AnyContent] = Action {
+  def showBill: Action[AnyContent] = Action {
     Ok(views.html.showBill())
   }
 
-  def cancelOrder : Action[AnyContent] = Action {
+  def cancelOrder: Action[AnyContent] = Action {
     services.OrderService.cancelOrder()
     Redirect(routes.MenuController.showMenu())
   }

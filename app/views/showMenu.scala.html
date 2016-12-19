@@ -1,27 +1,27 @@
-@(products: List[models.Menu], billForm : Form[forms.CreateBillForm])
+@(products: List[models.Menu], billForm: Form[forms.CreateBillForm])
 
 @main("Speisekarte") {
 
-        <body id="bodyShowMenu">
+    <body id="bodyShowMenu">
 
-            <h1>Willkommen zur Speisekarte</h1>
+        <h1>Willkommen zur Speisekarte</h1>
 
-            @helper.form(action = routes.BillController.addToBill()) {
+        @helper.form(action = routes.BillController.addToBill()) {
 
-                <ul>
-                    <li>@helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)))</li>
-                    <li>@helper.select(billForm("PizzaName"), models.categorizeMenu.pizzaList.map(p => p -> p))</li>
-                    <li>@helper.select(billForm("PizzaSize"), options = Seq("medium" -> "medium", "large" -> "large",
-                        "xl" -> "xl"))</li>
-                    <li>@helper.inputText(billForm("PizzaNumber"))</li>
-                    <li>@helper.select(billForm("BeverageName"), models.categorizeMenu.beverageList.map(p => p -> p))</li>
-                    <li> @helper.select(billForm("BeverageSize"), options = Seq("medium" -> "medium", "large" -> "large",
-                        "xl" -> "xl"))</li>
-                    <li>@helper.inputText(billForm("BeverageNumber"))</li>
-                    <li>@helper.select(billForm("DessertName"),models.categorizeMenu.dessertList.map(p => p -> p))</li>
-                    <li>@helper.inputText(billForm("DessertNumber"))</li>
-                    <li><input type="submit" value="Zur Kasse"/></li>
-                </ul>
-            }
-        </body>
+            <ul>
+                <li>@helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)))</li>
+                <li>@helper.select(billForm("PizzaName"), models.categorizeMenu.pizzaList.map(p => p -> p))</li>
+                <li>@helper.select(billForm("PizzaSize"), options = Seq("medium" -> "medium", "large" -> "large",
+                    "xl" -> "xl"))</li>
+                <li>@helper.inputText(billForm("PizzaNumber"))</li>
+                <li>@helper.select(billForm("BeverageName"), models.categorizeMenu.beverageList.map(p => p -> p))</li>
+                <li> @helper.select(billForm("BeverageSize"), options = Seq("medium" -> "medium", "large" -> "large",
+                    "xl" -> "xl"))</li>
+                <li>@helper.inputText(billForm("BeverageNumber"))</li>
+                <li>@helper.select(billForm("DessertName"), models.categorizeMenu.dessertList.map(p => p -> p))</li>
+                <li>@helper.inputText(billForm("DessertNumber"))</li>
+                <li><input type="submit" value="Zur Kasse"/></li>
+            </ul>
+        }
+    </body>
 }

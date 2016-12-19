@@ -1,8 +1,7 @@
 package dbaccess
 
-import anorm._
 import anorm.NamedParameter.symbol
-import anorm.SQL
+import anorm.{SQL, _}
 import models.Bill
 import play.api.Play.current
 import play.api.db.DB
@@ -67,4 +66,5 @@ trait OrderDaoT {
     }
   }
 }
+
 object OrderDao extends OrderDaoT
