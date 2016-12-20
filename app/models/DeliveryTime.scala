@@ -4,10 +4,8 @@ package models
   * Created by Hasi on 18.12.2016.
   */
 object DeliveryTime {
-
   var expectedTime: Int = _
   var customerName: String = _
-
 }
 
 case class calculateDeliveryTime(zip: Int, name: String) {
@@ -43,7 +41,6 @@ case class calculateDeliveryTime(zip: Int, name: String) {
   } else if (customerZip == Company.zip) {
     t = 2
   } else {
-
   }
 
   DeliveryTime.expectedTime = t + 10

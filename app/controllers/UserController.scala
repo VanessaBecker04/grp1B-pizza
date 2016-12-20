@@ -42,8 +42,13 @@ object UserController extends Controller {
         BadRequest(views.html.register(formWithErrors))
       },
       userData => {
-        val newUser = services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
-        Redirect(routes.UserController.welcomeUser())
+        models.calculateDeliveryTime(userData.zipcode, userData.name)
+        if (models.DeliveryTime.expectedTime == 10) {
+          Redirect(routes.UserController.attemptFailed())
+        } else {
+          services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
+          Redirect(routes.UserController.welcomeUser())
+        }
       })
   }
 
