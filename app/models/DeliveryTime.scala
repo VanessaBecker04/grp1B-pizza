@@ -42,6 +42,9 @@ case class calculateDeliveryTime(zip: Int, name: String) {
     t = 2
   } else {
   }
-
-  DeliveryTime.expectedTime = t + 10
+  if (t > 0) {
+    DeliveryTime.expectedTime = t + 10
+  } else {
+    DeliveryTime.expectedTime = -1
+  }
 }

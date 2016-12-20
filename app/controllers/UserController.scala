@@ -43,8 +43,8 @@ object UserController extends Controller {
       },
       userData => {
         models.calculateDeliveryTime(userData.zipcode, userData.name)
-        if (models.DeliveryTime.expectedTime == 10) {
-          Redirect(routes.UserController.attemptFailed())
+        if (models.DeliveryTime.expectedTime == -1) {
+          Redirect(routes.UserController.attemptFailed("register"))
         } else {
           services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
           Redirect(routes.UserController.welcomeUser())
@@ -67,8 +67,8 @@ object UserController extends Controller {
     Ok(views.html.welcomeEmployee(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
   }
 
-  def attemptFailed: Action[AnyContent] = Action {
-    Ok(views.html.attemptFailed())
+  def attemptFailed(errorcode: String): Action[AnyContent] = Action {
+    Ok(views.html.attemptFailed(errorcode))
   }
 
   def attemptSuccessful: Action[AnyContent] = Action {
@@ -90,7 +90,7 @@ object UserController extends Controller {
       loginData => {
         val loggedinUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
         if (loggedinUser == -1) {
-          Redirect(routes.UserController.attemptFailed())
+          Redirect(routes.UserController.attemptFailed("login"))
         } else {
           Redirect(routes.UserController.welcomeUser())
         }

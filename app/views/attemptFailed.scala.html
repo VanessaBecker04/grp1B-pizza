@@ -1,5 +1,11 @@
+@(errorcode: String)
 @main(models.Company.name) {
-    <h1>Der Vorgang ist fehlgeschlagen. Bitte versuchen Sie es erneut.</h1>
-    <p><a href="/login">Einloggen</a></p>
-    <p><a href="/register">Registrieren</a></p>
+    @if(errorcode.equals("register")) {
+        <h1>Ihre angegebene Adresse liegt außerhalb des Lieferbereichs.</h1>
+        <p><a href="/register">Registrieren</a></p>
+    }
+    @if(errorcode.equals("login")) {
+        <h1>Ihre eingegebenen Login-Daten sind fehlerhaft. Bitte versuchen Sie es erneut.</h1>
+        <p><a href="/login">Einloggen</a></p>
+    }
 }

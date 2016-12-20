@@ -12,7 +12,7 @@ GET         /deliveryTime        controllers.OrderHistoryController.showDelivery
 POST        /addUser             controllers.UserController.addUser
 GET         /welcomeUser         controllers.UserController.welcomeUser
 GET         /welcomeEmployee     controllers.UserController.welcomeEmployee
-GET         /attemptFailed       controllers.UserController.attemptFailed
+GET         /attemptFailed       controllers.UserController.attemptFailed(errorcode)
 GET         /attemptSuccessful   controllers.UserController.attemptSuccessful
 GET         /showUsers           controllers.UserController.showUsers
 GET         /loginUser           controllers.UserController.loginUser
