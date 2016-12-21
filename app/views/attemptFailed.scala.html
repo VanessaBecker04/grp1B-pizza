@@ -1,7 +1,8 @@
 @(errorcode: String)
 @main(models.Company.name) {
     @if(errorcode.equals("register")) {
-        <h1>Ihre angegebene Adresse liegt außerhalb des Lieferbereichs.</h1>
+        <h1>Ihre angegebene Adresse liegt außerhalb des Lieferbereichs. Der Lieferbereich umfasst die Postleitzahlen:</h1>
+        <p> 82057, 82061, 82065, 82069, 82131, 82229, 82234, @models.Company.zip, 82327, 82335, 82340, 82343, 82346</p>
         <p><a href="/register">Registrieren</a></p>
     }
     @if(errorcode.equals("login")) {

@@ -6,42 +6,25 @@ package models
 object DeliveryTime {
   var expectedTime: Int = _
   var customerName: String = _
+  var kilometersperminute: Int = 2
 }
 
 case class calculateDeliveryTime(zip: Int, name: String) {
   val customerZip = zip
   DeliveryTime.customerName = name
+  var km: Int = _
+  var kmpm: Int = DeliveryTime.kilometersperminute
 
-  var t: Int = _
-
-  if (customerZip == 82343) {
-    t = 6 / 2
-  } else if (customerZip == 82340) {
-    t = 10 / 2
-  } else if (customerZip == 82346) {
-    t = 16 / 2
-  } else if (customerZip == 82327) {
-    t = 16 / 2
-  } else if (customerZip == 82229) {
-    t = 16 / 2
-  } else if (customerZip == 82234) {
-    t = 14 / 2
-  } else if (customerZip == 82131) {
-    t = 12 / 2
-  } else if (customerZip == 82061) {
-    t = 12 / 2
-  } else if (customerZip == 82065) {
-    t = 16 / 2
-  } else if (customerZip == 82069) {
-    t = 12 / 2
-  } else if (customerZip == 82335) {
-    t = 6 / 2
-  } else if (customerZip == 82057) {
-    t = 16 / 2
-  } else if (customerZip == Company.zip) {
-    t = 2
-  } else {
+  customerZip match {
+    case Company.zip => km = 4
+    case 82335 | 82343 => km = 6
+    case 82340 => km = 10 / kmpm
+    case 82061 | 82069 | 82131 => km = 12
+    case 82234 => km = 14
+    case 82057 | 82065 | 82229 | 82327 | 82346 => km = 16
+    case _ =>
   }
+  var t = km / kmpm
   if (t > 0) {
     DeliveryTime.expectedTime = t + 10
   } else {
