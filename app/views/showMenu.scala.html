@@ -13,13 +13,13 @@
                 <li>@helper.select(billForm("PizzaName"), models.categorizeMenu.pizzaList.map(p => p -> p))</li>
                 <li>@helper.select(billForm("PizzaSize"), options = Seq("medium" -> "medium", "large" -> "large",
                     "xl" -> "xl"))</li>
-                <li>@helper.inputText(billForm("PizzaNumber"))</li>
+                <li>@helper.inputText(billForm("PizzaNumber").copy(value=Some("0")))</li>
                 <li>@helper.select(billForm("BeverageName"), models.categorizeMenu.beverageList.map(p => p -> p))</li>
                 <li> @helper.select(billForm("BeverageSize"), options = Seq("medium" -> "medium", "large" -> "large",
                     "xl" -> "xl"))</li>
-                <li>@helper.inputText(billForm("BeverageNumber"))</li>
+                <li>@helper.inputText(billForm("BeverageNumber").copy(value=Some("0")))</li>
                 <li>@helper.select(billForm("DessertName"), models.categorizeMenu.dessertList.map(p => p -> p))</li>
-                <li>@helper.inputText(billForm("DessertNumber"))</li>
+                <li>@helper.inputText(billForm("DessertNumber").copy(value=Some("0")))</li>
                 <li><input type="submit" value="Zur Kasse"/></li>
             </ul>
         }

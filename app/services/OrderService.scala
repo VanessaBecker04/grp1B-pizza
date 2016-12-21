@@ -46,10 +46,13 @@ trait OrderServiceT {
 
     for (c <- bill) {
       if (c.customerID.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
-        if (c.pizzaName != null) {
+        if (c.pizzaName != null && c.pizzaNumber > 0) {
           orderedProducts.append(c.pizzaNumber + "x ")
           orderedProducts.append(c.pizzaName + " ")
-          orderedProducts.append("(" + c.pizzaSize + "), ")
+          orderedProducts.append("(" + c.pizzaSize + ")")
+          if (c.beverageNumber > 0 || c.dessertNumber > 0) {
+            orderedProducts.append(", ")
+          }
           for (m <- menu) {
             if (m.name.equals(c.pizzaName)) {
               if (c.pizzaSize.equals("medium")) {
@@ -68,10 +71,13 @@ trait OrderServiceT {
           }
         } else {
         }
-        if (c.beverageName != null) {
+        if (c.beverageName != null && c.beverageNumber > 0) {
           orderedProducts.append(c.beverageNumber + "x ")
           orderedProducts.append(c.beverageName)
-          orderedProducts.append("(" + c.beverageSize + "), ")
+          orderedProducts.append("(" + c.beverageSize + ")")
+          if (c.dessertNumber > 0) {
+            orderedProducts.append(", ")
+          }
           for (m <- menu) {
             if (m.name.equals(c.beverageName)) {
               if (c.beverageSize.equals("medium")) {
@@ -90,7 +96,7 @@ trait OrderServiceT {
           }
         } else {
         }
-        if (c.dessertName != null) {
+        if (c.dessertName != null && c.dessertNumber > 0) {
           orderedProducts.append(c.dessertNumber + "x ")
           orderedProducts.append(c.dessertName)
           for (m <- menu) {
