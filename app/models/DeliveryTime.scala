@@ -7,6 +7,7 @@ object DeliveryTime {
   var expectedTime: Int = _
   var customerName: String = _
   var kilometersperminute: Int = 2
+  var bakeTime: Int = 10
 }
 
 case class calculateDeliveryTime(zip: Int, name: String) {
@@ -26,7 +27,7 @@ case class calculateDeliveryTime(zip: Int, name: String) {
   }
   var t = km / kmpm
   if (t > 0) {
-    DeliveryTime.expectedTime = t + 10
+    DeliveryTime.expectedTime = t + DeliveryTime.bakeTime
   } else {
     DeliveryTime.expectedTime = -1
   }
