@@ -1,13 +1,15 @@
 @main("Rechnung") {
 
-    <ul> Rechnung:
-        <li>@OrderProcess.customerID</li>
-        <li>@OrderProcess.customerData</li>
-        <li>@OrderProcess.orderedProducts</li>
-        <li>@OrderProcess.sumOfOrder</li>
+    <h1> Rechnung:</h1>
+
+    <ul id="showBillView" style="list-style: none">
+        <li>ID: @OrderProcess.customerID</li>
+        <li>Anschrift: @OrderProcess.customerData</li>
+        <li>Bestellung: @OrderProcess.orderedProducts</li>
+        <li>Gesamtsumme: @OrderProcess.sumOfOrder</li>
         <li>@OrderProcess.orderDate</li>
     </ul>
 
-    <p><a href="/addToHistory" >Bestellung bestätigen</a></p>
-    <p><a href="/cancelOrder" >Zurück zur Bestellung</a></p>
+    <p><a id="showBillConfirmButton" href="/addToHistory" >Bestellung bestätigen</a></p>
+    <p><a id="showBillCancelButton" href="/cancelOrder" >Zurück zur Bestellung</a></p>
 }

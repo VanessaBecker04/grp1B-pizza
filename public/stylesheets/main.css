@@ -1,4 +1,5 @@
 #pizzaShowMenu {
+    font-size: 20px;
     border-radius: 25px;
     position: absolute;
     left: 20px;
@@ -9,6 +10,7 @@
 }
 
 #beverageShowMenu {
+    font-size: 20px;
     border-radius: 25px;
     position: absolute;
     left: 550px;
@@ -19,6 +21,7 @@
 }
 
 #dessertShowMenu {
+    font-size: 20px;
     border-radius: 25px;
     position: absolute;
     right: 200px;
@@ -38,4 +41,116 @@
     background: floralwhite;
 }
 
+#showBillView {
+    font-size: 40px;
+    border-radius: 25px;
+    position: absolute;
+    left: 20px;
+    top: 120px;
+    padding-bottom: 100px;
+    padding-right: 20px;
+    background-color: rgba(400, 400, 400, 0.5);
+}
 
+#showBillConfirmButton {
+    color: #333333;
+    text-decoration: none;
+    border-radius: 25px;
+    position: absolute;
+    left: 20px;
+    top: 550px;
+    height: 50px;
+    width: 200px;
+    background: floralwhite;
+    text-align: center;
+}
+
+#showBillCancelButton {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    border-radius: 25px;
+    position: absolute;
+    left: 20px;
+    top: 650px;
+    height: 50px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#addEditMenu {
+    font-size: 20px;
+    border-radius: 25px;
+    position: absolute;
+    left: 20px;
+    top: 200px;
+    padding-bottom: 154px;
+    padding-right: 20px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#rmEditMenu {
+    font-size: 20px;
+    border-radius: 25px;
+    position: absolute;
+    right: 650px;
+    top: 200px;
+    padding-bottom: 154px;
+    padding-right: 20px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#showMenuInEditMenu {
+    font-size: 20px;
+    border-radius: 25px;
+    position: absolute;
+    right: 200px;
+    top: 200px;
+    padding-bottom: 154px;
+    padding-right: 20px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#linkToShowMenu {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    border-radius: 25px;
+    position: absolute;
+    left: 600px;
+    top: 650px;
+    height: 50px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#headerForDeliveryTime {
+    text-align: center;
+    color: black;
+    text-shadow: black;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#homeButtonDeliverTime {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    border-radius: 25px;
+    position: absolute;
+    left: 650px;
+    top: 400px;
+    height: 50px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#pizzaSizeShowMenu {
+    position: absolute;
+    left: 300px;
+    top: 200px;
+    background: black;
+    color: white;
+    opacity: 0.5;
+    padding-right: 20px;
+    border-radius: 25px;
+}

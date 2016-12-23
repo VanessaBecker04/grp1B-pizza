@@ -17,7 +17,7 @@ object MenuController extends Controller {
     */
   val menuForm = Form(
     mapping(
-      "Name" -> text, "Price" -> of[Double], "Category" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
+      "Produktname" -> text, "Preis je Einheit" -> of[Double], "Kategorie" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
   val rmForm = Form(mapping("Id" -> longNumber)(CreateRemoveFromMenuForm.apply)(CreateRemoveFromMenuForm.unapply))
 
   /**

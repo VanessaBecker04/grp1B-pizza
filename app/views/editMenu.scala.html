@@ -7,30 +7,31 @@
         <h1>Hallo Herr/Frau @models.activeUser.name </h1>
 
 
-        <ul>Produkt zur Speisekarte hinzufügen:
+        <ul id="addEditMenu" style="list-style: none">Produkt zur Speisekarte hinzufügen:
             @helper.form(action = routes.MenuController.addToMenu()) {
-                <li>@helper.inputText(menuForm("Name"))</li>
-                <li>@helper.inputText(menuForm("Price"))</li>
-                <li>@helper.inputText(menuForm("Category"))</li>
+                <li>@helper.inputText(menuForm("Produktname"))</li>
+                <li>@helper.inputText(menuForm("Preis je Einheit"), '_showConstraints -> false)</li>
+                <li>@helper.select(menuForm("Kategorie"), options = Seq("Pizza" -> "Pizza", "Getränk" -> "Getränk",
+                    "Dessert" -> "Dessert"))</li>
                 <li><input type="submit" value="Hinzufügen"/></li>
             }
         </ul>
 
-        <ul>Produkt von der Speisekarte entfernen:
+        <ul id="rmEditMenu" style="list-style: none">Produkt von der Speisekarte entfernen:
             @helper.form(action = routes.MenuController.rmFromMenu()) {
-                <li>@helper.inputText(rmForm("Id"))</li>
+                <li>@helper.inputText(rmForm("Id"), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Löschen"></li>
             }
 
         </ul>
 
-        <ul> Bereits in der Speisekarte:
+        <ul id="showMenuInEditMenu" style="list-style: none"> Bereits in der Speisekarte:
             @for(m <- services.MenuService.addedToMenu) {
                 <li>@m.id @m.name @m.price @m.category</li>
             }
         </ul>
 
-        <p id="linkToShowMenu"><a id="linkToShowMenu2" href="/showMenu">Zur Speisekarte</a></p>
+        <p><a id="linkToShowMenu" href="/showMenu">Zur Speisekarte</a></p>
 
     </body>
 }
