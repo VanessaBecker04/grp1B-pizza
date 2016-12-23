@@ -8,19 +8,20 @@
 
         @helper.form(action = routes.BillController.addToBill()) {
 
-            <ul>
-                <li>@helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)))</li>
-                <li>@helper.select(billForm("PizzaName"), models.categorizeMenu.pizzaList.map(p => p -> p))</li>
-                <li>@helper.select(billForm("PizzaSize"), options = Seq("medium" -> "medium", "large" -> "large",
-                    "xl" -> "xl"))</li>
-                <li>@helper.inputText(billForm("PizzaNumber").copy(value=Some("0")))</li>
-                <li>@helper.select(billForm("BeverageName"), models.categorizeMenu.beverageList.map(p => p -> p))</li>
-                <li> @helper.select(billForm("BeverageSize"), options = Seq("medium" -> "medium", "large" -> "large",
-                    "xl" -> "xl"))</li>
-                <li>@helper.inputText(billForm("BeverageNumber").copy(value=Some("0")))</li>
-                <li>@helper.select(billForm("DessertName"), models.categorizeMenu.dessertList.map(p => p -> p))</li>
-                <li>@helper.inputText(billForm("DessertNumber").copy(value=Some("0")))</li>
-                <li><input type="submit" value="Zur Kasse"/></li>
+            <ul id="showMenuList" style="list-style: none">
+                @helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)),
+                    'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
+                <li id="pizzaShowMenu">@helper.select(billForm("Pizza"), models.categorizeMenu.pizzaList.map(p => p -> p))
+                    @helper.select(billForm("Pizzagröße"), options = Seq("medium" -> "medium", "large" -> "large",
+                        "xl" -> "xl"))
+                    @helper.inputText(billForm("Anzahl der Pizzen").copy(value = Some("0")), '_showConstraints -> false)</li>
+                <li id="beverageShowMenu">@helper.select(billForm("Getränk"), models.categorizeMenu.beverageList.map(p => p -> p))
+                    @helper.select(billForm("Getränkegröße"), options = Seq("medium" -> "medium", "large" -> "large",
+                        "xl" -> "xl"))
+                    @helper.inputText(billForm("Anzahl der Getränke").copy(value = Some("0")), '_showConstraints -> false)</li>
+                <li id="dessertShowMenu">@helper.select(billForm("Dessert"), models.categorizeMenu.dessertList.map(p => p -> p))
+                    @helper.inputText(billForm("Anzahl der Desserts").copy(value = Some("0")), '_showConstraints -> false)</li>
+                <li><input id="showMenuButton" type="submit" value="Zur Kasse"/></li>
             </ul>
         }
     </body>

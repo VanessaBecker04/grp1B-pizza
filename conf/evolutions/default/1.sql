@@ -26,8 +26,8 @@ CREATE TABLE Menu (
     price double NOT NULL,
     category varchar(255) NOT NULL
 );
-INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 0.5, 'Pizza');
-INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 0.5, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 0.2, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 0.2, 'Pizza');
 INSERT INTO Menu(id, name, price, category) VALUES(201, 'Sprite', 0.3, 'Getränk');
 INSERT INTO Menu(id, name, price, category) VALUES(202, 'Cola', 0.3, 'Getränk');
 INSERT INTO Menu(id, name, price, category) VALUES(301, 'Schokokuchen', 2.0, 'Dessert');

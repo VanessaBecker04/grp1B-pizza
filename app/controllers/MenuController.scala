@@ -53,6 +53,7 @@ object MenuController extends Controller {
   }
 
   def showMenu: Action[AnyContent] = Action {
+    models.categorize()
     services.OrderService.cancelOrder()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }

@@ -12,9 +12,9 @@ import play.api.mvc.{Action, AnyContent, Controller}
 object BillController extends Controller {
   val billform = Form(
     mapping(
-      "CustomerID" -> longNumber, "PizzaName" -> text, "PizzaNumber" -> number,
-      "PizzaSize" -> text, "BeverageName" -> text, "BeverageNumber" -> number, "BeverageSize" -> text,
-      "DessertName" -> text, "DessertNumber" -> number)(CreateBillForm.apply)(CreateBillForm.unapply))
+      "CustomerID" -> longNumber, "Pizza" -> text, "Anzahl der Pizzen" -> number(min = 0, max = 100),
+      "Pizzagröße" -> text, "Getränk" -> text, "Anzahl der Getränke" -> number(min = 0, max = 100), "Getränkegröße" -> text,
+      "Dessert" -> text, "Anzahl der Desserts" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
 
 
   def addToBill: Action[AnyContent] = Action { implicit request =>

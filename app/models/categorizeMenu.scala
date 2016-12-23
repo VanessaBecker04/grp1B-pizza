@@ -7,6 +7,13 @@ import scala.collection.mutable.ListBuffer
   */
 object categorizeMenu {
 
+  var pizzaList: List[String] =_
+  var beverageList: List[String] =_
+  var dessertList: List[String] =_
+}
+
+case class categorize() {
+
   val pizzaList = new ListBuffer[String]
   val beverageList = new ListBuffer[String]
   val dessertList = new ListBuffer[String]
@@ -14,14 +21,18 @@ object categorizeMenu {
   val menuList = services.MenuService.addedToMenu
   for (m <- menuList) {
     if (m.category.equals("Pizza")) {
-      categorizeMenu.pizzaList += m.name
+      pizzaList += m.name
     }
     if (m.category.equals("Getränk")) {
-      categorizeMenu.beverageList += m.name
+      beverageList += m.name
     }
     if (m.category.equals("Dessert")) {
-      categorizeMenu.dessertList += m.name
+      dessertList += m.name
     }
   }
+
+  categorizeMenu.pizzaList = pizzaList.toList
+  categorizeMenu.beverageList = beverageList.toList
+  categorizeMenu.dessertList = dessertList.toList
 
 }
