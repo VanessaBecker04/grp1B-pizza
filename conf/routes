@@ -7,26 +7,28 @@ GET         /                    controllers.Application.index
 GET         /register            controllers.Application.register
 GET         /login               controllers.Application.login
 
-POST        /rmFromMenu          controllers.MenuController.rmFromMenu
-GET         /deliveryTime        controllers.OrderHistoryController.showDeliveryTime
 POST        /addUser             controllers.UserController.addUser
+GET         /showUsers           controllers.UserController.showUsers
+GET         /editUsers            controllers.UserController.editUser
+POST        /deleteUser          controllers.UserController.deleteUser
 GET         /welcomeUser         controllers.UserController.welcomeUser
 GET         /welcomeEmployee     controllers.UserController.welcomeEmployee
 GET         /attemptFailed       controllers.UserController.attemptFailed(errorcode)
 GET         /attemptSuccessful   controllers.UserController.attemptSuccessful
-GET         /showUsers           controllers.UserController.showUsers
 GET         /loginUser           controllers.UserController.loginUser
 GET         /logoutUser          controllers.UserController.logoutUser
 
 GET         /showMenu            controllers.MenuController.showMenu
 GET         /editMenu            controllers.MenuController.editMenu
 POST        /addToMenu           controllers.MenuController.addToMenu
+POST        /rmFromMenu          controllers.MenuController.rmFromMenu
 
 POST        /addToBill           controllers.BillController.addToBill
 GET         /showBill            controllers.BillController.showBill
 GET         /cancelOrder         controllers.BillController.cancelOrder
 
 GET         /addToHistory        controllers.OrderHistoryController.addToHistory
+GET         /deliveryTime        controllers.OrderHistoryController.showDeliveryTime
 GET         /showOrdersUser      controllers.OrderHistoryController.showOrdersUser
 GET         /showOrdersEmployee  controllers.OrderHistoryController.showOrdersEmployee
 GET         /showOrdersEmployeeU controllers.OrderHistoryController.showOrdersEmployeeU

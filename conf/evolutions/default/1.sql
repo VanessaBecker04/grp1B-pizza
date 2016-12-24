@@ -8,10 +8,11 @@ CREATE TABLE Users (
     address varchar(255) NOT NULL,
     zipcode int NOT NULL,
     city varchar(255) NOT NULL,
-    role varchar(255) NOT NULL
+    role varchar(255) NOT NULL,
+    inactive bit
 );
-INSERT INTO Users(id, forename, name, address, zipcode, city, role) VALUES(1, 'Herbert', 'Padrone', 'Kientalstr. 10', 82346, 'Andechs', 'Mitarbeiter');
-INSERT INTO Users(id, forename, name, address, zipcode, city, role) VALUES(2, 'Susanne', 'Emil', 'Ulrichstr. 1 ', 82343, 'Pöcking', 'Kunde');
+INSERT INTO Users(id, forename, name, address, zipcode, city, role, inactive) VALUES(1, 'Herbert', 'Padrone', 'Kientalstr. 10', 82346, 'Andechs', 'Mitarbeiter', 0);
+INSERT INTO Users(id, forename, name, address, zipcode, city, role, inactive) VALUES(2, 'Susanne', 'Emil', 'Ulrichstr. 1 ', 82343, 'Pöcking', 'Kunde', 0);
 
 
 # --- !Downs

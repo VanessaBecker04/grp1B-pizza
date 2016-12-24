@@ -124,8 +124,6 @@ trait OrderServiceT {
 
   def cancelOrder() = {
     orderDao.cancelOrder()
-    setOrder(0, 0, null, 0)
-    activeUser.orderID = 0
   }
 }
 

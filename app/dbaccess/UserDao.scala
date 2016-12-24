@@ -23,8 +23,8 @@ trait UserDaoT {
   def addUser(user: User): User = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into Users(forename, name, address, zipcode, city, role) values ({forename},{name},{address},{zipcode},{city},{role})").on(
-          'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role).executeInsert()
+        SQL("insert into Users(forename, name, address, zipcode, city, role, inactive) values ({forename},{name},{address},{zipcode},{city},{role}, {inactive})").on(
+          'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeInsert()
       user.id = id.get
       setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
     }
@@ -37,10 +37,16 @@ trait UserDaoT {
     * @param id the users id
     * @return a boolean success flag
     */
-  def rmUser(id: Long): Boolean = {
+  def deleteUser(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val rowsCount = SQL("delete from Users where id = ({id})").on('id -> id).executeUpdate()
-      rowsCount > 0
+      val userOrders = OrderHistoryDao.showOrdersUser(id)
+      if (userOrders.isEmpty) {
+        val rowsCount = SQL("delete from Users where id = ({id})").on('id -> id).executeUpdate()
+        rowsCount > 0
+      } else {
+        val rowsCount = SQL("Update Users set inactive=1 where id = {id}").on('id -> id).executeUpdate()
+        rowsCount > 0
+      }
     }
   }
 
@@ -51,9 +57,9 @@ trait UserDaoT {
     */
   def registeredUsers: List[User] = {
     DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select id, forename, name, address, zipcode, city, role from Users")
+      val selectUsers = SQL("Select id, forename, name, address, zipcode, city, role, inactive from Users")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role"))).toList
+      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role"), row[Boolean]("inactive"))).toList
       users
     }
   }

@@ -1,6 +1,6 @@
 package controllers
 
-import forms.ShowUserOrdersForm
+import forms.UserIDForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -14,7 +14,7 @@ object OrderHistoryController extends Controller {
   val userOrdersForm = Form {
     mapping(
       "CustomerID" -> longNumber
-    )(ShowUserOrdersForm.apply)(ShowUserOrdersForm.unapply)
+    )(UserIDForm.apply)(UserIDForm.unapply)
   }
 
   def addToHistory(): Action[AnyContent] = Action {

@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateUserForm, LoginUserForm}
+import forms.{CreateUserForm, LoginUserForm, UserIDForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -31,6 +31,12 @@ object UserController extends Controller {
       "Postleitzahl" -> number
     )(LoginUserForm.apply)(LoginUserForm.unapply))
 
+  val deleteUserForm = Form {
+    mapping(
+      "Kunden-ID" -> longNumber
+    )(UserIDForm.apply)(UserIDForm.unapply)
+  }
+
   /**
     * Adds a new user with the given data to the system.
     *
@@ -49,6 +55,17 @@ object UserController extends Controller {
           services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
           Redirect(routes.UserController.welcomeUser())
         }
+      })
+  }
+
+  def deleteUser: Action[AnyContent] = Action { implicit request =>
+    deleteUserForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.editUser(null, formWithErrors))
+      },
+      userData => {
+        services.UserService.deleteUser(userData.customerID)
+        Redirect(routes.UserController.editUser())
       })
   }
 
@@ -100,5 +117,9 @@ object UserController extends Controller {
   def logoutUser: Action[AnyContent] = Action {
     services.UserService.logoutUser()
     Redirect(routes.Application.index())
+  }
+
+  def editUser: Action[AnyContent] = Action {
+    Ok(views.html.editUser(controllers.UserController.userForm, controllers.UserController.deleteUserForm))
   }
 }

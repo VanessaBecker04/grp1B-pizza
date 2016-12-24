@@ -1,4 +1,4 @@
-@(users: List[User], userOrdersForm: Form[forms.ShowUserOrdersForm])
+@(users: List[User], userOrdersForm: Form[forms.UserIDForm])
 @main(models.Company.name) {
     <h1>Sie sind als Mitarbeiter @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
     <p><a href="/showUsers">Registrierte Benutzer</a></p>
@@ -12,7 +12,8 @@
     </p>
     <p><a href="/showMenu">Bestellung aufgeben</a></p>
     <p><a href="/showOrdersUser">Deine bisherigen Bestellungen ansehen</a></p>
+    <p><a href="/editUsers">Kundenverwaltung</a></p>
+    <p><a href="/editMenu">Produktverwaltung</a></p>
     <p><a href="/logoutUser">Ausloggen</a></p>
-    <p><a href="/editMenu">Speisekarte bearbeiten</a></p>
 
 }

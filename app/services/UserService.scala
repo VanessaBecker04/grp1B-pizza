@@ -20,7 +20,8 @@ trait UserServiceT {
     */
   def addUser(forename: String, name: String, address: String, zipcode: Int, city: String, role: String): User = {
     // create User
-    val newUser = User(-1, forename, name, address, zipcode, city, role)
+    val inactive: Boolean = false
+    val newUser = User(-1, forename, name, address, zipcode, city, role, inactive)
     // persist and return User
     userDao.addUser(newUser)
   }
@@ -31,7 +32,7 @@ trait UserServiceT {
     * @param id users id.
     * @return a boolean success flag.
     */
-  def rmUser(id: Long): Boolean = userDao.rmUser(id)
+  def deleteUser(id: Long): Boolean = userDao.deleteUser(id)
 
   /**
     * Gets a list of all registered users.

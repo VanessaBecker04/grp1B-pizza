@@ -1,0 +1,30 @@
+@(userForm: Form[forms.CreateUserForm], deleteUserForm: Form[forms.UserIDForm])
+
+@main("Kunden bearbeiten") {
+
+    <body id="bodyForEditMenu">
+
+        <ul id="addEditMenu" style="list-style: none">Kunden hinzufügen:
+            @helper.form(action = routes.UserController.addUser()) {
+                @helper.inputText(userForm("Vorname"))
+                @helper.inputText(userForm("Name"))
+                @helper.inputText(userForm("Straße und Hausnummer"))
+                @helper.inputText(userForm("Postleitzahl"))
+                @helper.inputText(userForm("Stadt"))
+                @helper.select(userForm("Rolle"), helper.options(List("Kunde", "Mitarbeiter")), '_label -> "Rolle")
+                <input type="submit" value="Speichern" />
+            }
+        </ul>
+
+        <ul id="rmEditMenu" style="list-style: none">Kunden entfernen:
+            @helper.form(action = routes.UserController.deleteUser()) {
+                <li>@helper.inputText(deleteUserForm("Kunden-ID"), '_showConstraints -> false)</li>
+                <li><input type="submit" value="Löschen"></li>
+            }
+
+        </ul>
+
+        <p><a id="linkToShowMenu" href="/showUsers">Registrierte Nutzer</a></p>
+
+    </body>
+}

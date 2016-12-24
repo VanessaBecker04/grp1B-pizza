@@ -116,7 +116,7 @@ object Users extends Controller {
     * @return success info or NotFound
     */
   def rmUser(id: Long): Action[AnyContent] = Action { implicit request =>
-    val success = UserService.rmUser(id)
+    val success = UserService.deleteUser(id)
     if (success)
       Ok(Json.obj("status" -> "OK"))
     else

@@ -6,4 +6,4 @@ package forms
   * @author Maximilan Öttl
   * @version 1.0, 17.12.2016
   */
-case class ShowUserOrdersForm(customerID: Long)
+case class UserIDForm(customerID: Long)
