@@ -1,6 +1,7 @@
 package models
 
-import java.util.Date
+import java.text.{DateFormat, SimpleDateFormat}
+import java.util.{Calendar, Date, GregorianCalendar, Locale}
 
 /**
   * Created by Hasi on 13.12.2016.
@@ -12,6 +13,9 @@ object OrderProcess {
   var orderedProducts: StringBuilder = new StringBuilder
   var sumOfOrder: Double = 0
   var orderDate = new Date()
+  var sdf: SimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy")
+  val currentDate: String = sdf.format(orderDate)
+
 
 }
 

@@ -20,7 +20,7 @@ trait OrderHistoryServiceT {
     * @return the new user.
     */
   def addToHistory(orderID: Long, customerID: Long, customerData: String, orderedProducts: String, sumOfOrder: Double,
-                   orderDate: Date): OrderHistory = {
+                   orderDate: String): OrderHistory = {
     // create User
     val newHistory = OrderHistory(orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate)
     // persist and return User

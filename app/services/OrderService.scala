@@ -74,7 +74,7 @@ trait OrderServiceT {
         if (c.beverageName != null && c.beverageNumber > 0) {
           orderedProducts.append(c.beverageNumber + "x ")
           orderedProducts.append(c.beverageName)
-          orderedProducts.append("(" + c.beverageSize + ")")
+          orderedProducts.append(" (" + c.beverageSize + ")")
           if (c.dessertNumber > 0) {
             orderedProducts.append(", ")
           }
@@ -107,7 +107,7 @@ trait OrderServiceT {
           }
         } else {
         }
-        wholeSum += (pizzaSum + beverageSum + dessertSum)
+        wholeSum += (Math.round((pizzaSum + beverageSum + dessertSum) * 100.0) / 100.0)
       }
     }
     models.setOrder(models.activeUser.orderID, models.activeUser.id, orderedProducts, wholeSum)

@@ -26,8 +26,8 @@ CREATE TABLE Menu (
     price double NOT NULL,
     category varchar(255) NOT NULL
 );
-INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 0.2, 'Pizza');
-INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 0.2, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza');
+INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 0.27, 'Pizza');
 INSERT INTO Menu(id, name, price, category) VALUES(201, 'Sprite', 0.3, 'Getränk');
 INSERT INTO Menu(id, name, price, category) VALUES(202, 'Cola', 0.3, 'Getränk');
 INSERT INTO Menu(id, name, price, category) VALUES(301, 'Schokokuchen', 2.0, 'Dessert');
@@ -63,7 +63,7 @@ Create Table Orderhistory (
     customerData varchar(255),
     orderedProducts varchar(255),
     sumOfOrder double,
-    orderDate DATE,
+    orderDate varchar(255),
 );
 
 # --- !Downs

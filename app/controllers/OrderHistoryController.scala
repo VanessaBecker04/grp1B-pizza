@@ -18,7 +18,7 @@ object OrderHistoryController extends Controller {
   }
 
   def addToHistory(): Action[AnyContent] = Action {
-    services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.orderDate)
+    services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.currentDate)
     Redirect(routes.OrderHistoryController.showDeliveryTime)
   }
 

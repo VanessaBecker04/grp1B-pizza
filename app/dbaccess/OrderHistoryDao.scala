@@ -51,7 +51,7 @@ trait OrderHistoryDaoT {
       val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
-        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[Date]("orderDate"))).toList
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"))).toList
       history
     }
   }
@@ -61,7 +61,7 @@ trait OrderHistoryDaoT {
       val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
-        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[Date]("orderDate"))).toList
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"))).toList
       history
     }
   }

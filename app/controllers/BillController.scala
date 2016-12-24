@@ -12,7 +12,7 @@ import play.api.mvc.{Action, AnyContent, Controller}
 object BillController extends Controller {
   val billform = Form(
     mapping(
-      "CustomerID" -> longNumber, "Pizza" -> text, "Anzahl der Pizzen" -> number(min = 0, max = 100),
+      "CustomerID" -> longNumber(min = 1), "Pizza" -> text, "Anzahl der Pizzen" -> number(min = 0, max = 100),
       "Pizzagröße" -> text, "Getränk" -> text, "Anzahl der Getränke" -> number(min = 0, max = 100), "Getränkegröße" -> text,
       "Dessert" -> text, "Anzahl der Desserts" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
 

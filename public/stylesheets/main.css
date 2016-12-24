@@ -1,39 +1,45 @@
 #pizzaShowMenu {
     font-size: 20px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 200px;
-    padding-bottom: 100px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
 #beverageShowMenu {
     font-size: 20px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 550px;
     top: 200px;
-    padding-bottom: 100px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
 #dessertShowMenu {
     font-size: 20px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     right: 200px;
     top: 200px;
-    padding-bottom: 154px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
 #showMenuButton {
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 578px;
     top: 600px;
     height: 50px;
@@ -44,11 +50,13 @@
 #showBillView {
     font-size: 40px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 120px;
-    padding-bottom: 100px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 400, 0.5);
 }
 
@@ -56,7 +64,7 @@
     color: #333333;
     text-decoration: none;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 550px;
     height: 50px;
@@ -70,7 +78,7 @@
     color: #333333;
     text-align: center;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 650px;
     height: 50px;
@@ -81,33 +89,39 @@
 #addEditMenu {
     font-size: 20px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 20px;
     top: 200px;
-    padding-bottom: 154px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
 #rmEditMenu {
     font-size: 20px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     right: 650px;
     top: 200px;
-    padding-bottom: 154px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
 #showMenuInEditMenu {
     font-size: 20px;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     right: 200px;
     top: 200px;
-    padding-bottom: 154px;
-    padding-right: 20px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
@@ -116,7 +130,7 @@
     color: #333333;
     text-align: center;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 600px;
     top: 650px;
     height: 50px;
@@ -136,7 +150,7 @@
     color: #333333;
     text-align: center;
     border-radius: 25px;
-    position: absolute;
+    position: fixed;
     left: 650px;
     top: 400px;
     height: 50px;
@@ -145,8 +159,8 @@
 }
 
 #pizzaSizeShowMenu {
-    position: absolute;
-    left: 300px;
+    position: fixed;
+    left: 330px;
     top: 200px;
     background: black;
     color: white;
