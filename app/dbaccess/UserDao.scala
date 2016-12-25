@@ -70,8 +70,12 @@ trait UserDaoT {
     DB.withConnection { implicit c =>
       val selectUser = SQL("Select id from Users where (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
         'namegiven -> namegiven, 'zipcodegiven -> zipcodegiven).as(scalar[Long].singleOpt)
+      val selectInactive = SQL("Select inactive from Users where (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
+        'namegiven -> namegiven, 'zipcodegiven -> zipcodegiven).as(scalar[Boolean].singleOpt)
       if (selectUser.isEmpty) {
         -1
+      } else if (selectInactive.get) {
+        -2
       } else {
         setActiveUser(selectUser.get)
         selectUser.get

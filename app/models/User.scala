@@ -17,7 +17,7 @@ object activeUser {
   var address: String = _
   var zipcode: Int = _
   var city: String = _
-  var role: String = _
+  var role: String = "none"
 
 }
 

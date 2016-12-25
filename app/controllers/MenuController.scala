@@ -49,7 +49,11 @@ object MenuController extends Controller {
   }
 
   def editMenu: Action[AnyContent] = Action {
-    Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm))
+    if(models.activeUser.role.equals("Mitarbeiter")) {
+      Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm))
+    } else {
+      Ok(views.html.attemptFailed("permissiondenied"))
+    }
   }
 
   def showMenu: Action[AnyContent] = Action {

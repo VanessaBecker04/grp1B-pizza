@@ -49,7 +49,7 @@ trait UserServiceT {
 
   def logoutUser(): Unit = {
     services.OrderService.cancelOrder()
-    setUser(0, null, null, null, 0, null, null)
+    setUser(0, null, null, null, 0, null, "none")
   }
 }
 

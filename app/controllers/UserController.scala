@@ -108,6 +108,8 @@ object UserController extends Controller {
         val loggedinUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
         if (loggedinUser == -1) {
           Redirect(routes.UserController.attemptFailed("login"))
+        } else if (loggedinUser == -2) {
+          Redirect(routes.UserController.attemptFailed("inactive"))
         } else {
           Redirect(routes.UserController.welcomeUser())
         }
@@ -120,6 +122,10 @@ object UserController extends Controller {
   }
 
   def editUsers: Action[AnyContent] = Action {
-    Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.deleteUserForm))
+    if(models.activeUser.role.equals("Mitarbeiter")) {
+      Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.deleteUserForm))
+    } else {
+      Ok(views.html.attemptFailed("permissiondenied"))
+    }
   }
 }

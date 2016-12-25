@@ -23,11 +23,19 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersUser(): Action[AnyContent] = Action {
-    Ok(views.html.showOrdersUser(OrderHistoryService.showOrdersUser(models.activeUser.id)))
+    if(models.activeUser.id != 0) {
+      Ok(views.html.showOrdersUser(OrderHistoryService.showOrdersUser(models.activeUser.id)))
+    } else {
+      Ok(views.html.attemptFailed("permissiondenied"))
+    }
   }
 
   def showOrdersEmployee(): Action[AnyContent] = Action {
-    Ok(views.html.showOrdersEmployee(OrderHistoryService.showOrdersEmployee))
+    if(models.activeUser.role.equals("Mitarbeiter")) {
+      Ok(views.html.showOrdersEmployee(OrderHistoryService.showOrdersEmployee))
+    } else {
+      Ok(views.html.attemptFailed("permissiondenied"))
+    }
   }
 
   def showDeliveryTime: Action[AnyContent] = Action {
@@ -46,6 +54,10 @@ object OrderHistoryController extends Controller {
   }
 
   def editOrders: Action[AnyContent] = Action {
-    Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
+    if(models.activeUser.role.equals("Mitarbeiter")) {
+      Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
+    } else {
+      Ok(views.html.attemptFailed("permissiondenied"))
+    }
   }
 }
