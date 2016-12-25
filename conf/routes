@@ -9,7 +9,7 @@ GET         /login               controllers.Application.login
 
 POST        /addUser             controllers.UserController.addUser
 GET         /showUsers           controllers.UserController.showUsers
-GET         /editUsers            controllers.UserController.editUser
+GET         /editUsers           controllers.UserController.editUsers
 POST        /deleteUser          controllers.UserController.deleteUser
 GET         /welcomeUser         controllers.UserController.welcomeUser
 GET         /welcomeEmployee     controllers.UserController.welcomeEmployee
@@ -32,6 +32,7 @@ GET         /deliveryTime        controllers.OrderHistoryController.showDelivery
 GET         /showOrdersUser      controllers.OrderHistoryController.showOrdersUser
 GET         /showOrdersEmployee  controllers.OrderHistoryController.showOrdersEmployee
 GET         /showOrdersEmployeeU controllers.OrderHistoryController.showOrdersEmployeeU
+GET         /editOrders          controllers.OrderHistoryController.editOrders
 
 # REST API
 GET         /api                 rest.Api.api

@@ -1,9 +1,6 @@
-@(userForm: Form[forms.CreateUserForm], deleteUserForm: Form[forms.UserIDForm])
+@(users: List[User], userForm: Form[forms.CreateUserForm], deleteUserForm: Form[forms.UserIDForm])
 
 @main("Kunden bearbeiten") {
-
-    <body id="bodyForEditMenu">
-
         <ul id="addEditMenu" style="list-style: none">Kunden hinzufügen:
             @helper.form(action = routes.UserController.addUser()) {
                 @helper.inputText(userForm("Vorname"))
@@ -18,13 +15,11 @@
 
         <ul id="rmEditMenu" style="list-style: none">Kunden entfernen:
             @helper.form(action = routes.UserController.deleteUser()) {
-                <li>@helper.inputText(deleteUserForm("Kunden-ID"), '_showConstraints -> false)</li>
+                <li>@helper.select(deleteUserForm("Kunden-ID"), users.map(u => u.id.toString -> u.id.toString))</li>
                 <li><input type="submit" value="Löschen"></li>
             }
 
         </ul>
 
         <p><a id="linkToShowMenu" href="/showUsers">Registrierte Nutzer</a></p>
-
-    </body>
 }

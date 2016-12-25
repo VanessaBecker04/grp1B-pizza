@@ -19,7 +19,7 @@ object OrderHistoryController extends Controller {
 
   def addToHistory(): Action[AnyContent] = Action {
     services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.currentDate)
-    Redirect(routes.OrderHistoryController.showDeliveryTime)
+    Redirect(routes.OrderHistoryController.showDeliveryTime())
   }
 
   def showOrdersUser(): Action[AnyContent] = Action {
@@ -37,11 +37,15 @@ object OrderHistoryController extends Controller {
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
     userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.welcomeEmployee(services.UserService.registeredUsers, formWithErrors))
+        BadRequest(views.html.editOrders(services.UserService.registeredUsers, formWithErrors))
       },
       userData => {
         val orders = services.OrderHistoryService.showOrdersUser(userData.customerID)
         Ok(views.html.showOrdersUser(orders))
       })
+  }
+
+  def editOrders: Action[AnyContent] = Action {
+    Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
   }
 }

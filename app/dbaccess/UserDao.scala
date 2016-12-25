@@ -26,7 +26,9 @@ trait UserDaoT {
         SQL("insert into Users(forename, name, address, zipcode, city, role, inactive) values ({forename},{name},{address},{zipcode},{city},{role}, {inactive})").on(
           'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeInsert()
       user.id = id.get
-      setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
+      if(!models.activeUser.role.equals("Mitarbeiter")) {
+        setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
+      }
     }
     user
   }

@@ -61,11 +61,11 @@ object UserController extends Controller {
   def deleteUser: Action[AnyContent] = Action { implicit request =>
     deleteUserForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editUser(null, formWithErrors))
+        BadRequest(views.html.editUsers(null, null, formWithErrors))
       },
       userData => {
         services.UserService.deleteUser(userData.customerID)
-        Redirect(routes.UserController.editUser())
+        Redirect(routes.UserController.welcomeEmployee())
       })
   }
 
@@ -81,7 +81,7 @@ object UserController extends Controller {
   }
 
   def welcomeEmployee: Action[AnyContent] = Action {
-    Ok(views.html.welcomeEmployee(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
+    Ok(views.html.welcomeEmployee())
   }
 
   def attemptFailed(errorcode: String): Action[AnyContent] = Action {
@@ -119,7 +119,7 @@ object UserController extends Controller {
     Redirect(routes.Application.index())
   }
 
-  def editUser: Action[AnyContent] = Action {
-    Ok(views.html.editUser(controllers.UserController.userForm, controllers.UserController.deleteUserForm))
+  def editUsers: Action[AnyContent] = Action {
+    Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.deleteUserForm))
   }
 }
