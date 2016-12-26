@@ -70,13 +70,13 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
-    var sumOfOrders: Double = 0
-    var numberOfOrders: Int = 0
-    userOrdersForm.bindFromRequest.fold(
+        userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.editOrders(services.UserService.registeredUsers, formWithErrors))
       },
       userData => {
+        var sumOfOrders: Double = 0
+        var numberOfOrders: Int = 0
         val orders = services.OrderHistoryService.showOrdersUser(userData.customerID)
         for(order <- orders) {
           sumOfOrders = sumOfOrders + order.sumOfOrder
