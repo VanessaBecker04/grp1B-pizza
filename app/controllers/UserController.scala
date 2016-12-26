@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateUserForm, LoginUserForm, UserIDForm}
+import forms.{CreateUserForm, EditUserForm, LoginUserForm, UserIDForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -27,11 +27,25 @@ object UserController extends Controller {
       "Stadt" -> text.verifying("Bitte Ihre Stadt angeben", !_.isEmpty),
       "Rolle" -> text.verifying("Bitte Ihre Rolle angeben", !_.isEmpty)
     )(CreateUserForm.apply)(CreateUserForm.unapply))
+
   val loginForm = Form(
     mapping(
       "Email" -> text,
       "Passwort" -> text
     )(LoginUserForm.apply)(LoginUserForm.unapply))
+
+  val editUserForm = Form(
+    mapping(
+      "Kunden-ID" -> longNumber,
+      "Email" -> text.verifying("Bitte eine Email angeben", !_.isEmpty),
+      "Passwort" -> text.verifying("Bitte ein Passwort angeben", !_.isEmpty),
+      "Vorname" -> text.verifying("Bitte einen Vornamen angeben", !_.isEmpty),
+      "Name" -> text.verifying("Bitte einen Namen angeben", !_.isEmpty),
+      "Straße und Hausnummer" -> text.verifying("Bitte eine Straße und Hausnummer angeben", !_.isEmpty),
+      "Postleitzahl" -> number,
+      "Stadt" -> text.verifying("Bitte eine Stadt angeben", !_.isEmpty),
+      "Rolle" -> text.verifying("Bitte eine Rolle angeben", !_.isEmpty)
+    )(EditUserForm.apply)(EditUserForm.unapply))
 
   val deleteUserForm = Form {
     mapping(
@@ -56,7 +70,31 @@ object UserController extends Controller {
         } else {
           val user = services.UserService.addUser(userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
           if (user != null) {
-            Redirect(routes.UserController.welcomeUser())
+            if (models.activeUser.role.equals("Mitarbeiter")) {
+              Redirect(routes.UserController.attemptSuccessful("usercreated"))
+            } else {
+              Redirect(routes.UserController.welcomeUser())
+            }
+          } else {
+            Redirect(routes.UserController.attemptFailed("emailused"))
+          }
+        }
+      })
+  }
+
+  def editUser: Action[AnyContent] = Action { implicit request =>
+    editUserForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.editUsers(null, null, formWithErrors, null))
+      },
+      userData => {
+        models.calculateDeliveryTime(userData.zipcode, userData.name)
+        if (models.DeliveryTime.expectedTime == -1) {
+          Redirect(routes.UserController.attemptFailed("register"))
+        } else {
+          val user = services.UserService.editUser(userData.customerID, userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
+          if (user != null) {
+            Redirect(routes.UserController.attemptSuccessful("useredited"))
           } else {
             Redirect(routes.UserController.attemptFailed("emailused"))
           }
@@ -67,11 +105,11 @@ object UserController extends Controller {
   def deleteUser: Action[AnyContent] = Action { implicit request =>
     deleteUserForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editUsers(null, null, formWithErrors))
+        BadRequest(views.html.editUsers(null, null, null, formWithErrors))
       },
       userData => {
         services.UserService.deleteUser(userData.customerID)
-        Redirect(routes.UserController.welcomeEmployee())
+        Redirect(routes.UserController.attemptSuccessful("userdeleted"))
       })
   }
 
@@ -94,8 +132,8 @@ object UserController extends Controller {
     Ok(views.html.attemptFailed(errorcode))
   }
 
-  def attemptSuccessful: Action[AnyContent] = Action {
-    Ok(views.html.attemptSuccessful())
+  def attemptSuccessful(successcode: String): Action[AnyContent] = Action {
+    Ok(views.html.attemptSuccessful(successcode))
   }
 
   /**
@@ -129,7 +167,7 @@ object UserController extends Controller {
 
   def editUsers: Action[AnyContent] = Action {
     if(models.activeUser.role.equals("Mitarbeiter")) {
-      Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.deleteUserForm))
+      Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.editUserForm, controllers.UserController.deleteUserForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }

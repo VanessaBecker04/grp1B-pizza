@@ -1,5 +1,14 @@
+@(successcode: String)
 @main(models.Company.name) {
-    <h1>Die Aktion wurde erfolgreich abgeschlossen.</h1>
+    @if(successcode.equals("usercreated")) {
+        <h1>Der Nutzer wurde erfolgreich hinzugefügt.</h1>
+    }
+    @if(successcode.equals("useredited")) {
+        <h1>Die Nutzerdaaten wurden erfolgreich angepasst.</h1>
+    }
+    @if(successcode.equals("userdeleted")) {
+        <h1>Der Nutzer wurde erfolgreich gelöscht und/oder auf den Status inaktiv gesetzt.</h1>
+    }
     <p><a href="/showMenu">Bestellung aufgeben</a></p>
     <p><a href="/">Benutzerkonto aufrufen</a></p>
 }

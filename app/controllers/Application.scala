@@ -29,4 +29,8 @@ object Application extends Controller {
   def login: Action[AnyContent] = Action {
     Ok(views.html.login(controllers.UserController.loginForm))
   }
+
+  def contact: Action[AnyContent] = Action {
+    Ok(views.html.contact())
+  }
 }

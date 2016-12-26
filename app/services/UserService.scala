@@ -27,6 +27,20 @@ trait UserServiceT {
   }
 
   /**
+    * Edits a user of the system.
+    *
+    * @param name name of the edited user.
+    * @return the edited user.
+    */
+  def editUser(customerID: Long, email: String, password: String, forename: String, name: String, address: String, zipcode: Int, city: String, role: String): User = {
+    // create User
+    val inactive: Boolean = false
+    val editedUser = User(customerID, email, password, forename, name, address, zipcode, city, role, inactive)
+    // persist and return User
+    userDao.editUser(editedUser)
+  }
+
+  /**
     * Removes a user by id from the system.
     *
     * @param id users id.

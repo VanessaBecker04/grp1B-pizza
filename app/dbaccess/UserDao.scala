@@ -30,12 +30,34 @@ trait UserDaoT {
       } else {
         returnuser = user
         val id: Option[Long] =
-          SQL("insert into Users(email, password, forename, name, address, zipcode, city, role, inactive) values ({email}, {password}, {forename},{name},{address},{zipcode},{city},{role}, {inactive})").on(
+          SQL("insert into Users(email, password, forename, name, address, zipcode, city, role, inactive) values ({email}, {password}, {forename}, {name}, {address}, {zipcode}, {city}, {role}, {inactive})").on(
             'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeInsert()
         user.id = id.get
         if(!models.activeUser.role.equals("Mitarbeiter")) {
           setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
         }
+      }
+    }
+    returnuser
+  }
+
+  /**
+    * Edits the given user in the database.
+    *
+    * @param user the user object to be stored.
+    * @return the persisted user object
+    */
+  def editUser(user: User): User = {
+    var returnuser: User = null
+    DB.withConnection { implicit c =>
+      val selectDuplicate = SQL("Select TOP 1 email from Users where email = {email}").on(
+        'email -> user.email).as(scalar[String].singleOpt)
+      if (selectDuplicate.isDefined) {
+        returnuser = null
+      } else {
+        returnuser = user
+        SQL("Update Users set email={email}, password={password}, forename={forename}, name={name}, address={address}, zipcode={zipcode}, city={city}, role={role}, inactive={inactive} where id = {id}").on(
+            'id -> user.id, 'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeUpdate()
       }
     }
     returnuser

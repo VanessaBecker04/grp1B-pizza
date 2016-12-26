@@ -1,4 +1,4 @@
-@(users: List[User], userForm: Form[forms.CreateUserForm], deleteUserForm: Form[forms.UserIDForm])
+@(users: List[User], userForm: Form[forms.CreateUserForm], editUserForm: Form[forms.EditUserForm], deleteUserForm: Form[forms.UserIDForm])
 
 @main("Kunden bearbeiten") {
         <ul id="addEditMenu" style="list-style: none">Kunden hinzufügen:
@@ -11,7 +11,7 @@
                 @helper.inputText(userForm("Postleitzahl"))
                 @helper.inputText(userForm("Stadt"))
                 @helper.select(userForm("Rolle"), helper.options(List("Kunde", "Mitarbeiter")), '_label -> "Rolle")
-                <input type="submit" value="Speichern" />
+                <input type="submit" value="Hinzufügen" />
             }
         </ul>
 
@@ -20,7 +20,21 @@
                 <li>@helper.select(deleteUserForm("Kunden-ID"), users.map(u => u.id.toString -> u.id.toString))</li>
                 <li><input type="submit" value="Löschen"></li>
             }
+        </ul>
 
+        <ul id="showMenuInEditMenu" style="list-style: none"> Kunden ändern:
+            @helper.form(action = routes.UserController.editUser()) {
+                @helper.select(editUserForm("Kunden-ID"), users.map(u => u.id.toString -> u.id.toString))
+                @helper.inputText(editUserForm("Email"))
+                @helper.inputPassword(editUserForm("Passwort"))
+                @helper.inputText(editUserForm("Vorname"))
+                @helper.inputText(editUserForm("Name"))
+                @helper.inputText(editUserForm("Straße und Hausnummer"))
+                @helper.inputText(editUserForm("Postleitzahl"))
+                @helper.inputText(editUserForm("Stadt"))
+                @helper.select(editUserForm("Rolle"), helper.options(List("Kunde", "Mitarbeiter")), '_label -> "Rolle")
+                <input type="submit" value="Ändern" />
+            }
         </ul>
 
         <p><a id="linkToShowMenu" href="/showUsers">Registrierte Nutzer</a></p>

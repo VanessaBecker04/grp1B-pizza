@@ -6,15 +6,17 @@
 GET         /                    controllers.Application.index
 GET         /register            controllers.Application.register
 GET         /login               controllers.Application.login
+GET         /contact             controllers.Application.contact
 
 POST        /addUser             controllers.UserController.addUser
+POST        /editUser            controllers.UserController.editUser
+POST        /deleteUser          controllers.UserController.deleteUser
 GET         /showUsers           controllers.UserController.showUsers
 GET         /editUsers           controllers.UserController.editUsers
-POST        /deleteUser          controllers.UserController.deleteUser
 GET         /welcomeUser         controllers.UserController.welcomeUser
 GET         /welcomeEmployee     controllers.UserController.welcomeEmployee
 GET         /attemptFailed       controllers.UserController.attemptFailed(errorcode)
-GET         /attemptSuccessful   controllers.UserController.attemptSuccessful
+GET         /attemptSuccessful   controllers.UserController.attemptSuccessful(successcode)
 GET         /loginUser           controllers.UserController.loginUser
 GET         /logoutUser          controllers.UserController.logoutUser
 

@@ -13,6 +13,7 @@
         <ul class="topnav" id="topnavbar">
             <li style="float:left"><a href="/">Home</a></li>
             <li style="float:left"><a href="/showMenu">Produkte</a></li>
+            <li style="float:right"><a href="/contact">Kontakt</a></li>
             @if(models.activeUser.id == 0) {
                 <li style="float:left"><a href="/login">Einloggen</a></li>
                 <li style="float:right"><a href="/register">Registrieren</a></li>
@@ -62,16 +63,5 @@
         }
     </style>
         @content
-        <p>
-            Impressum: <br/>
-                Pizza Suez <br/>
-                Heimgartenstr. 37 <br/>
-                82319 Starnberg <br/>
-            Öffnungszeiten: <br/>
-                Montag-Freitag: 10-20 Uhr <br/>
-                Samstag-Sonntag: 10-22 Uhr <br/>
-            Telefonnummer: <br/>
-            08151/733849 <br/>
-        </p>
     </body>
 </html>
