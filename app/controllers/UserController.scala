@@ -18,17 +18,19 @@ object UserController extends Controller {
     */
   val userForm = Form(
     mapping(
-      "Vorname" -> text,
-      "Name" -> text,
-      "Straße und Hausnummer" -> text,
+      "Email" -> text.verifying("Bitte Ihre Email angeben", !_.isEmpty),
+      "Passwort" -> text.verifying("Bitte Ihr Passwort angeben", !_.isEmpty),
+      "Vorname" -> text.verifying("Bitte Ihren Vornamen angeben", !_.isEmpty),
+      "Name" -> text.verifying("Bitte Ihren Namen angeben", !_.isEmpty),
+      "Straße und Hausnummer" -> text.verifying("Bitte Ihre Straße und Hausnummer angeben", !_.isEmpty),
       "Postleitzahl" -> number,
-      "Stadt" -> text,
-      "Rolle" -> text
+      "Stadt" -> text.verifying("Bitte Ihre Stadt angeben", !_.isEmpty),
+      "Rolle" -> text.verifying("Bitte Ihre Rolle angeben", !_.isEmpty)
     )(CreateUserForm.apply)(CreateUserForm.unapply))
   val loginForm = Form(
     mapping(
-      "Nachname" -> text,
-      "Postleitzahl" -> number
+      "Email" -> text,
+      "Passwort" -> text
     )(LoginUserForm.apply)(LoginUserForm.unapply))
 
   val deleteUserForm = Form {
@@ -52,8 +54,12 @@ object UserController extends Controller {
         if (models.DeliveryTime.expectedTime == -1) {
           Redirect(routes.UserController.attemptFailed("register"))
         } else {
-          services.UserService.addUser(userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
-          Redirect(routes.UserController.welcomeUser())
+          val user = services.UserService.addUser(userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
+          if (user != null) {
+            Redirect(routes.UserController.welcomeUser())
+          } else {
+            Redirect(routes.UserController.attemptFailed("emailused"))
+          }
         }
       })
   }
@@ -105,7 +111,7 @@ object UserController extends Controller {
         BadRequest(views.html.login(formWithErrors))
       },
       loginData => {
-        val loggedinUser = services.UserService.loginUser(loginData.name, loginData.zipcode)
+        val loggedinUser = services.UserService.loginUser(loginData.email, loginData.password)
         if (loggedinUser == -1) {
           Redirect(routes.UserController.attemptFailed("login"))
         } else if (loggedinUser == -2) {

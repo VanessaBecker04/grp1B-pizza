@@ -3,6 +3,8 @@
 @main("Kunden bearbeiten") {
         <ul id="addEditMenu" style="list-style: none">Kunden hinzufügen:
             @helper.form(action = routes.UserController.addUser()) {
+                @helper.inputText(userForm("Email"))
+                @helper.inputPassword(userForm("Passwort"))
                 @helper.inputText(userForm("Vorname"))
                 @helper.inputText(userForm("Name"))
                 @helper.inputText(userForm("Straße und Hausnummer"))

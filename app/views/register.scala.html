@@ -5,6 +5,8 @@
 @main(models.Company.name) {
     <h1>Registrieren:</h1>
     <p> @helper.form(action = routes.UserController.addUser()) {
+        @helper.inputText(userForm("Email"))
+        @helper.inputPassword(userForm("Passwort"))
         @helper.inputText(userForm("Vorname"))
         @helper.inputText(userForm("Name"))
         @helper.inputText(userForm("Straße und Hausnummer"))

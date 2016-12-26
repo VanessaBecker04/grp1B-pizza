@@ -6,8 +6,8 @@
     <h1>Login:</h1>
     <p>
     @helper.form(action = routes.UserController.loginUser()) {
-        @helper.inputText(loginForm("Nachname"))
-        @helper.inputText(loginForm("Postleitzahl"))
+        @helper.inputText(loginForm("Email"))
+        @helper.inputPassword(loginForm("Passwort"))
         <input type="submit" value="Absenden" />
     }
     </p>

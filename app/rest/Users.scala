@@ -101,7 +101,7 @@ object Users extends Controller {
       },
       username => {
         Ok(Json.obj("status" -> "OK",
-          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.forename, username.name, username.address, username.zipcode.toInt, username.city, username.role)))))
+          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.email, username.password, username.forename, username.name, username.address, username.zipcode.toInt, username.city, username.role)))))
       }
     )
   }
@@ -125,5 +125,5 @@ object Users extends Controller {
 
   private case class HateoasUser(user: User, url: String)
 
-  private case class Username(forename: String, name: String, address: String, zipcode: String, city: String, role: String)
+  private case class Username(email: String, password: String, forename: String, name: String, address: String, zipcode: String, city: String, role: String)
 }

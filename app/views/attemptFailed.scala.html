@@ -16,4 +16,9 @@
     @if(errorcode.equals("inactive")) {
         <h1>Ihr Account ist deaktiviert. Kontaktieren Sie uns, um ihr Konto zu reaktivieren.</h1>
     }
+    @if(errorcode.equals("emailused")) {
+        <h1>Ihre Email ist bereits registriert. Melden Sie sich an oder nutzen Sie eine andere Email.</h1>
+        <p><a href="/login">Einloggen</a></p>
+        <p><a href="/register">Registrieren</a></p>
+    }
 }

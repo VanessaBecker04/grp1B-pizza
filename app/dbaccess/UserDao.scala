@@ -21,16 +21,24 @@ trait UserDaoT {
     * @return the persisted user object
     */
   def addUser(user: User): User = {
+    var returnuser: User = null
     DB.withConnection { implicit c =>
-      val id: Option[Long] =
-        SQL("insert into Users(forename, name, address, zipcode, city, role, inactive) values ({forename},{name},{address},{zipcode},{city},{role}, {inactive})").on(
-          'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeInsert()
-      user.id = id.get
-      if(!models.activeUser.role.equals("Mitarbeiter")) {
-        setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
+      val selectDuplicate = SQL("Select TOP 1 email from Users where email = {email}").on(
+        'email -> user.email).as(scalar[String].singleOpt)
+      if (selectDuplicate.isDefined) {
+        returnuser = null
+      } else {
+        returnuser = user
+        val id: Option[Long] =
+          SQL("insert into Users(email, password, forename, name, address, zipcode, city, role, inactive) values ({email}, {password}, {forename},{name},{address},{zipcode},{city},{role}, {inactive})").on(
+            'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeInsert()
+        user.id = id.get
+        if(!models.activeUser.role.equals("Mitarbeiter")) {
+          setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
+        }
       }
     }
-    user
+    returnuser
   }
 
   /**
@@ -43,7 +51,7 @@ trait UserDaoT {
     DB.withConnection { implicit c =>
       val userOrders = OrderHistoryDao.showOrdersUser(id)
       if (userOrders.isEmpty) {
-        val rowsCount = SQL("delete from Users where id = ({id})").on('id -> id).executeUpdate()
+        val rowsCount = SQL("delete from Users where id = {id}").on('id -> id).executeUpdate()
         rowsCount > 0
       } else {
         val rowsCount = SQL("Update Users set inactive=1 where id = {id}").on('id -> id).executeUpdate()
@@ -59,19 +67,19 @@ trait UserDaoT {
     */
   def registeredUsers: List[User] = {
     DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select id, forename, name, address, zipcode, city, role, inactive from Users")
+      val selectUsers = SQL("Select id, email, forename, name, address, zipcode, city, role, inactive from Users")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role"), row[Boolean]("inactive"))).toList
+      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("email"), '1'.toString, row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role"), row[Boolean]("inactive"))).toList
       users
     }
   }
 
-  def loginUser(namegiven: String, zipcodegiven: Int): Long = {
+  def loginUser(email: String, password: String): Long = {
     DB.withConnection { implicit c =>
-      val selectUser = SQL("Select id from Users where (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
-        'namegiven -> namegiven, 'zipcodegiven -> zipcodegiven).as(scalar[Long].singleOpt)
-      val selectInactive = SQL("Select inactive from Users where (name = {namegiven}) AND (zipcode = {zipcodegiven})").on(
-        'namegiven -> namegiven, 'zipcodegiven -> zipcodegiven).as(scalar[Boolean].singleOpt)
+      val selectUser = SQL("Select id from Users where (email = {email}) AND (password = {password})").on(
+        'email -> email, 'password -> password).as(scalar[Long].singleOpt)
+      val selectInactive = SQL("Select inactive from Users where (email = {email}) AND (password = {password})").on(
+        'email -> email, 'password -> password).as(scalar[Boolean].singleOpt)
       if (selectUser.isEmpty) {
         -1
       } else if (selectInactive.get) {

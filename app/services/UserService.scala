@@ -18,10 +18,10 @@ trait UserServiceT {
     * @param name name of the new user.
     * @return the new user.
     */
-  def addUser(forename: String, name: String, address: String, zipcode: Int, city: String, role: String): User = {
+  def addUser(email: String, password: String, forename: String, name: String, address: String, zipcode: Int, city: String, role: String): User = {
     // create User
     val inactive: Boolean = false
-    val newUser = User(-1, forename, name, address, zipcode, city, role, inactive)
+    val newUser = User(-1, email, password, forename, name, address, zipcode, city, role, inactive)
     // persist and return User
     userDao.addUser(newUser)
   }
@@ -43,8 +43,8 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
-  def loginUser(name: String, zipcode: Int): Long = {
-    userDao.loginUser(name, zipcode)
+  def loginUser(email: String, password: String): Long = {
+    userDao.loginUser(email, password)
   }
 
   def logoutUser(): Unit = {
