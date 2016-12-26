@@ -70,7 +70,7 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
-        userOrdersForm.bindFromRequest.fold(
+    userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.editOrders(services.UserService.registeredUsers, formWithErrors))
       },
