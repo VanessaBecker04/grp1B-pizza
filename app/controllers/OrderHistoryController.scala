@@ -35,7 +35,15 @@ object OrderHistoryController extends Controller {
 
   def showOrdersUser(): Action[AnyContent] = Action {
     if(models.activeUser.id != 0) {
-      Ok(views.html.showOrdersUser(OrderHistoryService.showOrdersUser(models.activeUser.id)))
+      var sumOfOrders: Double = 0
+      var numberOfOrders: Int = 0
+      val orders = services.OrderHistoryService.showOrdersUser(models.activeUser.id)
+      for(order <- orders) {
+        sumOfOrders = sumOfOrders + order.sumOfOrder
+        numberOfOrders = numberOfOrders + 1
+      }
+      val averageOrderSum: Double = sumOfOrders / numberOfOrders
+      Ok(views.html.showOrdersUser(orders, sumOfOrders, averageOrderSum))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -43,7 +51,15 @@ object OrderHistoryController extends Controller {
 
   def showOrdersEmployee(): Action[AnyContent] = Action {
     if(models.activeUser.role.equals("Mitarbeiter")) {
-      Ok(views.html.showOrdersEmployee(OrderHistoryService.showOrdersEmployee))
+      var sumOfOrders: Double = 0
+      var numberOfOrders: Int = 0
+      val orders = services.OrderHistoryService.showOrdersEmployee
+      for(order <- orders) {
+        sumOfOrders = sumOfOrders + order.sumOfOrder
+        numberOfOrders = numberOfOrders + 1
+      }
+      val averageOrderSum: Double = sumOfOrders / numberOfOrders
+      Ok(views.html.showOrdersEmployee(orders, sumOfOrders, averageOrderSum))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -54,13 +70,20 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
+    var sumOfOrders: Double = 0
+    var numberOfOrders: Int = 0
     userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.editOrders(services.UserService.registeredUsers, formWithErrors))
       },
       userData => {
         val orders = services.OrderHistoryService.showOrdersUser(userData.customerID)
-        Ok(views.html.showOrdersUser(orders))
+        for(order <- orders) {
+          sumOfOrders = sumOfOrders + order.sumOfOrder
+          numberOfOrders = numberOfOrders + 1
+        }
+        val averageOrderSum: Double = sumOfOrders / numberOfOrders
+        Ok(views.html.showOrdersUser(orders, sumOfOrders, averageOrderSum))
       })
   }
 

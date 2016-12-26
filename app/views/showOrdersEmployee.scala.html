@@ -1,4 +1,4 @@
-@(orders: List[models.OrderHistory])
+@(orders: List[models.OrderHistory], sumOfOrders: Double, averageOrderSum: Double)
 
 @main(models.Company.name) {
     <p>Folgende Bestellungen wurden aufgegeben:</p>
@@ -7,5 +7,11 @@
         <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate</li>
     }
     </ul>
-
+    @if(sumOfOrders != 0) {
+        <ul>
+            Gesamtsumme der Bestellungen: @sumOfOrders €<br/>
+            Durchschnittsbestellwert: @averageOrderSum €</ul>
+    } else {
+        <ul>Es wurden keine Bestellungen aufgegeben.</ul>
+    }
 }

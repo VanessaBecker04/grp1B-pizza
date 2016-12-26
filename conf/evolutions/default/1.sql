@@ -2,7 +2,7 @@
 
 # --- !Ups
 CREATE TABLE Users (
-    id serial PRIMARY KEY AUTO_INCREMENT,
+    id serial PRIMARY KEY,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     forename varchar(255) NOT NULL,
