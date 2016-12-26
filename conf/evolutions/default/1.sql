@@ -27,14 +27,15 @@ CREATE TABLE Menu (
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
     price double NOT NULL,
-    category varchar(255) NOT NULL
+    category varchar(255) NOT NULL,
+    ordered bit
 );
-INSERT INTO Menu(id, name, price, category) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza');
-INSERT INTO Menu(id, name, price, category) VALUES(102, 'Pizza Regina', 0.27, 'Pizza');
-INSERT INTO Menu(id, name, price, category) VALUES(201, 'Sprite', 0.3, 'Getränk');
-INSERT INTO Menu(id, name, price, category) VALUES(202, 'Cola', 0.3, 'Getränk');
-INSERT INTO Menu(id, name, price, category) VALUES(301, 'Schokokuchen', 2.0, 'Dessert');
-INSERT INTO Menu(id, name, price, category) VALUES(302, 'Schokoeis', 2.0, 'Dessert');
+INSERT INTO Menu(id, name, price, category, ordered) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza', 0);
+INSERT INTO Menu(id, name, price, category, ordered) VALUES(102, 'Pizza Regina', 0.27, 'Pizza', 0);
+INSERT INTO Menu(id, name, price, category, ordered) VALUES(201, 'Sprite', 0.3, 'Getränk', 0);
+INSERT INTO Menu(id, name, price, category, ordered) VALUES(202, 'Cola', 0.3, 'Getränk', 0);
+INSERT INTO Menu(id, name, price, category, ordered) VALUES(301, 'Schokokuchen', 2.0, 'Dessert', 0);
+INSERT INTO Menu(id, name, price, category, ordered) VALUES(302, 'Schokoeis', 2.0, 'Dessert', 0);
 
 # --- !Downs
 

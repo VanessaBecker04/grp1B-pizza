@@ -43,10 +43,17 @@ object MenuController extends Controller {
         BadRequest(views.html.editMenu(null, formWithErrors))
       },
       userData => {
-        val rm = services.MenuService.rmFromMenu(userData.id)
+        for (k <- services.MenuService.addedToMenu) {
+          if (k.id == userData.id && !k.ordered) {
+            services.MenuService.rmFromMenu(userData.id)
+          } else {
+            Redirect(routes.MenuController.editMenu())
+          }
+        }
         Redirect(routes.MenuController.editMenu())
       })
   }
+
 
   def editMenu: Action[AnyContent] = Action {
     if(models.activeUser.role.equals("Mitarbeiter")) {

@@ -26,6 +26,8 @@ object BillController extends Controller {
         val newOrder = services.OrderService.addToOrder(models.activeUser.id, userData.pizzaName, userData.pizzaNumber,
           userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
           userData.dessertName, userData.dessertNumber)
+        models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName, userData.beverageNumber,
+          userData.dessertName, userData.dessertNumber)
         services.OrderService.doCalculationForBill()
         Redirect(routes.BillController.showBill())
       })
@@ -36,6 +38,7 @@ object BillController extends Controller {
   }
 
   def cancelOrder: Action[AnyContent] = Action {
+    models.setUndeleteable(null, 0, null, 0, null, 0)
     services.OrderService.cancelOrder()
     Redirect(routes.MenuController.showMenu())
   }

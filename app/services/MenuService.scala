@@ -19,7 +19,8 @@ trait MenuServiceT {
     */
   def addToMenu(name: String, price: Double, category: String): Menu = {
     // create User
-    val newMenu = Menu(-1, name, price, category)
+    val ordered: Boolean = false
+    val newMenu = Menu(-1, name, price, category, ordered)
     // persist and return User
     menuDao.addToMenu(newMenu)
   }
@@ -40,6 +41,8 @@ trait MenuServiceT {
   def addedToMenu: List[Menu] = {
     menuDao.addedToMenu
   }
+
+  def setProductOrdered(id: Long): Unit = menuDao.setProductOrdered(id)
 
 }
 
