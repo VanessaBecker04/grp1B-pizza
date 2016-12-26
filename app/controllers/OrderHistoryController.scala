@@ -19,6 +19,17 @@ object OrderHistoryController extends Controller {
 
   def addToHistory(): Action[AnyContent] = Action {
     services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.currentDate)
+    for (s <- services.MenuService.addedToMenu) {
+      if (s.name.equals(models.UndeleteableProducts.pizza)) {
+        services.MenuService.setProductOrdered(s.id)
+      }
+      if (s.name.equals(models.UndeleteableProducts.beverage)) {
+        services.MenuService.setProductOrdered(s.id)
+      }
+      if (s.name.equals(models.UndeleteableProducts.dessert)) {
+        services.MenuService.setProductOrdered(s.id)
+      }
+    }
     Redirect(routes.OrderHistoryController.showDeliveryTime())
   }
 

@@ -21,8 +21,8 @@ trait MenuDaoT {
   def addToMenu(menu: Menu): Menu = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into Menu(name, price, category) values ({name}, {price}, {category})").on(
-          'name -> menu.name, 'price -> menu.price, 'category -> menu.category).executeInsert()
+        SQL("insert into Menu(name, price, category, ordered) values ({name}, {price}, {category}, {ordered})").on(
+          'name -> menu.name, 'price -> menu.price, 'category -> menu.category, 'ordered -> menu.ordered).executeInsert()
       menu.id = id.get
     }
     menu
@@ -48,11 +48,17 @@ trait MenuDaoT {
     */
   def addedToMenu: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select id, name, price, category from Menu;")
+      val selectFromMenu = SQL("Select id, name, price, category, ordered from Menu;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
-        row[Double]("price"), row[String]("category"))).toList
+        row[Double]("price"), row[String]("category"), row[Boolean]("ordered"))).toList
       products
+    }
+  }
+
+  def setProductOrdered(id: Long): Unit = {
+    DB.withConnection { implicit c =>
+      SQL("Update Menu set ordered=1 where id = {id}").on('id -> id).executeUpdate()
     }
   }
 
