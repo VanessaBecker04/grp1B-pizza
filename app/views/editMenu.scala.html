@@ -1,4 +1,4 @@
-@(menuForm: Form[forms.CreateMenuForm], rmForm: Form[forms.CreateRemoveFromMenuForm])
+@(menuForm: Form[forms.CreateMenuForm], rmForm: Form[forms.CreateRemoveFromMenuForm], upForm: Form[forms.CreateUpdateInMenuForm])
 
 @main("Speisekarte bearbeiten") {
 
@@ -21,6 +21,16 @@
             @helper.form(action = routes.MenuController.rmFromMenu()) {
                 <li>@helper.inputText(rmForm("Id"), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Löschen"></li>
+            }
+
+        </ul>
+
+        <ul id="updateEditMenu" style="list-style: none">Produkte in der Speisekarte abändern:
+            @helper.form(action = routes.MenuController.updateInMenu()) {
+                <li>@helper.select(upForm("Id"), models.categorizeMenu.allIdFromMenu.map(p => p.toString -> p.toString))</li>
+                <li>@helper.inputText(upForm("Neuer Name"))</li>
+                <li>@helper.inputText(upForm("Neuer Preis"), '_showConstraints -> false)</li>
+                <li><input type="submit" value="Ändern"></li>
             }
 
         </ul>

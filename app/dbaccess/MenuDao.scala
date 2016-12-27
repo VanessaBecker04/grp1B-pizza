@@ -28,6 +28,12 @@ trait MenuDaoT {
     menu
   }
 
+  def updateInMenu(id: Long, name: String, price: Double): Unit = {
+    DB.withConnection { implicit c =>
+        SQL("Update Menu set name={name}, price={price} where id = {id}").on('id -> id, 'name -> name, 'price -> price).executeUpdate()
+    }
+  }
+
   /**
     * Removes a user by id from the database.
     *

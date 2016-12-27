@@ -21,4 +21,8 @@
         <p><a href="/login">Einloggen</a></p>
         <p><a href="/register">Registrieren</a></p>
     }
+    @if(errorcode.equals("atLeastOneProduct")) {
+        <h1>Sie müssen mindestens bei einem Produkt die Menge größer 0 auswählen</h1>
+        <p><a href="/showMenu">Bestellung aufgeben</a></p>
+    }
 }

@@ -12,6 +12,7 @@ object categorizeMenu {
   var pizzaList: List[String] =_
   var beverageList: List[String] =_
   var dessertList: List[String] =_
+  var allIdFromMenu: List[Long] =_
 }
 
 case class categorize() {
@@ -39,13 +40,21 @@ case class categorize() {
 
 }
 
+case class putAllMenuIDInList() {
+  val allID = new ListBuffer[Long]
+  for (s <- services.MenuService.addedToMenu) {
+    allID += s.id
+  }
+  categorizeMenu.allIdFromMenu = allID.toList
+}
+
 object UndeleteableProducts {
   var pizza: String =_
   var beverage: String =_
   var dessert: String =_
 }
 
-case class setUndeleteable(pizza: String, pizzaNr: Int, beverage: String, beverageNr: Int,  dessert: String, dessertNr: Int) {
+case class setUndeleteable(pizza: String, pizzaNr: Int, beverage: String, beverageNr: Int, dessert: String, dessertNr: Int) {
 
   if (pizzaNr != 0) {
     UndeleteableProducts.pizza = pizza

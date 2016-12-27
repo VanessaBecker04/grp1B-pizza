@@ -24,6 +24,7 @@ GET         /showMenu            controllers.MenuController.showMenu
 GET         /editMenu            controllers.MenuController.editMenu
 POST        /addToMenu           controllers.MenuController.addToMenu
 POST        /rmFromMenu          controllers.MenuController.rmFromMenu
+POST        /updateInMenu        controllers.MenuController.updateInMenu
 
 POST        /addToBill           controllers.BillController.addToBill
 GET         /showBill            controllers.BillController.showBill

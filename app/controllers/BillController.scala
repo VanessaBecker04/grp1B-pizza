@@ -12,7 +12,7 @@ import play.api.mvc.{Action, AnyContent, Controller}
 object BillController extends Controller {
   val billform = Form(
     mapping(
-      "CustomerID" -> longNumber(min = 1), "Pizza" -> text, "Anzahl der Pizzen" -> number(min = 0, max = 100),
+      "CustomerID" -> longNumber, "Pizza" -> text, "Anzahl der Pizzen" -> number(min = 0, max = 100),
       "Pizzagröße" -> text, "Getränk" -> text, "Anzahl der Getränke" -> number(min = 0, max = 100), "Getränkegröße" -> text,
       "Dessert" -> text, "Anzahl der Desserts" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
 
@@ -26,10 +26,18 @@ object BillController extends Controller {
         val newOrder = services.OrderService.addToOrder(models.activeUser.id, userData.pizzaName, userData.pizzaNumber,
           userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
           userData.dessertName, userData.dessertNumber)
-        models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName, userData.beverageNumber,
-          userData.dessertName, userData.dessertNumber)
-        services.OrderService.doCalculationForBill()
-        Redirect(routes.BillController.showBill())
+        if (models.activeUser.id == 0) {
+          Redirect(routes.Application.login())
+        } else {
+          if(userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
+            Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
+          } else {
+            models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
+              userData.beverageNumber, userData.dessertName, userData.dessertNumber)
+            services.OrderService.doCalculationForBill()
+            Redirect(routes.BillController.showBill())
+          }
+        }
       })
   }
 

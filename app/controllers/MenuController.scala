@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateMenuForm, CreateRemoveFromMenuForm}
+import forms.{CreateMenuForm, CreateRemoveFromMenuForm, CreateUpdateInMenuForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -19,6 +19,8 @@ object MenuController extends Controller {
     mapping(
       "Produktname" -> text, "Preis je Einheit" -> of[Double], "Kategorie" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
   val rmForm = Form(mapping("Id" -> longNumber)(CreateRemoveFromMenuForm.apply)(CreateRemoveFromMenuForm.unapply))
+  val updateForm = Form(mapping("Id" -> longNumber, "Neuer Name" -> text, "Neuer Preis" -> of[Double])
+  (CreateUpdateInMenuForm.apply)(CreateUpdateInMenuForm.unapply))
 
   /**
     * Adds a new user with the given data to the system.
@@ -29,7 +31,7 @@ object MenuController extends Controller {
   def addToMenu: Action[AnyContent] = Action { implicit request =>
     menuForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(formWithErrors, null))
+        BadRequest(views.html.editMenu(formWithErrors, null, null))
       },
       userData => {
         val newProduct = services.MenuService.addToMenu(userData.name, userData.price, userData.category)
@@ -37,10 +39,21 @@ object MenuController extends Controller {
       })
   }
 
+  def updateInMenu: Action[AnyContent] = Action { implicit request =>
+    updateForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.editMenu(null, null, formWithErrors))
+      },
+      userData => {
+        services.MenuService.updateInMenu(userData.id, userData.name, userData.price)
+        Redirect(routes.MenuController.editMenu())
+      })
+  }
+
   def rmFromMenu: Action[AnyContent] = Action { implicit request =>
     rmForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(null, formWithErrors))
+        BadRequest(views.html.editMenu(null, formWithErrors, null))
       },
       userData => {
         for (k <- services.MenuService.addedToMenu) {
@@ -57,7 +70,8 @@ object MenuController extends Controller {
 
   def editMenu: Action[AnyContent] = Action {
     if(models.activeUser.role.equals("Mitarbeiter")) {
-      Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm))
+      models.putAllMenuIDInList()
+      Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm, controllers.MenuController.updateForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }

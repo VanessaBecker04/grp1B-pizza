@@ -91,7 +91,7 @@
     border-radius: 25px;
     position: fixed;
     left: 20px;
-    top: 200px;
+    top: 120px;
     padding-top: 30px;
     padding-right: 40px;
     padding-left: 40px;
@@ -103,8 +103,21 @@
     font-size: 20px;
     border-radius: 25px;
     position: fixed;
+    left: 20px;
+    top: 500px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#updateEditMenu {
+    font-size: 20px;
+    border-radius: 25px;
+    position: fixed;
     right: 650px;
-    top: 200px;
+    top: 120px;
     padding-top: 30px;
     padding-right: 40px;
     padding-left: 40px;
@@ -117,7 +130,7 @@
     border-radius: 25px;
     position: fixed;
     right: 200px;
-    top: 200px;
+    top: 120px;
     padding-top: 30px;
     padding-right: 40px;
     padding-left: 40px;

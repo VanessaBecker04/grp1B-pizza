@@ -80,15 +80,15 @@ trait OrderServiceT {
           }
           for (m <- menu) {
             if (m.name.equals(c.beverageName)) {
-              if (c.beverageSize.equals("medium")) {
+              if (c.beverageSize.equals("0.5l")) {
                 beverageSum += m.price
                 beverageSum = (beverageSum * 5) * c.beverageNumber
               }
-              if (c.beverageSize.equals("large")) {
+              if (c.beverageSize.equals("0.75l")) {
                 beverageSum += m.price
                 beverageSum = (beverageSum * 7.5) * c.beverageNumber
               }
-              if (c.beverageSize.equals("xl")) {
+              if (c.beverageSize.equals("1.0l")) {
                 beverageSum += m.price
                 beverageSum = (beverageSum * 10) * c.beverageNumber
               }

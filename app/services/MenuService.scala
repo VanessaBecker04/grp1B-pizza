@@ -25,6 +25,10 @@ trait MenuServiceT {
     menuDao.addToMenu(newMenu)
   }
 
+  def updateInMenu(id: Long, name: String, price: Double): Unit = {
+    menuDao.updateInMenu(id, name, price)
+  }
+
   /**
     * Removes a user by id from the system.
     *
