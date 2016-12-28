@@ -7,16 +7,23 @@ import play.api.mvc.{Action, AnyContent, Controller}
 import services.OrderHistoryService
 
 /**
-  * Created by Hasi on 14.12.2016.
+  * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
   */
 object OrderHistoryController extends Controller {
 
+  /** Form Objekt für die Benutzerdaten.
+    *
+    */
   val userOrdersForm = Form {
     mapping(
       "CustomerID" -> longNumber
     )(UserIDForm.apply)(UserIDForm.unapply)
   }
 
+  /** Fügt ein neuen Bestellverlauf des Kunden in das System ein.
+    *
+    * @return erwartete Lieferzeit
+    */
   def addToHistory(): Action[AnyContent] = Action {
     services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.currentDate)
     for (s <- services.MenuService.addedToMenu) {
@@ -65,6 +72,10 @@ object OrderHistoryController extends Controller {
     }
   }
 
+  /** Zeigt die erwartete Lieferzeit der aufgegebenen Bestellung an.
+    *
+    * @return erwartete Lieferzeit
+    */
   def showDeliveryTime: Action[AnyContent] = Action {
     Ok(views.html.deliveryTime())
   }

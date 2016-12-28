@@ -106,9 +106,9 @@
     left: 20px;
     top: 500px;
     padding-top: 30px;
-    padding-right: 40px;
-    padding-left: 40px;
-    padding-bottom: 40px;
+    padding-right: 35px;
+    padding-left: 35px;
+    padding-bottom: 35px;
     background-color: rgba(400, 400, 700, 0.5);
 }
 
@@ -129,7 +129,7 @@
     font-size: 20px;
     border-radius: 25px;
     position: fixed;
-    right: 200px;
+    right: 20px;
     top: 120px;
     padding-top: 30px;
     padding-right: 40px;

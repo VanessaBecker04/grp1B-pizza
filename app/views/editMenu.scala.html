@@ -17,7 +17,7 @@
             }
         </ul>
 
-        <ul id="rmEditMenu" style="list-style: none">Produkt von der Speisekarte entfernen:
+        <ul id="rmEditMenu" style="list-style: none">Produkt von der Speisekarte entfernen/deaktivieren:
             @helper.form(action = routes.MenuController.rmFromMenu()) {
                 <li>@helper.inputText(rmForm("Id"), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Löschen"></li>
@@ -27,9 +27,10 @@
 
         <ul id="updateEditMenu" style="list-style: none">Produkte in der Speisekarte abändern:
             @helper.form(action = routes.MenuController.updateInMenu()) {
-                <li>@helper.select(upForm("Id"), models.categorizeMenu.allIdFromMenu.map(p => p.toString -> p.toString))</li>
+                <li>@helper.select(upForm("Id"), models.categorizeMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li>@helper.inputText(upForm("Neuer Name"))</li>
                 <li>@helper.inputText(upForm("Neuer Preis"), '_showConstraints -> false)</li>
+                <li>@helper.inputRadioGroup(upForm("Aktivieren"), options = Seq("true" -> "Ja"), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Ändern"></li>
             }
 
@@ -37,7 +38,7 @@
 
         <ul id="showMenuInEditMenu" style="list-style: none"> Bereits in der Speisekarte:
             @for(m <- services.MenuService.addedToMenu) {
-                <li>@m.id @m.name @m.price @m.category</li>
+                <li>#@m.id @m.name, Preis: @m.price €/cm, @m.category, bestellt: @{if (m.ordered) "Ja" else "Nein"}, active: @{if (m.active) "Ja" else "Nein"}</li>
             }
         </ul>
 

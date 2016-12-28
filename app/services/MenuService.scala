@@ -20,13 +20,14 @@ trait MenuServiceT {
   def addToMenu(name: String, price: Double, category: String): Menu = {
     // create User
     val ordered: Boolean = false
-    val newMenu = Menu(-1, name, price, category, ordered)
+    val active: Boolean = true
+    val newMenu = Menu(-1, name, price, category, ordered, active)
     // persist and return User
     menuDao.addToMenu(newMenu)
   }
 
-  def updateInMenu(id: Long, name: String, price: Double): Unit = {
-    menuDao.updateInMenu(id, name, price)
+  def updateInMenu(id: Long, name: String, price: Double, active: Boolean): Unit = {
+    menuDao.updateInMenu(id, name, price, active)
   }
 
   /**
@@ -47,6 +48,8 @@ trait MenuServiceT {
   }
 
   def setProductOrdered(id: Long): Unit = menuDao.setProductOrdered(id)
+
+  def setProductInactive(id: Long): Unit = menuDao.setProductInactive(id)
 
 }
 

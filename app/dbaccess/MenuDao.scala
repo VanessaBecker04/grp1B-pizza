@@ -6,39 +6,46 @@ import models.Menu
 import play.api.Play.current
 import play.api.db.DB
 
-/**
-  * Created by Hasi on 21.11.2016.
+/** Datenbankzugriff über Benutzerschnittstellen für die Speisekarten Datenbank (MENU)
+  * Created by Hasibullah Faroq on 21.11.2016.
   */
 
 trait MenuDaoT {
 
   /**
-    * Creates the given user in the database.
+    * fügt ein neues Produkt in die Datenbank Menu ein.
     *
-    * @param menu the user object to be stored.
-    * @return the persisted user object
+    * @param menu das Menu Objekt was in die Datenbank gespeichert werden soll.
+    * @return das Menu Objekt
     */
   def addToMenu(menu: Menu): Menu = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into Menu(name, price, category, ordered) values ({name}, {price}, {category}, {ordered})").on(
-          'name -> menu.name, 'price -> menu.price, 'category -> menu.category, 'ordered -> menu.ordered).executeInsert()
+        SQL("insert into Menu(name, price, category, ordered, active) values ({name}, {price}, {category}, {ordered}, {active})").on(
+          'name -> menu.name, 'price -> menu.price, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
       menu.id = id.get
     }
     menu
   }
 
-  def updateInMenu(id: Long, name: String, price: Double): Unit = {
+  /** Verändert einzelen Attribute eines Produktes in der Datenbank.
+    *
+    * @param id id des Produktes was sich in der Datenbank befindet
+    * @param name neuer Name für das bestehende Produkt
+    * @param price neuer Preis für das bestehende Produkt
+    * @param active neuer Status für das Produkt
+    */
+  def updateInMenu(id: Long, name: String, price: Double, active: Boolean): Unit = {
     DB.withConnection { implicit c =>
-        SQL("Update Menu set name={name}, price={price} where id = {id}").on('id -> id, 'name -> name, 'price -> price).executeUpdate()
+        SQL("Update Menu set name={name}, price={price}, active={active} where id = {id}").on('id -> id, 'name -> name, 'price -> price, 'active -> active).executeUpdate()
     }
   }
 
   /**
-    * Removes a user by id from the database.
+    * Entfernt ein Produkt aus der Datenbank.
     *
-    * @param id the users id
-    * @return a boolean success flag
+    * @param id id des Produktes
+    * @return wahrheitswert ob die Löschung erfolgreich war
     */
   def rmFromMenu(id: Long): Boolean = {
     DB.withConnection { implicit c =>
@@ -48,23 +55,37 @@ trait MenuDaoT {
   }
 
   /**
-    * Returns a list of available user from the database.
+    * Gibt eine Liste zurück mit allen vorhandenen Produkten.
     *
-    * @return a list of user objects.
+    * @return eine Liste von Produkten
     */
   def addedToMenu: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select id, name, price, category, ordered from Menu;")
+      val selectFromMenu = SQL("Select id, name, price, category, ordered, active from Menu;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
-        row[Double]("price"), row[String]("category"), row[Boolean]("ordered"))).toList
+        row[Double]("price"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       products
     }
   }
 
+  /** Setzt das Produkt als einmal bestellt.
+    *
+    * @param id die Id des bestellten Produktes
+    */
   def setProductOrdered(id: Long): Unit = {
     DB.withConnection { implicit c =>
       SQL("Update Menu set ordered=1 where id = {id}").on('id -> id).executeUpdate()
+    }
+  }
+
+  /** Setzt das Produkt Inaktiv, damit sie nicht weiterhin bestellt werden kann.
+    *
+    * @param id die id des Produktes welches inaktiv gestellt werden
+    */
+  def setProductInactive(id: Long): Unit = {
+    DB.withConnection { implicit c =>
+      SQL("Update Menu set active=0 where id = {id}").on('id -> id).executeUpdate()
     }
   }
 

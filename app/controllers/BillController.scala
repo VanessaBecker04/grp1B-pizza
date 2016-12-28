@@ -6,17 +6,23 @@ import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
 
 
-/**
-  * Created by Hasi on 28.11.2016.
+/** Kontroller für die Rechnungserstellung einer Bestellung.
+  * Created by Hasibullah Faroq on 28.11.2016.
   */
 object BillController extends Controller {
+  /**
+    * Form Objekt für die Benutzer Daten.
+    */
   val billform = Form(
     mapping(
       "CustomerID" -> longNumber, "Pizza" -> text, "Anzahl der Pizzen" -> number(min = 0, max = 100),
       "Pizzagröße" -> text, "Getränk" -> text, "Anzahl der Getränke" -> number(min = 0, max = 100), "Getränkegröße" -> text,
       "Dessert" -> text, "Anzahl der Desserts" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
 
-
+  /** Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
+    *
+    *@return entweder attemptFailed, login oder showBill(Rechnung)
+    */
   def addToBill: Action[AnyContent] = Action { implicit request =>
     billform.bindFromRequest.fold(
       formWithErrors => {
@@ -41,10 +47,18 @@ object BillController extends Controller {
       })
   }
 
+  /** Leitet Kunden zur Rechnung weiter.
+    *
+    * @return showBill(Rechnung)
+    */
   def showBill: Action[AnyContent] = Action {
     Ok(views.html.showBill())
   }
 
+  /** Bricht den Bestellvorgang ab und leitet den Kunden zur Bestellübersicht weiter.
+    *
+    * @return showMenu(Bestellübersicht)
+    */
   def cancelOrder: Action[AnyContent] = Action {
     models.setUndeleteable(null, 0, null, 0, null, 0)
     services.OrderService.cancelOrder()

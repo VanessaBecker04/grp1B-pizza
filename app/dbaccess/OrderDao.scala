@@ -6,7 +6,7 @@ import models.Bill
 import play.api.Play.current
 import play.api.db.DB
 
-/**
+/** Datenbankzugriff über Benutzerschnittstellen für die Rechnungserstellung (Orderbill)
   * Created by Hasi on 28.11.2016.
   */
 

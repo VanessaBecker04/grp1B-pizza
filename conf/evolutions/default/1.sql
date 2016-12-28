@@ -28,14 +28,15 @@ CREATE TABLE Menu (
     name varchar(255) NOT NULL,
     price double NOT NULL,
     category varchar(255) NOT NULL,
-    ordered bit
+    ordered bit,
+    active bit
 );
-INSERT INTO Menu(id, name, price, category, ordered) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza', 0);
-INSERT INTO Menu(id, name, price, category, ordered) VALUES(102, 'Pizza Regina', 0.27, 'Pizza', 0);
-INSERT INTO Menu(id, name, price, category, ordered) VALUES(201, 'Sprite', 0.3, 'Getränk', 0);
-INSERT INTO Menu(id, name, price, category, ordered) VALUES(202, 'Cola', 0.3, 'Getränk', 0);
-INSERT INTO Menu(id, name, price, category, ordered) VALUES(301, 'Schokokuchen', 2.0, 'Dessert', 0);
-INSERT INTO Menu(id, name, price, category, ordered) VALUES(302, 'Schokoeis', 2.0, 'Dessert', 0);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza', 0, 1);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'Pizza', 0, 1);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'Getränk', 0, 1);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(202, 'Cola', 0.3, 'Getränk', 0, 1);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Dessert', 0, 1);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Dessert', 0, 1);
 
 # --- !Downs
 

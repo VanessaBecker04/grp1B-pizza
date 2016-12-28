@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by Hasi on 21.11.2016.
   */
-case class Menu(var id: Long, var name: String, var price: Double, var category: String, var ordered: Boolean)
+case class Menu(var id: Long, var name: String, var price: Double, var category: String, var ordered: Boolean, var active: Boolean)
 
 object categorizeMenu {
 
@@ -23,13 +23,13 @@ case class categorize() {
 
   val menuList = services.MenuService.addedToMenu
   for (m <- menuList) {
-    if (m.category.equals("Pizza")) {
+    if (m.category.equals("Pizza") && m.active) {
       pizzaList += m.name
     }
-    if (m.category.equals("Getränk")) {
+    if (m.category.equals("Getränk") && m.active) {
       beverageList += m.name
     }
-    if (m.category.equals("Dessert")) {
+    if (m.category.equals("Dessert") && m.active) {
       dessertList += m.name
     }
   }
