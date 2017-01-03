@@ -15,7 +15,7 @@
     font-size: 20px;
     border-radius: 25px;
     position: fixed;
-    left: 550px;
+    left: 350px;
     top: 200px;
     padding-top: 30px;
     padding-right: 40px;
@@ -28,7 +28,7 @@
     font-size: 20px;
     border-radius: 25px;
     position: fixed;
-    right: 200px;
+    left: 680px;
     top: 200px;
     padding-top: 30px;
     padding-right: 40px;
@@ -40,15 +40,19 @@
 #showMenuButton {
     border-radius: 25px;
     position: fixed;
-    left: 578px;
-    top: 600px;
+    left: 380px;
+    top: 440px;
     height: 50px;
     width: 200px;
     background: floralwhite;
 }
 
+#showMenuButton:hover {
+    background-color: #555;
+}
+
 #showBillView {
-    font-size: 40px;
+    font-size: 30px;
     border-radius: 25px;
     position: fixed;
     left: 20px;
@@ -61,29 +65,94 @@
 }
 
 #showBillConfirmButton {
-    color: #333333;
     text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
     border-radius: 25px;
     position: fixed;
     left: 20px;
-    top: 550px;
-    height: 50px;
+    top: 450px;
+    height: 40px;
     width: 200px;
     background: floralwhite;
-    text-align: center;
+}
+
+#showBillConfirmButton:hover {
+    background-color: #555;
 }
 
 #showBillCancelButton {
     text-decoration: none;
     color: #333333;
     text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 250px;
+    top: 450px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#showBillCancelButton:hover {
+    background-color: #555;
+}
+
+
+#loggedInFirstButton {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
     border-radius: 25px;
     position: fixed;
     left: 20px;
-    top: 650px;
-    height: 50px;
+    top: 150px;
+    height: 40px;
     width: 200px;
     background: floralwhite;
+}
+
+#loggedInFirstButton:hover {
+    background-color: #555;
+}
+
+#loggedInSecondButton {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 220px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#loggedInSecondButton:hover {
+    background-color: #555;
+}
+
+#loggedInThirdButton {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 290px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#loggedInThirdButton:hover {
+    background-color: #555;
 }
 
 #addEditMenu {
@@ -116,7 +185,7 @@
     font-size: 20px;
     border-radius: 25px;
     position: fixed;
-    right: 650px;
+    left: 350px;
     top: 120px;
     padding-top: 30px;
     padding-right: 40px;
@@ -129,7 +198,7 @@
     font-size: 20px;
     border-radius: 25px;
     position: fixed;
-    right: 20px;
+    left: 680px;
     top: 120px;
     padding-top: 30px;
     padding-right: 40px;
@@ -142,14 +211,126 @@
     text-decoration: none;
     color: #333333;
     text-align: center;
+    padding-top:20px;
     border-radius: 25px;
     position: fixed;
-    left: 600px;
-    top: 650px;
-    height: 50px;
+    left: 900px;
+    top: 400px;
+    height: 40px;
     width: 200px;
     background: floralwhite;
 }
+
+#linkToShowMenu:hover {
+    background-color: #555;
+}
+
+#addEditUsers {
+    font-size: 20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 120px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#rmEditUsers {
+    font-size: 20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 375px;
+    top: 120px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#updateEditUsers {
+    font-size: 20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 680px;
+    top: 120px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#linkToShowRegisteredUsers {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 390px;
+    top: 350px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#linkToShowRegisteredUsers:hover {
+    background-color: #555;
+}
+
+#linkToAllOrders {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 120px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#linkToAllOrders:hover {
+    background-color: #555;
+}
+
+#selectUserEditOrders {
+    font-size: 20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 200px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#linkToShowRegisteredUsersInEditOrders {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 290px;
+    top: 120px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#linkToShowRegisteredUsersInEditOrders:hover {
+    background-color: #555;
+}
+
 
 #headerForDeliveryTime {
     text-align: center;
@@ -173,8 +354,8 @@
 
 #pizzaSizeShowMenu {
     position: fixed;
-    left: 330px;
-    top: 200px;
+    left: 60px;
+    top: 415px;
     background: black;
     color: white;
     opacity: 0.5;

@@ -1,10 +1,7 @@
 @(products: List[models.Menu], billForm: Form[forms.CreateBillForm])
 
 @main("Speisekarte") {
-
-    <body id="bodyShowMenu">
-
-        <h1>Willkommen zur Speisekarte</h1>
+    <h1>Willkommen zur Speisekarte</h1>
 
         @helper.form(action = routes.BillController.addToBill()) {
 
@@ -29,7 +26,6 @@
         <ul id="pizzaSizeShowMenu" style="list-style: none;"> Pizzagrößen in cm
             <li>Medium = 27cm</li>
             <li>Large = 32cm</li>
-            <li>Xl = 36cm</li>
+            <li>XL = 36cm</li>
         </ul>
-    </body>
 }

@@ -1,6 +1,5 @@
 @main(models.Company.name) {
     <h1>Sie sind als Kunde @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
-    <p><a href="/showMenu">Bestellung aufgeben</a></p>
-    <p><a href="/showOrdersUser">Deine bisherigen Bestellungen ansehen</a></p>
-    <p><a href="/logoutUser">Ausloggen</a></p>
+    <p><a id="loggedInFirstButton" href="/showMenu">Bestellung aufgeben</a></p>
+    <p><a id="loggedInSecondButton" href="/showOrdersUser">Ihre Bestellungen</a></p>
 }

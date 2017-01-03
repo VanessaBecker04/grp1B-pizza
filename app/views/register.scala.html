@@ -12,7 +12,7 @@
         @helper.inputText(userForm("Straße und Hausnummer"))
         @helper.inputText(userForm("Postleitzahl"))
         @helper.inputText(userForm("Stadt"))
-        @helper.select(userForm("Rolle"), helper.options(List("Kunde", "Mitarbeiter")), '_label -> "Rolle")
+        @helper.select(userForm("Rolle"), helper.options(List("Kunde")))
         <input type="submit" value="Speichern" />
     }
     </p>

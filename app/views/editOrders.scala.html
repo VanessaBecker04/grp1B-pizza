@@ -1,13 +1,12 @@
 @(users: List[User], userOrdersForm: Form[forms.UserIDForm])
 
 @main("Bestellungen ansehen") {
-    <p><a href="/showOrdersEmployee">Alle Bestellungen ansehen</a></p>
-    <li>Bestellungen eines bestimmten Kunden ansehen:</li>
-    <p>
+    <p><a id="linkToAllOrders" href="/showOrdersEmployee">Alle Bestellungen ansehen</a></p>
+    <ul id="selectUserEditOrders" style="list-style: none">Bestellungen eines bestimmten Kunden ansehen:
     @helper.form(action = routes.OrderHistoryController.showOrdersEmployeeU()) {
         @helper.select(userOrdersForm("CustomerID"), users.map(u => u.id.toString -> u.id.toString))
         <input type="submit" value="Auswahl absenden" />
     }
-    </p>
-    <p><a id="linkToShowMenu" href="/showUsers">Registrierte Nutzer</a></p>
+    </ul>
+    <p><a id="linkToShowRegisteredUsersInEditOrders" href="/showUsers">Registrierte Nutzer</a></p>
 }

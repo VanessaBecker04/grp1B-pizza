@@ -4,10 +4,7 @@
 
     <body id="bodyForEditMenu">
 
-        <h1>Hallo Herr/Frau @models.activeUser.name </h1>
-
-
-        <ul id="addEditMenu" style="list-style: none">Produkt zur Speisekarte hinzufügen:
+        <ul id="addEditMenu" style="list-style: none">Produkt hinzufügen:
             @helper.form(action = routes.MenuController.addToMenu()) {
                 <li>@helper.inputText(menuForm("Produktname"))</li>
                 <li>@helper.inputText(menuForm("Preis je Einheit"), '_showConstraints -> false)</li>
@@ -17,7 +14,7 @@
             }
         </ul>
 
-        <ul id="rmEditMenu" style="list-style: none">Produkt von der Speisekarte entfernen/deaktivieren:
+        <ul id="rmEditMenu" style="list-style: none">Produkt entfernen:
             @helper.form(action = routes.MenuController.rmFromMenu()) {
                 <li>@helper.inputText(rmForm("Id"), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Löschen"></li>
@@ -25,7 +22,7 @@
 
         </ul>
 
-        <ul id="updateEditMenu" style="list-style: none">Produkte in der Speisekarte abändern:
+        <ul id="updateEditMenu" style="list-style: none">Produkt abändern:
             @helper.form(action = routes.MenuController.updateInMenu()) {
                 <li>@helper.select(upForm("Id"), models.categorizeMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li>@helper.inputText(upForm("Neuer Name"))</li>
