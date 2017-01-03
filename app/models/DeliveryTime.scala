@@ -6,7 +6,7 @@ package models
 object DeliveryTime {
   var expectedTime: Int = _
   var customerName: String = _
-  var kilometersperminute: Int = 2
+  var kilometersperminute: Int = 1
   var bakeTime: Int = 10
 }
 
