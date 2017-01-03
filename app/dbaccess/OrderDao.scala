@@ -59,6 +59,9 @@ trait OrderDaoT {
     }
   }
 
+  /**
+    * Removes order from temporary Orderbill table.
+    */
   def cancelOrder() {
     DB.withConnection { implicit c =>
       SQL("Delete from Orderbill where id " +

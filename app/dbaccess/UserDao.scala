@@ -10,7 +10,7 @@ import play.api.db.DB
 /**
   * Data access object for user related operations.
   *
-  * @author ob, scs
+  * @author ob, scs, Maximilian Öttl
   */
 trait UserDaoT {
 
@@ -96,6 +96,11 @@ trait UserDaoT {
     }
   }
 
+  /**
+    * Returns the customerID of the loggedinUser if successful. Returns errorcode if login was not successful.
+    *
+    * @return customerID
+    */
   def loginUser(email: String, password: String): Long = {
     DB.withConnection { implicit c =>
       val selectUser = SQL("Select id from Users where (email = {email}) AND (password = {password})").on(
@@ -113,6 +118,9 @@ trait UserDaoT {
     }
   }
 
+  /**
+    * The logged in user is set as the active user.
+    */
   def setActiveUser(idgiven: Long): Unit = {
     DB.withConnection { implicit c =>
       val selectedUser = SQL("Select id, forename, name, address, zipcode, city, role from Users where id = {idgiven}").on('idgiven -> idgiven)

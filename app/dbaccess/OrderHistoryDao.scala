@@ -13,10 +13,10 @@ import play.api.db.DB
 
 trait OrderHistoryDaoT {
   /**
-    * Creates the given user in the database.
+    * Creates the given order in the database.
     *
-    * @param menu the user object to be stored.
-    * @return the persisted user object
+    * @param coh the order object to be stored.
+    * @return the persisted order object
     */
   def addToHistory(coh: OrderHistory): OrderHistory = {
     DB.withConnection { implicit c =>
@@ -29,9 +29,9 @@ trait OrderHistoryDaoT {
   }
 
   /**
-    * Removes a user by id from the database.
+    * Removes a menu item by id from the database.
     *
-    * @param id the users id
+    * @param id the menu item id
     * @return a boolean success flag
     */
   def rmFromHistory(id: Long): Boolean = {
@@ -42,9 +42,9 @@ trait OrderHistoryDaoT {
   }
 
   /**
-    * Returns a list of available user from the database.
+    * Returns a list of all orders from the database.
     *
-    * @return a list of user objects.
+    * @return a list of order objects
     */
   def showOrdersEmployee: List[OrderHistory] = {
     DB.withConnection { implicit c =>
@@ -56,6 +56,11 @@ trait OrderHistoryDaoT {
     }
   }
 
+  /**
+    * Returns a list of all orders of a specified user from the database.
+    *
+    * @return a list of order objects
+    */
   def showOrdersUser(id: Long): List[OrderHistory] = {
     DB.withConnection { implicit c =>
       val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)

@@ -6,7 +6,7 @@ import models.{User, setUser}
 /**
   * Service class for user related operations.
   *
-  * @author ob, scs
+  * @author ob, scs, Maximilian Öttl
   */
 trait UserServiceT {
 
@@ -57,10 +57,19 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
+  /**
+    * Logs in a user into the system.
+    * @param email email
+    * @param password password
+    * @return
+    */
   def loginUser(email: String, password: String): Long = {
     userDao.loginUser(email, password)
   }
 
+  /**
+    * Logs out the currently logged in user by resetting the activeUser model.
+    */
   def logoutUser(): Unit = {
     services.OrderService.cancelOrder()
     setUser(0, null, null, null, 0, null, "none")

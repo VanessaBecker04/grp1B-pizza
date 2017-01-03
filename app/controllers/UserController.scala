@@ -9,7 +9,7 @@ import services.UserService
 /**
   * Controller for user specific operations.
   *
-  * @author ob, scs
+  * @author ob, scs, Maximilian Öttl
   */
 object UserController extends Controller {
 
@@ -28,12 +28,18 @@ object UserController extends Controller {
       "Rolle" -> text.verifying("Bitte Ihre Rolle angeben", !_.isEmpty)
     )(CreateUserForm.apply)(CreateUserForm.unapply))
 
+  /**
+    * Form object for login data.
+    */
   val loginForm = Form(
     mapping(
       "Email" -> text,
       "Passwort" -> text
     )(LoginUserForm.apply)(LoginUserForm.unapply))
 
+  /**
+    * Form object for editUser data.
+    */
   val editUserForm = Form(
     mapping(
       "Kunden-ID" -> longNumber,
@@ -47,6 +53,9 @@ object UserController extends Controller {
       "Rolle" -> text.verifying("Bitte eine Rolle angeben", !_.isEmpty)
     )(EditUserForm.apply)(EditUserForm.unapply))
 
+  /**
+    * Form object for deleteUser data.
+    */
   val deleteUserForm = Form {
     mapping(
       "Kunden-ID" -> longNumber
@@ -82,6 +91,11 @@ object UserController extends Controller {
       })
   }
 
+  /**
+    * Edits a specified user with the given data from the system.
+    *
+    * @return success of edit
+    */
   def editUser: Action[AnyContent] = Action { implicit request =>
     editUserForm.bindFromRequest.fold(
       formWithErrors => {
@@ -102,6 +116,11 @@ object UserController extends Controller {
       })
   }
 
+  /**
+    * Deletes a specified user from the system.
+    *
+    * @return success of deletion
+    */
   def deleteUser: Action[AnyContent] = Action { implicit request =>
     deleteUserForm.bindFromRequest.fold(
       formWithErrors => {
@@ -114,7 +133,7 @@ object UserController extends Controller {
   }
 
   /**
-    * Shows the welcome view.
+    * Shows the welcome view for a customer.
     */
   def welcomeUser: Action[AnyContent] = Action {
     if (models.activeUser.role.equals("Mitarbeiter")) {
@@ -124,14 +143,23 @@ object UserController extends Controller {
     }
   }
 
+  /**
+    * Shows the welcome view for an employee.
+    */
   def welcomeEmployee: Action[AnyContent] = Action {
     Ok(views.html.welcomeEmployee())
   }
 
+  /**
+    * Shows the attemptFail view with a given errorcode.
+    */
   def attemptFailed(errorcode: String): Action[AnyContent] = Action {
     Ok(views.html.attemptFailed(errorcode))
   }
 
+  /**
+    * Shows the attemptSuccessful view with a given successcode.
+    */
   def attemptSuccessful(successcode: String): Action[AnyContent] = Action {
     Ok(views.html.attemptSuccessful(successcode))
   }
@@ -143,6 +171,11 @@ object UserController extends Controller {
     Ok(views.html.showUsers(UserService.registeredUsers))
   }
 
+  /**
+    * Logs in a user with the given data.
+    *
+    * @return welcome page for loggedin user
+    */
   def loginUser: Action[AnyContent] = Action { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => {
@@ -160,11 +193,19 @@ object UserController extends Controller {
       })
   }
 
+  /**
+    * Logs out the currently logged in user.
+    *
+    * @return index
+    */
   def logoutUser: Action[AnyContent] = Action {
     services.UserService.logoutUser()
     Redirect(routes.Application.index())
   }
 
+  /**
+    * Shows the editUser view for employees.
+    */
   def editUsers: Action[AnyContent] = Action {
     if(models.activeUser.role.equals("Mitarbeiter")) {
       Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.editUserForm, controllers.UserController.deleteUserForm))
