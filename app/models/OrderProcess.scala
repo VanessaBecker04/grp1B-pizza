@@ -1,7 +1,7 @@
 package models
 
-import java.text.{DateFormat, SimpleDateFormat}
-import java.util.{Calendar, Date, GregorianCalendar, Locale}
+import java.text.SimpleDateFormat
+import java.util.Date
 
 /**
   * Created by Hasibullah Faroq on 13.12.2016.
@@ -9,6 +9,7 @@ import java.util.{Calendar, Date, GregorianCalendar, Locale}
   * history hinzugefügt werden können.
   */
 object OrderProcess {
+  val currentDate: String = sdf.format(orderDate)
   var orderID: Long = 0
   var customerID: Long = 0
   var customerData: String = ""
@@ -16,17 +17,16 @@ object OrderProcess {
   var sumOfOrder: Double = 0
   var orderDate = new Date()
   var sdf: SimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy")
-  val currentDate: String = sdf.format(orderDate)
 
 
 }
 
 /** übergibt Werte an das Orderprocess Objekt
   *
-  * @param orderID Bestellnummer
-  * @param customerID Kundennummer des Kunden, der die Bestellung aufgegeben hat
+  * @param orderID         Bestellnummer
+  * @param customerID      Kundennummer des Kunden, der die Bestellung aufgegeben hat
   * @param orderedProducts bestellte Produkte
-  * @param sumOfOrder Gesamtsumme der Bestellung
+  * @param sumOfOrder      Gesamtsumme der Bestellung
   */
 case class setOrder(orderID: Long, customerID: Long, orderedProducts: StringBuilder, sumOfOrder: Double) {
   OrderProcess.orderID = orderID

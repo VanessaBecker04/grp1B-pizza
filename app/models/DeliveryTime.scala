@@ -10,9 +10,9 @@ object DeliveryTime {
   var bakeTime: Int = 10
 }
 
-/**Berechnung der Lieferzeit.
+/** Berechnung der Lieferzeit.
   *
-  * @param zip Postleitzeil des Kunden
+  * @param zip  Postleitzeil des Kunden
   * @param name Name des Kunden
   */
 case class calculateDeliveryTime(zip: Int, name: String) {

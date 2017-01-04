@@ -1,7 +1,5 @@
 package services
 
-import java.util.Date
-
 import dbaccess.{OrderHistoryDao, OrderHistoryDaoT}
 import models.OrderHistory
 
@@ -16,13 +14,12 @@ trait OrderHistoryServiceT {
   /**
     * fügt ein neue Bestellung des Kunden in die Datenbank Orderhistory ein.
     *
-    *
-    * @param orderID Bestellnummer für die Bestellung
-    * @param customerID Kundennummer
-    * @param customerData Kundendaten
+    * @param orderID         Bestellnummer für die Bestellung
+    * @param customerID      Kundennummer
+    * @param customerData    Kundendaten
     * @param orderedProducts bestellte Produkte
-    * @param sumOfOrder Gesamtsummer der Bestellung
-    * @param orderDate Datum der Bestellung
+    * @param sumOfOrder      Gesamtsummer der Bestellung
+    * @param orderDate       Datum der Bestellung
     */
   def addToHistory(orderID: Long, customerID: Long, customerData: String, orderedProducts: String, sumOfOrder: Double,
                    orderDate: String): OrderHistory = {

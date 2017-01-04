@@ -15,8 +15,8 @@ trait MenuServiceT {
   /**
     * Fügt ein neues Produkt in die Datenbank Menu.
     *
-    * @param name Name des neuen Produktes
-    * @param price Preis/Unit für das neue Produkt
+    * @param name     Name des neuen Produktes
+    * @param price    Preis/Unit für das neue Produkt
     * @param category Kategorie des neuen Produktes
     * @return das neue Produkte
     */
@@ -31,9 +31,9 @@ trait MenuServiceT {
 
   /** Verändert einzelen Attribute eines Produktes in der Datenbank.
     *
-    * @param id id des Produktes was sich in der Datenbank befindet
-    * @param name neuer Name für das bestehende Produkt
-    * @param price neuer Preis für das bestehende Produkt
+    * @param id     id des Produktes was sich in der Datenbank befindet
+    * @param name   neuer Name für das bestehende Produkt
+    * @param price  neuer Preis für das bestehende Produkt
     * @param active neuer Status für das Produkt
     */
   def updateInMenu(id: Long, name: String, price: Double, active: Boolean): Unit = {
@@ -56,11 +56,13 @@ trait MenuServiceT {
   def addedToMenu: List[Menu] = {
     menuDao.addedToMenu
   }
+
   /** Setzt das Produkt als einmal bestellt.
     *
     * @param id die Id des bestellten Produktes
     */
   def setProductOrdered(id: Long): Unit = menuDao.setProductOrdered(id)
+
   /** Setzt das Produkt Inaktiv, damit sie nicht weiterhin bestellt werden kann.
     *
     * @param id die id des Produktes welches inaktiv gestellt werden

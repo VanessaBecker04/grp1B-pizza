@@ -5,8 +5,8 @@ package forms
   *
   * Form beinhaltet Daten um ein Produkt zu erstellen.
   *
-  * @param name name des Produktes
-  * @param price €/cm des Produktes
+  * @param name     name des Produktes
+  * @param price    €/cm des Produktes
   * @param category Kategorie des Produktes
   */
 case class CreateMenuForm(name: String, price: Double, category: String)

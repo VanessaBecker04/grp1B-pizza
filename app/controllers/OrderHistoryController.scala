@@ -4,7 +4,6 @@ import forms.UserIDForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
-import services.OrderHistoryService
 
 /**
   * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
@@ -41,11 +40,11 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersUser(): Action[AnyContent] = Action {
-    if(models.activeUser.id != 0) {
+    if (models.activeUser.id != 0) {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
       val orders = services.OrderHistoryService.showOrdersUser(models.activeUser.id)
-      for(order <- orders) {
+      for (order <- orders) {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
       }
@@ -57,11 +56,11 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersEmployee(): Action[AnyContent] = Action {
-    if(models.activeUser.role.equals("Mitarbeiter")) {
+    if (models.activeUser.role.equals("Mitarbeiter")) {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
       val orders = services.OrderHistoryService.showOrdersEmployee
-      for(order <- orders) {
+      for (order <- orders) {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
       }
@@ -89,7 +88,7 @@ object OrderHistoryController extends Controller {
         var sumOfOrders: Double = 0
         var numberOfOrders: Int = 0
         val orders = services.OrderHistoryService.showOrdersUser(userData.customerID)
-        for(order <- orders) {
+        for (order <- orders) {
           sumOfOrders = sumOfOrders + order.sumOfOrder
           numberOfOrders = numberOfOrders + 1
         }
@@ -99,7 +98,7 @@ object OrderHistoryController extends Controller {
   }
 
   def editOrders: Action[AnyContent] = Action {
-    if(models.activeUser.role.equals("Mitarbeiter")) {
+    if (models.activeUser.role.equals("Mitarbeiter")) {
       Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))

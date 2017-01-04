@@ -84,7 +84,7 @@ object MenuController extends Controller {
     * @return editMenu
     */
   def editMenu: Action[AnyContent] = Action {
-    if(models.activeUser.role.equals("Mitarbeiter")) {
+    if (models.activeUser.role.equals("Mitarbeiter")) {
       models.putAllMenuIDInList()
       Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm, controllers.MenuController.updateForm))
     } else {

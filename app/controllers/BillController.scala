@@ -21,7 +21,7 @@ object BillController extends Controller {
 
   /** Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
     *
-    *@return entweder attemptFailed, login oder showBill(Rechnung)
+    * @return entweder attemptFailed, login oder showBill(Rechnung)
     */
   def addToBill: Action[AnyContent] = Action { implicit request =>
     billform.bindFromRequest.fold(
@@ -35,7 +35,7 @@ object BillController extends Controller {
         if (models.activeUser.id == 0) {
           Redirect(routes.Application.login())
         } else {
-          if(userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
+          if (userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
             Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
           } else {
             models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,

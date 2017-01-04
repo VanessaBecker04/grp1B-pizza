@@ -33,7 +33,7 @@ trait UserDaoT {
           SQL("insert into Users(email, password, forename, name, address, zipcode, city, role, inactive) values ({email}, {password}, {forename}, {name}, {address}, {zipcode}, {city}, {role}, {inactive})").on(
             'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeInsert()
         user.id = id.get
-        if(!models.activeUser.role.equals("Mitarbeiter")) {
+        if (!models.activeUser.role.equals("Mitarbeiter")) {
           setUser(id.get, user.forename, user.name, user.address, user.zipcode, user.city, user.role)
         }
       }
@@ -57,7 +57,7 @@ trait UserDaoT {
       } else {
         returnuser = user
         SQL("Update Users set email={email}, password={password}, forename={forename}, name={name}, address={address}, zipcode={zipcode}, city={city}, role={role}, inactive={inactive} where id = {id}").on(
-            'id -> user.id, 'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeUpdate()
+          'id -> user.id, 'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeUpdate()
       }
     }
     returnuser

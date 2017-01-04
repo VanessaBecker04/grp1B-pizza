@@ -1,7 +1,5 @@
 package dbaccess
 
-import java.util.Date
-
 import anorm._
 import models.OrderHistory
 import play.api.Play.current

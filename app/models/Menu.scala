@@ -14,10 +14,10 @@ case class Menu(var id: Long, var name: String, var price: Double, var category:
   */
 object CategorizedMenu {
 
-  var pizzaList: List[String] =_
-  var beverageList: List[String] =_
-  var dessertList: List[String] =_
-  var allIdFromMenu: List[Long] =_
+  var pizzaList: List[String] = _
+  var beverageList: List[String] = _
+  var dessertList: List[String] = _
+  var allIdFromMenu: List[Long] = _
 }
 
 /** übergibt Werte an das Objekt CategorizedMenu
@@ -63,19 +63,19 @@ case class putAllMenuIDInList() {
   *
   */
 object UndeleteableProducts {
-  var pizza: String =_
-  var beverage: String =_
-  var dessert: String =_
+  var pizza: String = _
+  var beverage: String = _
+  var dessert: String = _
 }
 
 /** übergibt Werte an das Objekt UndeleteableProducts
   *
-  * @param pizza Name der bestellten Pizza
-  * @param pizzaNr Anzahl der bestellten Pizza
-  * @param beverage Name der bestellten Produkte
+  * @param pizza      Name der bestellten Pizza
+  * @param pizzaNr    Anzahl der bestellten Pizza
+  * @param beverage   Name der bestellten Produkte
   * @param beverageNr Anzahl der bestellten Getränke
-  * @param dessert Name des bestellten Desserts
-  * @param dessertNr Anzahl der bestellten Desserts
+  * @param dessert    Name des bestellten Desserts
+  * @param dessertNr  Anzahl der bestellten Desserts
   *
   */
 case class setUndeleteable(pizza: String, pizzaNr: Int, beverage: String, beverageNr: Int, dessert: String, dessertNr: Int) {

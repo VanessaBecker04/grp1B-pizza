@@ -30,14 +30,14 @@ trait MenuDaoT {
 
   /** Verändert einzelen Attribute eines Produktes in der Datenbank.
     *
-    * @param id id des Produktes was sich in der Datenbank befindet
-    * @param name neuer Name für das bestehende Produkt
-    * @param price neuer Preis für das bestehende Produkt
+    * @param id     id des Produktes was sich in der Datenbank befindet
+    * @param name   neuer Name für das bestehende Produkt
+    * @param price  neuer Preis für das bestehende Produkt
     * @param active neuer Status für das Produkt
     */
   def updateInMenu(id: Long, name: String, price: Double, active: Boolean): Unit = {
     DB.withConnection { implicit c =>
-        SQL("Update Menu set name={name}, price={price}, active={active} where id = {id}").on('id -> id, 'name -> name, 'price -> price, 'active -> active).executeUpdate()
+      SQL("Update Menu set name={name}, price={price}, active={active} where id = {id}").on('id -> id, 'name -> name, 'price -> price, 'active -> active).executeUpdate()
     }
   }
 

@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{OrderDao, OrderDaoT}
-import models.{Bill, activeUser, setOrder}
+import models.Bill
 
 /** Service Klasse für Rechnungsbezogene (Orderbill) Handlungen.
   * Created by Hasibullah Faroq on 28.11.2016.
@@ -14,15 +14,15 @@ trait OrderServiceT {
   /**
     * Fügt eine neue Rechnung zu der Datenbank Orderbill hinzu.
     *
-    * @param customerID Kundennummer des Kunden der die Bestellung aufgibt
-    * @param pizzaName Name der Pizza die bestellt wird
-    * @param pizzaNumber Anzahl der bestellten Pizzen
-    * @param pizzaSize Größe der Pizza die bestellt wird
-    * @param beverageName Name des Getränks, das bestellt wird
+    * @param customerID     Kundennummer des Kunden der die Bestellung aufgibt
+    * @param pizzaName      Name der Pizza die bestellt wird
+    * @param pizzaNumber    Anzahl der bestellten Pizzen
+    * @param pizzaSize      Größe der Pizza die bestellt wird
+    * @param beverageName   Name des Getränks, das bestellt wird
     * @param beverageNumber Anzahl der bestellten Getränke
-    * @param beverageSize Größe des Getränks, das bestellt wird
-    * @param dessertName Name des Desserts, das bestellt wird
-    * @param dessertNumber Anzahl der bestellten Desserts
+    * @param beverageSize   Größe des Getränks, das bestellt wird
+    * @param dessertName    Name des Desserts, das bestellt wird
+    * @param dessertNumber  Anzahl der bestellten Desserts
     * @return das Bill Objekt
     */
   def addToOrder(customerID: Long, pizzaName: String, pizzaNumber: Int, pizzaSize: String, beverageName: String,
@@ -133,6 +133,7 @@ trait OrderServiceT {
   def addedToOrder: List[Bill] = {
     orderDao.addedToOrder
   }
+
   /**
     * Entfernt Rechnung, wenn Bestellung abgebrochen wurde.
     */

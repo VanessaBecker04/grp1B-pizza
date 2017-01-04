@@ -207,7 +207,7 @@ object UserController extends Controller {
     * Shows the editUser view for employees.
     */
   def editUsers: Action[AnyContent] = Action {
-    if(models.activeUser.role.equals("Mitarbeiter")) {
+    if (models.activeUser.role.equals("Mitarbeiter")) {
       Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.editUserForm, controllers.UserController.deleteUserForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))

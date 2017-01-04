@@ -1,7 +1,5 @@
 package models
 
-import java.util.Date
-
 /**
   * Created by Hasibullah Faroq on 14.12.2016.
   * Bestellungs Entität

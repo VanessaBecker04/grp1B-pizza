@@ -59,7 +59,8 @@ trait UserServiceT {
 
   /**
     * Logs in a user into the system.
-    * @param email email
+    *
+    * @param email    email
     * @param password password
     * @return
     */

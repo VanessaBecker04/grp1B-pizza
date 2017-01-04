@@ -126,4 +126,5 @@ object Users extends Controller {
   private case class HateoasUser(user: User, url: String)
 
   private case class Username(email: String, password: String, forename: String, name: String, address: String, zipcode: String, city: String, role: String)
+
 }

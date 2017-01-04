@@ -3,29 +3,29 @@
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
 
-        @helper.form(action = routes.BillController.addToBill()) {
+    @helper.form(action = routes.BillController.addToBill()) {
 
-            <ul id="showMenuList" style="list-style: none">
-                @helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)),
-                    'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
-                <li id="pizzaShowMenu">@helper.select(billForm("Pizza"), models.CategorizedMenu.pizzaList.map(p => p -> p))
-                    @helper.select(billForm("Pizzagröße"), options = Seq("medium" -> "medium", "large" -> "large",
-                        "xl" -> "xl"))
-                    @helper.inputText(billForm("Anzahl der Pizzen").copy(value = Some("0")), '_showConstraints -> false)</li>
-                <li id="beverageShowMenu">@helper.select(billForm("Getränk"), models.CategorizedMenu.beverageList.map(p => p -> p))
-                    @helper.select(billForm("Getränkegröße"), options = Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l",
-                        "1.0l" -> "1.0l"))
-                    @helper.inputText(billForm("Anzahl der Getränke").copy(value = Some("0")), '_showConstraints -> false)</li>
-                <li id="dessertShowMenu">@helper.select(billForm("Dessert"), models.CategorizedMenu.dessertList.map(p => p -> p))
-                    @helper.inputText(billForm("Anzahl der Desserts").copy(value = Some("0")), '_showConstraints -> false)</li>
-                <li><input id="showMenuButton" type="submit" value="Zur Kasse"/></li>
-            </ul>
-
-        }
-
-        <ul id="pizzaSizeShowMenu" style="list-style: none;"> Pizzagrößen in cm
-            <li>Medium = 27cm</li>
-            <li>Large = 32cm</li>
-            <li>XL = 36cm</li>
+        <ul id="showMenuList" style="list-style: none">
+            @helper.select(billForm("CustomerID"), helper.options(List(models.activeUser.id.toString)),
+                'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
+            <li id="pizzaShowMenu">@helper.select(billForm("Pizza"), models.CategorizedMenu.pizzaList.map(p => p -> p))
+                @helper.select(billForm("Pizzagröße"), options = Seq("medium" -> "medium", "large" -> "large",
+                    "xl" -> "xl"))
+                @helper.inputText(billForm("Anzahl der Pizzen").copy(value = Some("0")), '_showConstraints -> false)</li>
+            <li id="beverageShowMenu">@helper.select(billForm("Getränk"), models.CategorizedMenu.beverageList.map(p => p -> p))
+                @helper.select(billForm("Getränkegröße"), options = Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l",
+                    "1.0l" -> "1.0l"))
+                @helper.inputText(billForm("Anzahl der Getränke").copy(value = Some("0")), '_showConstraints -> false)</li>
+            <li id="dessertShowMenu">@helper.select(billForm("Dessert"), models.CategorizedMenu.dessertList.map(p => p -> p))
+                @helper.inputText(billForm("Anzahl der Desserts").copy(value = Some("0")), '_showConstraints -> false)</li>
+            <li><input id="showMenuButton" type="submit" value="Zur Kasse"/></li>
         </ul>
+
+    }
+
+    <ul id="pizzaSizeShowMenu" style="list-style: none;"> Pizzagrößen in cm
+        <li>Medium = 27cm</li>
+        <li>Large = 32cm</li>
+        <li>XL = 36cm</li>
+    </ul>
 }
