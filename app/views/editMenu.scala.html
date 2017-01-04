@@ -16,7 +16,7 @@
 
         <ul id="rmEditMenu" style="list-style: none">Produkt entfernen/deaktivieren:
             @helper.form(action = routes.MenuController.rmFromMenu()) {
-                <li>@helper.inputText(rmForm("Id"), '_showConstraints -> false)</li>
+                <li>@helper.select(rmForm("Id"), models.CategorizedMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Löschen"></li>
             }
 
