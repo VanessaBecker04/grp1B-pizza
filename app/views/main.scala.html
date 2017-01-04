@@ -11,58 +11,58 @@
     </head>
     <body>
         <ul class="topnav" id="topnavbar">
-            <li style="float: left"><a href="/">Home</a></li>
-            <li style="float: left"><a href="/showMenu">Produkte</a></li>
-            <li style="float: right"><a href="/contact">Kontakt</a></li>
+            <li style="float:left"><a href="/">Home</a></li>
+            <li style="float:left"><a href="/showMenu">Produkte</a></li>
+            <li style="float:right"><a href="/contact">Kontakt</a></li>
             @if(models.activeUser.id == 0) {
-                <li style="float: left"><a href="/login">Einloggen</a></li>
-                <li style="float: right"><a href="/register">Registrieren</a></li>
+                <li style="float:left"><a href="/login">Einloggen</a></li>
+                <li style="float:right"><a href="/register">Registrieren</a></li>
             } else {
-                <li style="float: right"><a href="/logoutUser">Ausloggen</a></li>
+                <li style="float:right"><a href="/logoutUser">Ausloggen</a></li>
             }
 
         </ul>
 
         <style>
-                {
-                    background-position: top left;
-                    background-repeat: repeat;
-                    background-size: 100% auto;
-                    background-image: url(@routes.Assets.at("images/body_bg.png"));
-                }
+        body {
+                 background-position: top left;
+                 background-repeat: repeat;
+                 background-size: 100% auto;
+                 background-image: url(@routes.Assets.at("images/body_bg.png"));
+             }
+        ul.topnav {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
 
+        ul.topnav li a {
+            display: inline-block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 17px;
+        }
 
+        ul.topnav li a:hover {
+            background-color: #555;
+        }
 
+        h1 {
+            margin-top: 50px;
+            color: white;
+            text-shadow: 0 0 5px black;
+            text-align: center;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </style>
+        p {
+            margin-top: 10px;
+        }
+    </style>
         @content
     </body>
 </html>
