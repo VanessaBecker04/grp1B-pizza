@@ -4,7 +4,9 @@ import java.text.{DateFormat, SimpleDateFormat}
 import java.util.{Calendar, Date, GregorianCalendar, Locale}
 
 /**
-  * Created by Hasi on 13.12.2016.
+  * Created by Hasibullah Faroq on 13.12.2016.
+  * Bestellverlauf Objekt, die genutzt wird um vorhandene Daten passend umzuformen, damit diese in die Datenbank Order-
+  * history hinzugefügt werden können.
   */
 object OrderProcess {
   var orderID: Long = 0
@@ -19,6 +21,13 @@ object OrderProcess {
 
 }
 
+/** übergibt Werte an das Orderprocess Objekt
+  *
+  * @param orderID Bestellnummer
+  * @param customerID Kundennummer des Kunden, der die Bestellung aufgegeben hat
+  * @param orderedProducts bestellte Produkte
+  * @param sumOfOrder Gesamtsumme der Bestellung
+  */
 case class setOrder(orderID: Long, customerID: Long, orderedProducts: StringBuilder, sumOfOrder: Double) {
   OrderProcess.orderID = orderID
   OrderProcess.customerID = customerID

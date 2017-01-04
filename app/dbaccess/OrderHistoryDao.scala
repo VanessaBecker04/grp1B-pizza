@@ -8,15 +8,16 @@ import play.api.Play.current
 import play.api.db.DB
 
 /**
-  * Created by Hasi on 14.12.2016.
+  * Created by Hasibullah Faroq und Maximilian Öttl on 14.12.2016.
+  * Datenbankzugriff über Benutzerschnittstellen für die kompletten Bestellunge Datenbank (Orderhistory)
   */
 
 trait OrderHistoryDaoT {
   /**
-    * Creates the given order in the database.
+    * fügt ein neue Bestellung des Kunden in die Datenbank Orderhistory ein.
     *
-    * @param coh the order object to be stored.
-    * @return the persisted order object
+    * @param coh das Orderhistory Objekt was in die Datenbank gespeichert werden soll.
+    * @return die Orderhistory Objekt
     */
   def addToHistory(coh: OrderHistory): OrderHistory = {
     DB.withConnection { implicit c =>
@@ -29,10 +30,10 @@ trait OrderHistoryDaoT {
   }
 
   /**
-    * Removes a menu item by id from the database.
+    * Entfernt eine Bestellung aus der Datenbank Orderhistory.
     *
-    * @param id the menu item id
-    * @return a boolean success flag
+    * @param id id der Bestellung
+    * @return wahrheitswert ob die Löschung erfolgreich war
     */
   def rmFromHistory(id: Long): Boolean = {
     DB.withConnection { implicit c =>

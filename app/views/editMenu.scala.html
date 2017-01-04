@@ -24,7 +24,7 @@
 
         <ul id="updateEditMenu" style="list-style: none">Produkt abändern:
             @helper.form(action = routes.MenuController.updateInMenu()) {
-                <li>@helper.select(upForm("Id"), models.categorizeMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
+                <li>@helper.select(upForm("Id"), models.CategorizedMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li>@helper.inputText(upForm("Neuer Name"))</li>
                 <li>@helper.inputText(upForm("Neuer Preis"), '_showConstraints -> false)</li>
                 <li>@helper.inputRadioGroup(upForm("Aktivieren"), options = Seq("true" -> "Ja"), '_showConstraints -> false)</li>

@@ -3,17 +3,27 @@ package services
 import dbaccess.{OrderDao, OrderDaoT}
 import models.{Bill, activeUser, setOrder}
 
-/**
-  * Created by Hasi on 28.11.2016.
+/** Service Klasse für Rechnungsbezogene (Orderbill) Handlungen.
+  * Created by Hasibullah Faroq on 28.11.2016.
   */
 
 trait OrderServiceT {
+
   val orderDao: OrderDaoT = OrderDao
 
   /**
-    * Adds a new user to the system.
+    * Fügt eine neue Rechnung zu der Datenbank Orderbill hinzu.
     *
-    * @return the new user.
+    * @param customerID Kundennummer des Kunden der die Bestellung aufgibt
+    * @param pizzaName Name der Pizza die bestellt wird
+    * @param pizzaNumber Anzahl der bestellten Pizzen
+    * @param pizzaSize Größe der Pizza die bestellt wird
+    * @param beverageName Name des Getränks, das bestellt wird
+    * @param beverageNumber Anzahl der bestellten Getränke
+    * @param beverageSize Größe des Getränks, das bestellt wird
+    * @param dessertName Name des Desserts, das bestellt wird
+    * @param dessertNumber Anzahl der bestellten Desserts
+    * @return das Bill Objekt
     */
   def addToOrder(customerID: Long, pizzaName: String, pizzaNumber: Int, pizzaSize: String, beverageName: String,
                  beverageNumber: Int, beverageSize: String, dessertName: String, dessertNumber: Int): Bill = {
@@ -25,13 +35,15 @@ trait OrderServiceT {
   }
 
   /**
-    * Removes a user by id from the system.
+    * entfernt die Rechnungs Daten von der Datenbank Orderbill für id
     *
-    * @param id users id.
-    * @return a boolean success flag.
+    * @param id Oderbill id
     */
   def rmFromOrder(id: Long): Boolean = orderDao.rmFromOrder(id)
 
+  /** berechnet die Gesamtsumme der Bestellung
+    *
+    */
   def doCalculationForBill(): Unit = {
 
     val bill = addedToOrder
@@ -114,14 +126,16 @@ trait OrderServiceT {
   }
 
   /**
-    * Gets a list of all registered users.
+    * Gibt eine Liste zurück mit allen vorhandenen Rechnungen
     *
-    * @return list of users.
+    * @return eine liste von Bill objekten.
     */
   def addedToOrder: List[Bill] = {
     orderDao.addedToOrder
   }
-
+  /**
+    * Entfernt Rechnung, wenn Bestellung abgebrochen wurde.
+    */
   def cancelOrder() = {
     orderDao.cancelOrder()
   }

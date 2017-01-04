@@ -6,7 +6,7 @@ import dbaccess.{OrderHistoryDao, OrderHistoryDaoT}
 import models.OrderHistory
 
 /**
-  * Created by Hasi on 14.12.2016.
+  * Created by Hasibullah Faroq, Maximilian Öttl on 14.12.2016.
   */
 
 trait OrderHistoryServiceT {
@@ -14,10 +14,15 @@ trait OrderHistoryServiceT {
   val orderHistoryDao: OrderHistoryDaoT = OrderHistoryDao
 
   /**
-    * Adds a new user to the system.
+    * fügt ein neue Bestellung des Kunden in die Datenbank Orderhistory ein.
     *
-    * @param name name of the new user.
-    * @return the new user.
+    *
+    * @param orderID Bestellnummer für die Bestellung
+    * @param customerID Kundennummer
+    * @param customerData Kundendaten
+    * @param orderedProducts bestellte Produkte
+    * @param sumOfOrder Gesamtsummer der Bestellung
+    * @param orderDate Datum der Bestellung
     */
   def addToHistory(orderID: Long, customerID: Long, customerData: String, orderedProducts: String, sumOfOrder: Double,
                    orderDate: String): OrderHistory = {
@@ -28,10 +33,10 @@ trait OrderHistoryServiceT {
   }
 
   /**
-    * Removes a user by id from the system.
+    * Entfernt eine Bestellung aus der Datenbank Orderhistory.
     *
-    * @param id users id.
-    * @return a boolean success flag.
+    * @param id id der Bestellung
+    * @return wahrheitswert ob die Löschung erfolgreich war
     */
   def rmFromHistory(id: Long): Boolean = orderHistoryDao.rmFromHistory(id)
 

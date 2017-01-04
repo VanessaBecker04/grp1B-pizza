@@ -12,10 +12,10 @@ import play.api.db.DB
 
 trait OrderDaoT {
   /**
-    * Creates the given user in the database.
+    * Fügt eine neue Rechnung zu der Datenbank Orderbill
     *
-    * @param bill the user object to be stored.
-    * @return the persisted user object
+    * @param bill das Bill Objekt was in der Datenbank gespeichert werden soll.
+    * @return das Bill Objekt
     */
   def addToOrder(bill: Bill): Bill = {
     DB.withConnection { implicit c =>
@@ -29,10 +29,10 @@ trait OrderDaoT {
   }
 
   /**
-    * Removes a user by id from the database.
+    * entfernt die Rechnungs Daten von der Datenbank Orderbill für id
     *
-    * @param id the users id
-    * @return a boolean success flag
+    * @param id Oderbill id
+    * @return wahrheitswert ob die Löschung erfolgreich war
     */
   def rmFromOrder(id: Long): Boolean = {
     DB.withConnection { implicit c =>
@@ -42,9 +42,9 @@ trait OrderDaoT {
   }
 
   /**
-    * Returns a list of available user from the database.
+    * Gibt eine Liste zurück mit allen vorhandenen Rechnungen
     *
-    * @return a list of user objects.
+    * @return eine liste von Bill objekten.
     */
   def addedToOrder: List[Bill] = {
     DB.withConnection { implicit c =>
@@ -60,7 +60,7 @@ trait OrderDaoT {
   }
 
   /**
-    * Removes order from temporary Orderbill table.
+    * Entfernt Rechnung, wenn Bestellung abgebrochen wurde.
     */
   def cancelOrder() {
     DB.withConnection { implicit c =>

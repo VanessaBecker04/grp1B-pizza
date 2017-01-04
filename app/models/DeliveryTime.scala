@@ -1,7 +1,7 @@
 package models
 
-/**
-  * Created by Hasi on 18.12.2016.
+/** Lieferzeit Objekt, welches Lieferzeit und weitere Variablen verwaltete die für die Berechnung der Lieferzeit benötigt wird.
+  * Created by Hasibullah Faroq on 18.12.2016.
   */
 object DeliveryTime {
   var expectedTime: Int = _
@@ -10,6 +10,11 @@ object DeliveryTime {
   var bakeTime: Int = 10
 }
 
+/**Berechnung der Lieferzeit.
+  *
+  * @param zip Postleitzeil des Kunden
+  * @param name Name des Kunden
+  */
 case class calculateDeliveryTime(zip: Int, name: String) {
   val customerZip = zip
   DeliveryTime.customerName = name

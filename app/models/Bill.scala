@@ -1,7 +1,8 @@
 package models
 
 /**
-  * Created by Hasi on 28.11.2016.
+  * Created by Hasibullah Faroq on 28.11.2016.
+  * Bill Entität
   */
 case class Bill(var id: Long, var customerID: Long, var pizzaName: String, var pizzaNumber: Int,
                 var pizzaSize: String, var beverageName: String, var beverageNumber: Int,
