@@ -9,7 +9,6 @@ import java.util.Date
   * history hinzugefügt werden können.
   */
 object OrderProcess {
-  val currentDate: String = sdf.format(orderDate)
   var orderID: Long = 0
   var customerID: Long = 0
   var customerData: String = ""
@@ -17,6 +16,7 @@ object OrderProcess {
   var sumOfOrder: Double = 0
   var orderDate = new Date()
   var sdf: SimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy")
+  val currentDate: String = sdf.format(orderDate)
 
 
 }
