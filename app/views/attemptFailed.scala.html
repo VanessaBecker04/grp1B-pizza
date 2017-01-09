@@ -22,7 +22,11 @@
         <p><a href="/register">Registrieren</a></p>
     }
     @if(errorcode.equals("atLeastOneProduct")) {
-        <h1>Sie müssen mindestens bei einem Produkt die Menge größer 0 auswählen</h1>
+        <h1>Sie müssen mindestens bei einem Produkt die Menge größer 0 auswählen.</h1>
         <p><a href="/showMenu">Bestellung aufgeben</a></p>
+    }
+    @if(errorcode.equals("productDoesExist")) {
+        <h1>Dieses Produkt existiert bereits. Bei Bedarf bitte aktivieren.</h1>
+        <p><a href="/editMenu">Zurück zur Produktverwaltung</a></p>
     }
 }

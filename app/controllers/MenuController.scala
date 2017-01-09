@@ -4,6 +4,8 @@ import forms.{CreateMenuForm, CreateRemoveFromMenuForm, CreateUpdateInMenuForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import play.api.data.validation.Constraints.min
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
 
@@ -15,11 +17,20 @@ object MenuController extends Controller {
   /**
     * Form Objekte für die Benutzer Daten.
     */
+
   val menuForm = Form(
     mapping(
-      "Produktname" -> text, "Preis je Einheit" -> of[Double], "Kategorie" -> text)(CreateMenuForm.apply)(CreateMenuForm.unapply))
+      "Produktname" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty),
+      "Preis je Einheit" -> of[Double],
+      "Kategorie" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty))
+    (CreateMenuForm.apply)(CreateMenuForm.unapply))
   val rmForm = Form(mapping("Id" -> longNumber)(CreateRemoveFromMenuForm.apply)(CreateRemoveFromMenuForm.unapply))
-  val updateForm = Form(mapping("Id" -> longNumber, "Neuer Name" -> text, "Neuer Preis" -> of[Double], "Aktivieren" -> of[Boolean])
+  val updateForm = Form(
+    mapping(
+      "Id" -> longNumber,
+      "Neuer Name" -> text.verifying("Bitte neuen Namen für das Produkt eingeben", !_.isEmpty),
+      "Neuer Preis" -> of[Double],
+      "Aktivieren" -> of[Boolean])
   (CreateUpdateInMenuForm.apply)(CreateUpdateInMenuForm.unapply))
 
   /**
@@ -34,8 +45,18 @@ object MenuController extends Controller {
         BadRequest(views.html.editMenu(formWithErrors, null, null))
       },
       userData => {
-        val newProduct = services.MenuService.addToMenu(userData.name, userData.price, userData.category)
-        Redirect(routes.MenuController.editMenu())
+        var nameExist: Boolean = false
+        for (p <- services.MenuService.addedToMenu) {
+          if (p.name.equals(userData.name) && p.category.equals(userData.category)) {
+            nameExist = true
+          }
+        }
+        if (nameExist) {
+          Redirect(routes.UserController.attemptFailed("productDoesExist"))
+        } else {
+          services.MenuService.addToMenu(userData.name, userData.price, userData.category)
+          Redirect(routes.MenuController.editMenu())
+        }
       })
   }
 
