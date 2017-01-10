@@ -4,7 +4,8 @@
 
 @main(models.Company.name) {
     <h1>Registrieren:</h1>
-    <p> @helper.form(action = routes.UserController.addUser()) {
+    <ul id="simplebox" style="list-style: none">
+        @helper.form(action = routes.UserController.addUser()) {
         @helper.inputText(userForm("Email"))
         @helper.inputPassword(userForm("Passwort"))
         @helper.inputText(userForm("Vorname"))
@@ -12,8 +13,8 @@
         @helper.inputText(userForm("Straße und Hausnummer"))
         @helper.inputText(userForm("Postleitzahl"))
         @helper.inputText(userForm("Stadt"))
-        @helper.select(userForm("Rolle"), helper.options(List("Kunde")))
+        @helper.select(userForm("Rolle"), helper.options(List("Kunde")), 'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
         <input type="submit" value="Speichern" />
     }
-    </p>
+    </ul>
 }

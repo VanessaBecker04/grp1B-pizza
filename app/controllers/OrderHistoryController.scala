@@ -48,7 +48,8 @@ object OrderHistoryController extends Controller {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
       }
-      val averageOrderSum: Double = sumOfOrders / numberOfOrders
+      val averageOrderSum: Double = Math.round((sumOfOrders / numberOfOrders) * 100.0) / 100.0
+      sumOfOrders = Math.round(sumOfOrders * 100.0) / 100.0
       Ok(views.html.showOrdersUser(orders, sumOfOrders, averageOrderSum))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
@@ -64,7 +65,8 @@ object OrderHistoryController extends Controller {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
       }
-      val averageOrderSum: Double = sumOfOrders / numberOfOrders
+      val averageOrderSum: Double = Math.round((sumOfOrders / numberOfOrders) * 100.0) / 100.0
+      sumOfOrders = Math.round(sumOfOrders * 100.0) / 100.0
       Ok(views.html.showOrdersEmployee(orders, sumOfOrders, averageOrderSum))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
@@ -92,7 +94,8 @@ object OrderHistoryController extends Controller {
           sumOfOrders = sumOfOrders + order.sumOfOrder
           numberOfOrders = numberOfOrders + 1
         }
-        val averageOrderSum: Double = sumOfOrders / numberOfOrders
+        val averageOrderSum: Double = Math.round((sumOfOrders / numberOfOrders) * 100.0) / 100.0
+        sumOfOrders = Math.round(sumOfOrders * 100.0) / 100.0
         Ok(views.html.showOrdersUser(orders, sumOfOrders, averageOrderSum))
       })
   }

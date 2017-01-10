@@ -4,11 +4,11 @@
 
 @main(models.Company.name) {
     <h1>Login:</h1>
-    <p>
+    <ul id="simplebox" style="list-style: none">
     @helper.form(action = routes.UserController.loginUser()) {
         @helper.inputText(loginForm("Email"))
         @helper.inputPassword(loginForm("Passwort"))
         <input type="submit" value="Absenden" />
     }
-    </p>
+    </ul>
 }

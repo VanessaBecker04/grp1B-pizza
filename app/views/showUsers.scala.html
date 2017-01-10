@@ -2,11 +2,9 @@
 
 @main(models.Company.name) {
 
-    <h1>Willkommen bei @models.Company.name</h1>
-
-    <p>Zur Zeit sind folgende Benutzer registriert:</p>
-
-    <ul>
+    <ul id="simpleboxsmall" style="list-style: none">
+    Zur Zeit sind folgende Benutzer registriert:
+    <br/>
     @for(user <- users) {
         <li>Kunden-ID: @user.id Email: @user.email Name: @user.forename @user.name Adresse: @user.address @user.zipcode @user.city Rolle: @user.role Inaktiv: @user.inactive</li>
     }

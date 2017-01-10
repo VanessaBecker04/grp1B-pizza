@@ -373,3 +373,29 @@
     padding-right: 20px;
     border-radius: 25px;
 }
+
+#simplebox {
+    font-size: 20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 120px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
+
+#simpleboxsmall {
+    font-size: 15px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 120px;
+    padding-top: 30px;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-bottom: 40px;
+    background-color: rgba(400, 400, 700, 0.5);
+}
