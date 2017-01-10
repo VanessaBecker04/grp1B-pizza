@@ -214,8 +214,8 @@
     padding-top:20px;
     border-radius: 25px;
     position: fixed;
-    left: 900px;
-    top: 400px;
+    left: 400px;
+    top: 565px;
     height: 40px;
     width: 200px;
     background: floralwhite;
@@ -398,4 +398,22 @@
     padding-left: 40px;
     padding-bottom: 40px;
     background-color: rgba(400, 400, 700, 0.5);
+}
+
+#homeButtonContact {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 20px;
+    top: 500px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#homeButtonContact:hover {
+    background-color: #555;
 }
