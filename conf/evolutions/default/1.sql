@@ -18,7 +18,7 @@ INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, r
 
 
 # --- !Downs
-DROP TABLE Users,
+DROP TABLE Users;
 
 # Menu schema
 
