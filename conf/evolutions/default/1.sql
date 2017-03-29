@@ -11,8 +11,10 @@ CREATE TABLE Users (
     zipcode int NOT NULL,
     city varchar(255) NOT NULL,
     role varchar(255) NOT NULL,
-    inactive bit
+    inactive boolean
 );
+INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(1, 'padrone@suez.de', 'Suez82346', 'Herbert', 'Padrone', 'Kientalstr. 10', 82346, 'Andechs', 'Mitarbeiter', false);
+INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(2, 'emil@gmx.de', 'Susanne82343', 'Susanne', 'Emil', 'Ulrichstr. 1 ', 82343, 'Pöcking', 'Kunde', false);
 
 
 # --- !Downs
@@ -26,10 +28,15 @@ CREATE TABLE Menu (
     name varchar(255) NOT NULL,
     price double NOT NULL,
     category varchar(255) NOT NULL,
-    ordered bit,
-    active bit
+    ordered boolean,
+    active boolean
 );
-
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza', false, true);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'Pizza', false, true);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'Getränk', false, true);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(202, 'Cola', 0.3, 'Getränk', false, true);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Dessert', false, true);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Dessert', false, true);
 
 # --- !Downs
 
