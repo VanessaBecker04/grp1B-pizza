@@ -75,7 +75,7 @@ trait MenuDaoT {
     */
   def setProductOrdered(id: Long): Unit = {
     DB.withConnection { implicit c =>
-      SQL("Update Menu set ordered=1 where id = {id}").on('id -> id).executeUpdate()
+      SQL("Update Menu set ordered=true where id = {id}").on('id -> id).executeUpdate()
     }
   }
 
@@ -85,7 +85,7 @@ trait MenuDaoT {
     */
   def setProductInactive(id: Long): Unit = {
     DB.withConnection { implicit c =>
-      SQL("Update Menu set active=0 where id = {id}").on('id -> id).executeUpdate()
+      SQL("Update Menu set active=false where id = {id}").on('id -> id).executeUpdate()
     }
   }
 
