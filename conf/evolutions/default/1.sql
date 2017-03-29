@@ -31,12 +31,12 @@ CREATE TABLE Menu (
     ordered bit,
     active bit
 );
-INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza', 0, 1);
-INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'Pizza', 0, 1);
-INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'Getränk', 0, 1);
-INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(202, 'Cola', 0.3, 'Getränk', 0, 1);
-INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Dessert', 0, 1);
-INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Dessert', 0, 1);
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'Pizza', B'0', B'1');
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'Pizza', B'0', B'1');
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'Getränk', B'0', B'1');
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(202, 'Cola', 0.3, 'Getränk', B'0', B'1');
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Dessert', B'0', B'1');
+INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Dessert', B'0', B'1');
 
 # --- !Downs
 
