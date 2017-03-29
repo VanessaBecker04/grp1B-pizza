@@ -26,7 +26,7 @@ DROP TABLE Users,
 CREATE TABLE Menu (
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
-    price double NOT NULL,
+    price double precision NOT NULL,
     category varchar(255) NOT NULL,
     ordered boolean,
     active boolean
@@ -67,7 +67,7 @@ Create Table Orderhistory (
     customerID serial NOT NULL,
     customerData varchar(255),
     orderedProducts varchar(255),
-    sumOfOrder double,
+    sumOfOrder double precision,
     orderDate varchar(255),
 );
 
