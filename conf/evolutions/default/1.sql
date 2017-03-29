@@ -1,7 +1,7 @@
 # Users schema
 
 # --- !Ups
-CREATE TABLE Users (
+CREATE TABLE Users(
     id serial PRIMARY KEY,
     email varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
@@ -23,7 +23,7 @@ DROP TABLE Users;
 # Menu schema
 
 # --- !Ups
-CREATE TABLE Menu (
+CREATE TABLE Menu(
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
     price double precision NOT NULL,
@@ -43,7 +43,7 @@ INSERT INTO Menu(id, name, price, category, ordered, active) VALUES(302, 'Schoko
 # Orderbill schema
 
 # --- !Ups
-CREATE TABLE Orderbill (
+CREATE TABLE Orderbill(
     id serial PRIMARY KEY,
     customerId serial NOT NULL,
     pizzaName varchar(255),
@@ -62,7 +62,7 @@ DROP TABLE Orderbill;
 # Orderhistory schema
 
 # --- !Ups
-Create Table Orderhistory (
+Create Table Orderhistory(
     orderID serial NOT NULL PRIMARY KEY,
     customerID serial NOT NULL,
     customerData varchar(255),
