@@ -13,8 +13,8 @@ CREATE TABLE Users (
     role varchar(255) NOT NULL,
     inactive bit
 );
-INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(1, 'padrone@suez.de', 'Suez82346', 'Herbert', 'Padrone', 'Kientalstr. 10', 82346, 'Andechs', 'Mitarbeiter', 0);
-INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(2, 'emil@gmx.de', 'Susanne82343', 'Susanne', 'Emil', 'Ulrichstr. 1 ', 82343, 'Pöcking', 'Kunde', 0);
+INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(1, 'padrone@suez.de', 'Suez82346', 'Herbert', 'Padrone', 'Kientalstr. 10', 82346, 'Andechs', 'Mitarbeiter', B'0');
+INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(2, 'emil@gmx.de', 'Susanne82343', 'Susanne', 'Emil', 'Ulrichstr. 1 ', 82343, 'Pöcking', 'Kunde', B'0');
 
 
 # --- !Downs
