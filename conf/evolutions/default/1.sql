@@ -53,7 +53,7 @@ CREATE TABLE Orderbill(
     beverageNumber int,
     beverageSize varchar(255),
     dessertName varchar(255),
-    dessertNumber int,
+    dessertNumber int
 );
 
 # --- !Downs
@@ -68,7 +68,7 @@ Create Table Orderhistory(
     customerData varchar(255),
     orderedProducts varchar(255),
     sumOfOrder double precision,
-    orderDate varchar(255),
+    orderDate varchar(255)
 );
 
 # --- !Downs
