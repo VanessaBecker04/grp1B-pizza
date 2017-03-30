@@ -2,12 +2,12 @@
 
 Die Website ist über [Heroku](http://grp1b-pizza.herokuapp.com/) erreichbar. Empfehlenswert ist die Nutzung der Website über den Firefox-Browser, um Darstellungsfehler zu vermeiden.
 
-—
 Voreingestellte Nutzer zum Anmelden:
 
-Mitarbeiter Padrone Email: *padrone@suez.de* Passwort: *Suez82346*
-Kunde Emil Email: *emil@gmx.de* Passwort: *Susanne82343*
-—
+* Mitarbeiter Padrone mit Email: *padrone@suez.de* und Passwort: *Suez82346*
+* Kunde Emil mit Email: *emil@gmx.de* und Passwort: *Susanne82343*
+
+
 **Benutzungshinweise:**
 
 * Ein manueller Aufruf von firmeninternen Funktionen über die Adresszeile des Browsers ist ohne vorherige Anmeldung als Mitarbeiter nicht möglich und führt zu einer Fehlermeldung, dass nicht die nötigen Zugriffsrechte vorhanden sind.
