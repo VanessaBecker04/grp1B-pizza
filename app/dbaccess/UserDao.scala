@@ -23,7 +23,7 @@ trait UserDaoT {
   def addUser(user: User): User = {
     var returnuser: User = null
     DB.withConnection { implicit c =>
-      val selectDuplicate = SQL("Select TOP 1 email from Users where email = {email}").on(
+      val selectDuplicate = SQL("Select email from Users where email = {email}").on(
         'email -> user.email).as(scalar[String].singleOpt)
       if (selectDuplicate.isDefined) {
         returnuser = null
@@ -50,7 +50,7 @@ trait UserDaoT {
   def editUser(user: User): User = {
     var returnuser: User = null
     DB.withConnection { implicit c =>
-      val selectDuplicate = SQL("Select TOP 1 email from Users where email = {email}").on(
+      val selectDuplicate = SQL("Select email from Users where email = {email}").on(
         'email -> user.email).as(scalar[String].singleOpt)
       if (selectDuplicate.isDefined) {
         returnuser = null
