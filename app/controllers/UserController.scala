@@ -188,7 +188,7 @@ object UserController extends Controller {
         } else if (loggedinUser == -2) {
           Redirect(routes.UserController.attemptFailed("inactive"))
         } else {
-          Redirect(routes.UserController.welcomeUser())
+          Redirect(routes.UserController.welcomeUser()).withSession("user" -> loggedinUser.toString)
         }
       })
   }
@@ -200,7 +200,7 @@ object UserController extends Controller {
     */
   def logoutUser: Action[AnyContent] = Action {
     services.UserService.logoutUser()
-    Redirect(routes.Application.index())
+    Redirect(routes.Application.index()).withNewSession
   }
 
   /**
