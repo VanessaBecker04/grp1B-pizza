@@ -14,10 +14,12 @@ object Application extends Controller {
     *
     * @return main web page
     */
-  def index: Action[AnyContent] = Action {
-    if (models.activeUser.id != 0) {
+  def index: Action[AnyContent] = Action { implicit request =>
+    if (request2session.get("user").isDefined) {
+      Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
       Redirect(routes.UserController.welcomeUser())
     } else {
+      Console.println("Value of 'user' from Session not logged in: " + request2session.get("user"))
       Ok(views.html.index())
     }
   }
