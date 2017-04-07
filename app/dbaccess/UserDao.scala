@@ -113,6 +113,7 @@ trait UserDaoT {
         -2
       } else {
         setActiveUser(selectUser.get)
+        models.activeUser.loggedin = true
         selectUser.get
       }
     }
