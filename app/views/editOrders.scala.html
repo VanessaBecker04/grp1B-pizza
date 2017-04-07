@@ -1,4 +1,4 @@
-@(users: List[User], userOrdersForm: Form[forms.UserIDForm])
+@(users: List[User], userOrdersForm: Form[forms.UserIDForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main("Bestellungen ansehen") {
     <p><a id="linkToAllOrders" href="/showOrdersEmployee">Alle Bestellungen ansehen</a></p>

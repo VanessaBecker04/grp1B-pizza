@@ -1,3 +1,4 @@
+@()(implicit request: play.api.mvc.RequestHeader)
 @main(models.Company.name) {
     <h1>Sie sind als Mitarbeiter @models.activeUser.forename @models.activeUser.name eingeloggt.</h1>
     <p><a id="loggedInFirstButton" href="/editOrders">Bestellverwaltung</a></p>

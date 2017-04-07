@@ -1,4 +1,4 @@
-@(users: List[models.User])
+@(users: List[models.User])(implicit request: play.api.mvc.RequestHeader)
 
 @main(models.Company.name) {
 

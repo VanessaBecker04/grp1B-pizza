@@ -39,7 +39,7 @@ object OrderHistoryController extends Controller {
     Redirect(routes.OrderHistoryController.showDeliveryTime())
   }
 
-  def showOrdersUser(): Action[AnyContent] = Action {
+  def showOrdersUser(): Action[AnyContent] = Action { implicit request =>
     if (models.activeUser.id != 0) {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
@@ -56,7 +56,7 @@ object OrderHistoryController extends Controller {
     }
   }
 
-  def showOrdersEmployee(): Action[AnyContent] = Action {
+  def showOrdersEmployee(): Action[AnyContent] = Action { implicit request =>
     if (models.activeUser.role.equals("Mitarbeiter")) {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
@@ -77,7 +77,7 @@ object OrderHistoryController extends Controller {
     *
     * @return erwartete Lieferzeit
     */
-  def showDeliveryTime: Action[AnyContent] = Action {
+  def showDeliveryTime: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.deliveryTime())
   }
 
@@ -100,7 +100,7 @@ object OrderHistoryController extends Controller {
       })
   }
 
-  def editOrders: Action[AnyContent] = Action {
+  def editOrders: Action[AnyContent] = Action { implicit request =>
     if (models.activeUser.role.equals("Mitarbeiter")) {
       Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
     } else {

@@ -1,4 +1,4 @@
-@(errorcode: String)
+@(errorcode: String)(implicit request: play.api.mvc.RequestHeader)
 @main(models.Company.name) {
     @if(errorcode.equals("register")) {
         <h1>Ihre angegebene Adresse liegt außerhalb des Lieferbereichs. Der Lieferbereich umfasst die Postleitzahlen:</h1>

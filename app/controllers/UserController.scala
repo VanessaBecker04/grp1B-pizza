@@ -146,28 +146,28 @@ object UserController extends Controller {
   /**
     * Shows the welcome view for an employee.
     */
-  def welcomeEmployee: Action[AnyContent] = Action {
+  def welcomeEmployee: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.welcomeEmployee())
   }
 
   /**
     * Shows the attemptFail view with a given errorcode.
     */
-  def attemptFailed(errorcode: String): Action[AnyContent] = Action {
+  def attemptFailed(errorcode: String): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.attemptFailed(errorcode))
   }
 
   /**
     * Shows the attemptSuccessful view with a given successcode.
     */
-  def attemptSuccessful(successcode: String): Action[AnyContent] = Action {
+  def attemptSuccessful(successcode: String): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.attemptSuccessful(successcode))
   }
 
   /**
     * List all users currently available in the system.
     */
-  def showUsers: Action[AnyContent] = Action {
+  def showUsers: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.showUsers(UserService.registeredUsers))
   }
 
@@ -206,7 +206,7 @@ object UserController extends Controller {
   /**
     * Shows the editUser view for employees.
     */
-  def editUsers: Action[AnyContent] = Action {
+  def editUsers: Action[AnyContent] = Action { implicit request =>
     if (models.activeUser.role.equals("Mitarbeiter")) {
       Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.editUserForm, controllers.UserController.deleteUserForm))
     } else {

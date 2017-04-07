@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit request: play.api.mvc.RequestHeader)
 
 <!DOCTYPE html>
 
@@ -14,7 +14,7 @@
             <li style="float:left"><a href="/">Home</a></li>
             <li style="float:left"><a href="/showMenu">Produkte</a></li>
             <li style="float:right"><a href="/contact">Kontakt</a></li>
-            @if(!models.activeUser.loggedin) {
+            @if(request.session.get("user").isEmpty) {
                 <li style="float:left"><a href="/login">Einloggen</a></li>
                 <li style="float:right"><a href="/register">Registrieren</a></li>
             } else {

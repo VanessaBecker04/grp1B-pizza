@@ -1,6 +1,6 @@
-@(userForm: Form[forms.CreateUserForm])
+@(userForm: Form[forms.CreateUserForm])(implicit request: play.api.mvc.RequestHeader)
 
-    @import views.html.helper
+@import views.html.helper
 
 @main(models.Company.name) {
     <h1>Registrieren:</h1>

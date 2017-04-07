@@ -17,11 +17,9 @@ object Application extends Controller {
   def index: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("user").isDefined) {
       Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
-      Console.println("Logged in?" + models.activeUser.loggedin)
       Redirect(routes.UserController.welcomeUser())
     } else {
       Console.println("Value of 'user' from Session not logged in: " + request2session.get("user"))
-      Console.println("Logged in?" + models.activeUser.loggedin)
       Ok(views.html.index())
     }
   }
@@ -31,7 +29,7 @@ object Application extends Controller {
     *
     * @return register web page
     */
-  def register: Action[AnyContent] = Action {
+  def register: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.register(controllers.UserController.userForm))
   }
 
@@ -40,7 +38,7 @@ object Application extends Controller {
     *
     * @return login web page
     */
-  def login: Action[AnyContent] = Action {
+  def login: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.login(controllers.UserController.loginForm))
   }
 
@@ -49,7 +47,7 @@ object Application extends Controller {
     *
     * @return contact web page
     */
-  def contact: Action[AnyContent] = Action {
+  def contact: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.contact())
   }
 }

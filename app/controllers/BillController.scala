@@ -51,7 +51,7 @@ object BillController extends Controller {
     *
     * @return showBill(Rechnung)
     */
-  def showBill: Action[AnyContent] = Action {
+  def showBill: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.showBill())
   }
 

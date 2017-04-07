@@ -1,4 +1,4 @@
-@(successcode: String)
+@(successcode: String)(implicit request: play.api.mvc.RequestHeader)
 @main(models.Company.name) {
     @if(successcode.equals("usercreated")) {
         <h1>Der Nutzer wurde erfolgreich hinzugefügt.</h1>

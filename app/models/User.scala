@@ -18,7 +18,6 @@ object activeUser {
   var zipcode: Int = _
   var city: String = _
   var role: String = "none"
-  var loggedin : Boolean = false
 
 }
 

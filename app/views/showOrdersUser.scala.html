@@ -1,4 +1,4 @@
-@(orders: List[models.OrderHistory], sumOfOrders: Double, averageOrderSum: Double)
+@(orders: List[models.OrderHistory], sumOfOrders: Double, averageOrderSum: Double)(implicit request: play.api.mvc.RequestHeader)
 
 @main(models.Company.name) {
     <ul id="simpleboxsmall" style="list-style: none">

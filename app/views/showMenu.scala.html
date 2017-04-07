@@ -1,4 +1,4 @@
-@(products: List[models.Menu], billForm: Form[forms.CreateBillForm])
+@(products: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
