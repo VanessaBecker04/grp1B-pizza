@@ -135,7 +135,7 @@ object UserController extends Controller {
   /**
     * Shows the welcome view for a customer.
     */
-  def welcomeUser: Action[AnyContent] = Action {
+  def welcomeUser: Action[AnyContent] = Action { implicit request =>
     if (models.activeUser.role.equals("Mitarbeiter")) {
       Redirect(routes.UserController.welcomeEmployee())
     } else {
