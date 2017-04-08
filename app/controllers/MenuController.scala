@@ -105,7 +105,7 @@ object MenuController extends Controller {
     * @return editMenu
     */
   def editMenu: Action[AnyContent] = Action { implicit request =>
-    if (models.activeUser.role.equals("Mitarbeiter")) {
+    if (request2session.get("role").get == "Mitarbeiter") {
       models.putAllMenuIDInList()
       Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm, controllers.MenuController.updateForm))
     } else {

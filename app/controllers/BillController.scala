@@ -24,27 +24,27 @@ object BillController extends Controller {
     * @return entweder attemptFailed, login oder showBill(Rechnung)
     */
   def addToBill: Action[AnyContent] = Action { implicit request =>
-    billform.bindFromRequest.fold(
-      formWithErrors => {
-        BadRequest(views.html.showMenu(List.empty, formWithErrors))
-      },
-      userData => {
-        val newOrder = services.OrderService.addToOrder(models.activeUser.id, userData.pizzaName, userData.pizzaNumber,
-          userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
-          userData.dessertName, userData.dessertNumber)
-        if (models.activeUser.id == 0) {
-          Redirect(routes.Application.login())
-        } else {
+    if (request2session.get("user").isEmpty) {
+      Redirect(routes.Application.login())
+    } else {
+      billform.bindFromRequest.fold(
+        formWithErrors => {
+          BadRequest(views.html.showMenu(List.empty, formWithErrors))
+        },
+        userData => {
+          val newOrder = services.OrderService.addToOrder(request2session.get("user").get.toLong, userData.pizzaName, userData.pizzaNumber,
+            userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
+            userData.dessertName, userData.dessertNumber)
           if (userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
             Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
           } else {
             models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
               userData.beverageNumber, userData.dessertName, userData.dessertNumber)
-            services.OrderService.doCalculationForBill()
+            services.OrderService.doCalculationForBill(request2session.get("user").get.toLong, newOrder.id)
             Redirect(routes.BillController.showBill())
           }
-        }
-      })
+        })
+    }
   }
 
   /** Leitet Kunden zur Rechnung weiter.

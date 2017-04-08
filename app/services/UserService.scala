@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{UserDao, UserDaoT}
-import models.{User, setUser}
+import models.User
 
 /**
   * Service class for user related operations.
@@ -73,7 +73,6 @@ trait UserServiceT {
     */
   def logoutUser(): Unit = {
     services.OrderService.cancelOrder()
-    setUser(0, null, null, null, 0, null, "none")
   }
 }
 

@@ -79,7 +79,7 @@ object UserController extends Controller {
         } else {
           val user = services.UserService.addUser(userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
           if (user != null) {
-            if (models.activeUser.role.equals("Mitarbeiter")) {
+            if (request2session.get("role").get == "Mitarbeiter") {
               Redirect(routes.UserController.attemptSuccessful("usercreated"))
             } else {
               Redirect(routes.UserController.welcomeUser()).withSession(
@@ -145,7 +145,7 @@ object UserController extends Controller {
     * Shows the welcome view for a customer.
     */
   def welcomeUser: Action[AnyContent] = Action { implicit request =>
-    if (models.activeUser.role.equals("Mitarbeiter")) {
+    if (request2session.get("role").get == "Mitarbeiter") {
       Redirect(routes.UserController.welcomeEmployee())
     } else {
       Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
@@ -228,7 +228,7 @@ object UserController extends Controller {
     * Shows the editUser view for employees.
     */
   def editUsers: Action[AnyContent] = Action { implicit request =>
-    if (models.activeUser.role.equals("Mitarbeiter")) {
+    if (request2session.get("role").get == "Mitarbeiter") {
       Ok(views.html.editUsers(services.UserService.registeredUsers, controllers.UserController.userForm, controllers.UserController.editUserForm, controllers.UserController.deleteUserForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))

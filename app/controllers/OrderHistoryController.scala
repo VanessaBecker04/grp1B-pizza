@@ -40,10 +40,10 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersUser(): Action[AnyContent] = Action { implicit request =>
-    if (models.activeUser.id != 0) {
+    if (request2session.get("user").isDefined) {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
-      val orders = services.OrderHistoryService.showOrdersUser(models.activeUser.id)
+      val orders = services.OrderHistoryService.showOrdersUser(request2session.get("user").get.toLong)
       for (order <- orders) {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
@@ -57,7 +57,7 @@ object OrderHistoryController extends Controller {
   }
 
   def showOrdersEmployee(): Action[AnyContent] = Action { implicit request =>
-    if (models.activeUser.role.equals("Mitarbeiter")) {
+    if (request2session.get("role").get == "Mitarbeiter") {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
       val orders = services.OrderHistoryService.showOrdersEmployee
@@ -101,7 +101,7 @@ object OrderHistoryController extends Controller {
   }
 
   def editOrders: Action[AnyContent] = Action { implicit request =>
-    if (models.activeUser.role.equals("Mitarbeiter")) {
+    if (request2session.get("role").get == "Mitarbeiter") {
       Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))

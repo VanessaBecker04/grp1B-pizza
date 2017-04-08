@@ -1,5 +1,6 @@
 package services
 
+import controllers.UserController.request2session
 import dbaccess.{OrderDao, OrderDaoT}
 import models.Bill
 
@@ -44,7 +45,7 @@ trait OrderServiceT {
   /** berechnet die Gesamtsumme der Bestellung
     *
     */
-  def doCalculationForBill(): Unit = {
+  def doCalculationForBill(id: Long, orderID: Long): Unit = {
 
     val bill = addedToOrder
     val menu = services.MenuService.addedToMenu
@@ -57,7 +58,7 @@ trait OrderServiceT {
 
 
     for (c <- bill) {
-      if (c.customerID.equals(models.activeUser.id) && c.id.equals(models.activeUser.orderID)) {
+      if (c.customerID.equals(id) && c.id.equals(orderID)) {
         if (c.pizzaName != null && c.pizzaNumber > 0) {
           orderedProducts.append(c.pizzaNumber + "x ")
           orderedProducts.append(c.pizzaName + " ")
@@ -122,7 +123,7 @@ trait OrderServiceT {
         wholeSum += (Math.round((pizzaSum + beverageSum + dessertSum) * 100.0) / 100.0)
       }
     }
-    models.setOrder(models.activeUser.orderID, models.activeUser.id, orderedProducts, wholeSum)
+    models.setOrder(orderID, id, orderedProducts, wholeSum)
   }
 
   /**
