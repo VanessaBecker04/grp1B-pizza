@@ -101,19 +101,18 @@ trait UserDaoT {
     *
     * @return customerID
     */
-  def loginUser(email: String, password: String): Long = {
+  def loginUser(email: String, password: String): User = {
     DB.withConnection { implicit c =>
       val selectUser = SQL("Select id from Users where (email = {email}) AND (password = {password})").on(
         'email -> email, 'password -> password).as(scalar[Long].singleOpt)
       val selectInactive = SQL("Select inactive from Users where (email = {email}) AND (password = {password})").on(
         'email -> email, 'password -> password).as(scalar[Boolean].singleOpt)
       if (selectUser.isEmpty) {
-        -1
+        User(-1, "0", "0", "0", "0", "0", 0, "0", "0", false)
       } else if (selectInactive.get) {
-        -2
+        User(-2, "0", "0", "0", "0", "0", 0, "0", "0", false)
       } else {
-        setActiveUser(selectUser.get)
-        selectUser.get
+        returnActiveUser(selectUser.get)
       }
     }
   }
@@ -121,10 +120,11 @@ trait UserDaoT {
   /**
     * The logged in user is set as the active user.
     */
-  def setActiveUser(idgiven: Long): Unit = {
+  def returnActiveUser(idgiven: Long): User = {
     DB.withConnection { implicit c =>
-      val selectedUser = SQL("Select id, forename, name, address, zipcode, city, role from Users where id = {idgiven}").on('idgiven -> idgiven)
-      selectedUser().map(row => setUser(row[Long]("id"), row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role")))
+      val selectedUser = SQL("Select id, email, password, forename, name, address, zipcode, city, role, inactive from Users where id = {idgiven}").on('idgiven -> idgiven)
+      val user = selectedUser().map(row => User(row[Long]("id"), row[String]("email"), '1'.toString, row[String]("forename"), row[String]("name"), row[String]("address"), row[Int]("zipcode"), row[String]("city"), row[String]("role"), row[Boolean]("inactive"))).lastOption
+      user.get
     }
   }
 }

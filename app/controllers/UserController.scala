@@ -183,12 +183,21 @@ object UserController extends Controller {
       },
       loginData => {
         val loggedinUser = services.UserService.loginUser(loginData.email, loginData.password)
-        if (loggedinUser == -1) {
+        if (loggedinUser.id == -1) {
           Redirect(routes.UserController.attemptFailed("login"))
-        } else if (loggedinUser == -2) {
+        } else if (loggedinUser.id == -2) {
           Redirect(routes.UserController.attemptFailed("inactive"))
         } else {
-          Redirect(routes.UserController.welcomeUser()).withSession("user" -> loggedinUser.toString)
+          Redirect(routes.UserController.welcomeUser()).withSession(
+            "user" -> loggedinUser.id.toString,
+            "email" -> loggedinUser.email.toString,
+            "forename" -> loggedinUser.forename.toString,
+            "name" -> loggedinUser.name.toString,
+            "address" -> loggedinUser.address.toString,
+            "zipcode" -> loggedinUser.zipcode.toString,
+            "city" -> loggedinUser.city.toString,
+            "role" -> loggedinUser.role.toString
+          )
         }
       })
   }

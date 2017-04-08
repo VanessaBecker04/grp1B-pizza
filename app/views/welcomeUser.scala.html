@@ -1,6 +1,6 @@
 @()(implicit request: play.api.mvc.RequestHeader)
 @main(models.Company.name) {
-    <h1>Sie sind als Kunde @request.session.get("user") eingeloggt.</h1>
+    <h1>Sie sind als Kunde @request.session.get("forename") @request.session.get("name") eingeloggt.</h1>
     <p><a id="loggedInFirstButton" href="/showMenu">Bestellung aufgeben</a></p>
     <p><a id="loggedInSecondButton" href="/showOrdersUser">Ihre Bestellungen</a></p>
 }

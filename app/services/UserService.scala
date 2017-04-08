@@ -64,7 +64,7 @@ trait UserServiceT {
     * @param password password
     * @return
     */
-  def loginUser(email: String, password: String): Long = {
+  def loginUser(email: String, password: String): User = {
     userDao.loginUser(email, password)
   }
 
