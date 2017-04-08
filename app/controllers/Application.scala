@@ -16,14 +16,8 @@ object Application extends Controller {
     */
   def index: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("user").isDefined) {
-      Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
-      Console.println("Value of 'forename' from Session logged in: " + request2session.get("forename"))
-      Console.println("Value of 'name' from Session logged in: " + request2session.get("name"))
       Redirect(routes.UserController.welcomeUser())
     } else {
-      Console.println("Value of 'user' from Session not logged in: " + request2session.get("user"))
-      Console.println("Value of 'forename' from Session not logged in: " + request2session.get("forename"))
-      Console.println("Value of 'name' from Session not logged in: " + request2session.get("name"))
       Ok(views.html.index())
     }
   }

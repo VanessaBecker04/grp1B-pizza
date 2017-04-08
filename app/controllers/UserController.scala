@@ -82,7 +82,16 @@ object UserController extends Controller {
             if (models.activeUser.role.equals("Mitarbeiter")) {
               Redirect(routes.UserController.attemptSuccessful("usercreated"))
             } else {
-              Redirect(routes.UserController.welcomeUser())
+              Redirect(routes.UserController.welcomeUser()).withSession(
+                "user" -> user.id.toString,
+                "email" -> user.email.toString,
+                "forename" -> user.forename.toString,
+                "name" -> user.name.toString,
+                "address" -> user.address.toString,
+                "zipcode" -> user.zipcode.toString,
+                "city" -> user.city.toString,
+                "role" -> user.role.toString
+              )
             }
           } else {
             Redirect(routes.UserController.attemptFailed("emailused"))
@@ -139,6 +148,9 @@ object UserController extends Controller {
     if (models.activeUser.role.equals("Mitarbeiter")) {
       Redirect(routes.UserController.welcomeEmployee())
     } else {
+      Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
+      Console.println("Value of 'forename' from Session logged in: " + request2session.get("forename"))
+      Console.println("Value of 'name' from Session logged in: " + request2session.get("name"))
       Ok(views.html.welcomeUser())
     }
   }
