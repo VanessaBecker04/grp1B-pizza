@@ -3,10 +3,10 @@
 
     <h1> Rechnung:</h1>
     <ul id="showBillView" style="list-style: none">
-        <li>Anschrift: @OrderProcess.customerData</li>
-        <li>Bestellung: @OrderProcess.orderedProducts</li>
-        <li>Gesamtsumme: @OrderProcess.sumOfOrder € </li>
-        <li>Datum: @OrderProcess.currentDate</li>
+        <li>Anschrift: @request.session.get("customerData")</li>
+        <li>Bestellung: @request.session.get("orderedProducts")</li>
+        <li>Gesamtsumme: @request.session.get("sumOfOrder")</li>
+        <li>Datum: @request.session.get("currentDate")</li>
     </ul>
 
     <p><a id="showBillConfirmButton" href="/addToHistory" >Bestellung bestätigen</a></p>

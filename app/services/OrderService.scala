@@ -123,7 +123,7 @@ trait OrderServiceT {
         wholeSum += (Math.round((pizzaSum + beverageSum + dessertSum) * 100.0) / 100.0)
       }
     }
-    models.setOrder(orderID, id, orderedProducts, wholeSum)
+    controllers.BillController.setOrder(orderedProducts, wholeSum)
   }
 
   /**

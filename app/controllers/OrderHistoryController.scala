@@ -23,8 +23,11 @@ object OrderHistoryController extends Controller {
     *
     * @return erwartete Lieferzeit
     */
-  def addToHistory(): Action[AnyContent] = Action {
-    services.OrderHistoryService.addToHistory(models.OrderProcess.orderID, models.OrderProcess.customerID, models.OrderProcess.customerData, models.OrderProcess.orderedProducts.toString(), models.OrderProcess.sumOfOrder, models.OrderProcess.currentDate)
+  def addToHistory(): Action[AnyContent] = Action { implicit request =>
+    services.OrderHistoryService.addToHistory(request2session.get("orderId").get.toLong,
+      request2session.get("user").get.toLong, request2session.get("customerData").get,
+      request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble,
+      request2session.get("currentDate").get)
     for (s <- services.MenuService.addedToMenu) {
       if (s.name.equals(models.UndeleteableProducts.pizza)) {
         services.MenuService.setProductOrdered(s.id)
