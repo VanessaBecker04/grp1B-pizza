@@ -2,7 +2,7 @@ package services
 
 import controllers.UserController.request2session
 import dbaccess.{OrderDao, OrderDaoT}
-import models.Bill
+import models.{Bill, Company, DeliveryTime}
 
 /** Service Klasse für Rechnungsbezogene (Orderbill) Handlungen.
   * Created by Hasibullah Faroq on 28.11.2016.
@@ -124,6 +124,25 @@ trait OrderServiceT {
       }
     }
     (orderedProducts, wholeSum)
+  }
+
+  /**
+    * Berechnung der Lieferzeit.
+    */
+  def calculateDeliveryTime(customerZIP: Int): Double = {
+    var km: Int = -11
+    var kmpm: Double = DeliveryTime.kilometersperminute
+
+    customerZIP match {
+      case Company.zip => km = 4
+      case 82335 | 82343 => km = 6
+      case 82340 => km = 10
+      case 82061 | 82069 | 82131 => km = 12
+      case 82234 => km = 14
+      case 82057 | 82065 | 82229 | 82327 | 82346 => km = 16
+      case _ =>
+    }
+    km / kmpm + DeliveryTime.bakeTime
   }
 
   /**

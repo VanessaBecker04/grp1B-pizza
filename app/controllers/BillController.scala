@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 import forms.CreateBillForm
-import models.calculateDeliveryTime
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -52,17 +51,11 @@ object BillController extends Controller {
   }
 
   def setOrder(orderID: Long, orderedProducts: String, sumOfOrder: Double): Action[AnyContent] = Action { implicit request =>
-    val customerList = services.UserService.registeredUsers
-    var customerData: String = ""
-    var orderDate = new Date()
-    var sdf: SimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy")
+    val customerData: String = request2session.get("forename").get.toString + " " + request2session.get("name").get.toString + ", " + request2session.get("address").get.toString + ", " + request2session.get("zipcode").get.toString + " " + request2session.get("city").get.toString
+    val orderDate = new Date()
+    val sdf: SimpleDateFormat = new SimpleDateFormat("dd.MM.yyyy")
     val currentDate: String = sdf.format(orderDate)
-    for (c <- customerList) {
-      if (c.id == request2session.get("user").get.toLong) {
-        customerData = c.forename + " " + c.name + " " + c.address + " " + c.zipcode + " " + c.city
-        calculateDeliveryTime(c.zipcode, c.name)
-      }
-    }
+    val deliveryTime = services.OrderService.calculateDeliveryTime(request2session.get("zipcode").get.toInt)
 
     Redirect(routes.BillController.showBill()).withSession(
       request.session +
@@ -70,13 +63,14 @@ object BillController extends Controller {
         ("orderedProducts" -> orderedProducts.toString) +
         ("sumOfOrder" -> sumOfOrder.toString) +
         ("customerData" -> customerData.toString) +
-        ("currentDate" -> currentDate.toString)
+        ("currentDate" -> currentDate.toString) +
+        ("deliveryTime" -> deliveryTime.toString)
     )
   }
 
-  /** Leitet Kunden zur Rechnung weiter.
+  /** Leitet Kunden zum Warenkorb weiter.
     *
-    * @return showBill(Rechnung)
+    * @return showBill(Warenkorb)
     */
   def showBill: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.showBill())

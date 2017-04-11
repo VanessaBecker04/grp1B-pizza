@@ -73,8 +73,8 @@ object UserController extends Controller {
         BadRequest(views.html.register(formWithErrors))
       },
       userData => {
-        models.calculateDeliveryTime(userData.zipcode, userData.name)
-        if (models.DeliveryTime.expectedTime == -1) {
+        val deliveryTime = services.OrderService.calculateDeliveryTime(userData.zipcode)
+        if (deliveryTime == -1) {
           Redirect(routes.UserController.attemptFailed("register"))
         } else {
           val user = services.UserService.addUser(userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
@@ -111,8 +111,8 @@ object UserController extends Controller {
         BadRequest(views.html.editUsers(null, null, formWithErrors, null))
       },
       userData => {
-        models.calculateDeliveryTime(userData.zipcode, userData.name)
-        if (models.DeliveryTime.expectedTime == -1) {
+        val deliveryTime = services.OrderService.calculateDeliveryTime(userData.zipcode)
+        if (deliveryTime == -1) {
           Redirect(routes.UserController.attemptFailed("register"))
         } else {
           val user = services.UserService.editUser(userData.customerID, userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)

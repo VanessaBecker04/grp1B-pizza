@@ -2,6 +2,6 @@
 @main("Lieferzeit") {
 
     <p><a id="headerForDeliveryTime">
-        Sehr geehrte/r Herr/Frau @DeliveryTime.customerName, Ihre Lieferung wird in ungefähr @DeliveryTime.expectedTime Minuten bei Ihnen eintreffen.</a></p>
+        Sehr geehrte/r Herr/Frau @request.session.get("forename") @request.session.get("name"), Ihre Lieferung wird in ungefähr @request.session.get("deliveryTime") Minuten bei Ihnen eintreffen.</a></p>
     <p><a id="homeButtonDeliveryTime" href="/" >Zurück zum Hauptmenu</a></p>
 }
