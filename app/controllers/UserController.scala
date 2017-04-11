@@ -79,8 +79,12 @@ object UserController extends Controller {
         } else {
           val user = services.UserService.addUser(userData.email, userData.password, userData.forename, userData.name, userData.address, userData.zipcode, userData.city, userData.role)
           if (user != null) {
-            if (request2session.get("role").get == "Mitarbeiter") {
-              Redirect(routes.UserController.attemptSuccessful("usercreated"))
+            if (request2session.get("role").isDefined) {
+              if (request2session.get("role").get == "Mitarbeiter") {
+                Redirect(routes.UserController.attemptSuccessful("usercreated"))
+              } else {
+                Redirect(routes.UserController.attemptFailed("permissiondenied"))
+              }
             } else {
               Redirect(routes.UserController.welcomeUser()).withSession(
                 "user" -> user.id.toString,
