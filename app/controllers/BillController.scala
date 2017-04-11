@@ -44,16 +44,14 @@ object BillController extends Controller {
           } else {
             models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
               userData.beverageNumber, userData.dessertName, userData.dessertNumber)
-            services.OrderService.doCalculationForBill(request2session.get("user").get.toLong, newOrder.id)
-            Redirect(routes.BillController.showBill()).withSession(
-              "orderId" -> newOrder.id.toString
-            )
+            val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(request2session.get("user").get.toLong, newOrder.id)
+            Redirect(routes.BillController.setOrder(newOrder.id, orderedProducts.toString, sumOfOrder))
           }
         })
     }
   }
 
-  def setOrder(orderedProducts: StringBuilder, sumOfOrder: Double): Action[AnyContent] = Action { implicit request =>
+  def setOrder(orderID: Long, orderedProducts: String, sumOfOrder: Double): Action[AnyContent] = Action { implicit request =>
     val customerList = services.UserService.registeredUsers
     var customerData: String = ""
     var orderDate = new Date()
@@ -65,11 +63,14 @@ object BillController extends Controller {
         calculateDeliveryTime(c.zipcode, c.name)
       }
     }
+
     Redirect(routes.BillController.showBill()).withSession(
-      "orderedProducts" -> orderedProducts.toString,
-      "sumOfOrder" -> sumOfOrder.toString,
-      "customerData" -> customerData.toString,
-      "currentDate" -> currentDate.toString
+      request.session +
+        ("orderID" -> orderID.toString) +
+        ("orderedProducts" -> orderedProducts.toString) +
+        ("sumOfOrder" -> sumOfOrder.toString) +
+        ("customerData" -> customerData.toString) +
+        ("currentDate" -> currentDate.toString)
     )
   }
 

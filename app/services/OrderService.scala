@@ -45,7 +45,7 @@ trait OrderServiceT {
   /** berechnet die Gesamtsumme der Bestellung
     *
     */
-  def doCalculationForBill(id: Long, orderID: Long): Unit = {
+  def doCalculationForBill(id: Long, orderID: Long) = {
 
     val bill = addedToOrder
     val menu = services.MenuService.addedToMenu
@@ -123,7 +123,7 @@ trait OrderServiceT {
         wholeSum += (Math.round((pizzaSum + beverageSum + dessertSum) * 100.0) / 100.0)
       }
     }
-    controllers.BillController.setOrder(orderedProducts, wholeSum)
+    (orderedProducts, wholeSum)
   }
 
   /**

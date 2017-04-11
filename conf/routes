@@ -27,6 +27,7 @@ POST        /rmFromMenu          controllers.MenuController.rmFromMenu
 POST        /updateInMenu        controllers.MenuController.updateInMenu
 
 POST        /addToBill           controllers.BillController.addToBill
+GET         /setOrder            controllers.BillController.setOrder(orderID: Long, orderedProducts: String, sumOfOrder: Double)
 GET         /showBill            controllers.BillController.showBill
 GET         /cancelOrder         controllers.BillController.cancelOrder
 
