@@ -45,19 +45,11 @@ trait UserDaoT {
     * @return the persisted user object
     */
   def editUser(user: User): User = {
-    var returnuser: User = null
     DB.withConnection { implicit c =>
-      val selectDuplicate = SQL("Select email from Users where email = {email}").on(
-        'email -> user.email).as(scalar[String].singleOpt)
-      if (selectDuplicate.isDefined) {
-        returnuser = null
-      } else {
-        returnuser = user
-        SQL("Update Users set email={email}, password={password}, forename={forename}, name={name}, address={address}, zipcode={zipcode}, city={city}, role={role}, inactive={inactive} where id = {id}").on(
+      SQL("Update Users set email={email}, password={password}, forename={forename}, name={name}, address={address}, zipcode={zipcode}, city={city}, role={role}, inactive={inactive} where id = {id}").on(
           'id -> user.id, 'email -> user.email, 'password -> user.password, 'forename -> user.forename, 'name -> user.name, 'address -> user.address, 'zipcode -> user.zipcode, 'city -> user.city, 'role -> user.role, 'inactive -> user.inactive).executeUpdate()
       }
-    }
-    returnuser
+    user
   }
 
   /**
@@ -70,7 +62,7 @@ trait UserDaoT {
     DB.withConnection { implicit c =>
       val userOrders = OrderHistoryDao.showOrdersUser(id)
       if (userOrders.isEmpty) {
-        val rowsCount = SQL("delete from Users where id = {id}").on('id -> id).executeUpdate()
+        val rowsCount = SQL("Delete from Users where id = {id}").on('id -> id).executeUpdate()
         rowsCount > 0
       } else {
         val rowsCount = SQL("Update Users set inactive=B'1' where id = {id}").on('id -> id).executeUpdate()
