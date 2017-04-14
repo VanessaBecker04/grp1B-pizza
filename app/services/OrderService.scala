@@ -130,7 +130,7 @@ trait OrderServiceT {
     * Berechnung der Lieferzeit.
     */
   def calculateDeliveryTime(customerZIP: Int): Double = {
-    var km: Int = -11
+    var km: Int = 0
     var kmpm: Double = DeliveryTime.kilometersperminute
 
     customerZIP match {
@@ -142,7 +142,11 @@ trait OrderServiceT {
       case 82057 | 82065 | 82229 | 82327 | 82346 => km = 16
       case _ =>
     }
-    km / kmpm + DeliveryTime.bakeTime
+    if (km == 0) {
+      -1
+    } else {
+      km / kmpm + DeliveryTime.bakeTime
+    }
   }
 
   /**
