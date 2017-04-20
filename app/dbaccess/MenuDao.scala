@@ -2,6 +2,7 @@ package dbaccess
 
 import anorm.NamedParameter.symbol
 import anorm.SQL
+import anorm.SqlParser.scalar
 import models.Menu
 import play.api.Play.current
 import play.api.db.DB
@@ -19,13 +20,17 @@ trait MenuDaoT {
     * @return das Menu Objekt
     */
   def addToMenu(menu: Menu): Menu = {
-    DB.withConnection { implicit c =>
-      val id: Option[Long] =
-        SQL("insert into Menu(name, price, category, ordered, active) values ({name}, {price}, {category}, {ordered}, {active})").on(
-          'name -> menu.name, 'price -> menu.price, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
-      menu.id = id.get
+    if (countCategories() < 3) {
+      DB.withConnection { implicit c =>
+        val id: Option[Long] =
+          SQL("insert into Menu(name, price, unitOfMeasurement, category, ordered, active) values ({name}, {price}, {unitOfMeasurement}, {category}, {ordered}, {active})").on(
+            'name -> menu.name, 'price -> menu.price, 'unitOfMeasurement -> menu.unitOfMeasurement, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
+        menu.id = id.get
+        menu
+      }
+    } else {
+      null
     }
-    menu
   }
 
   /** Verändert einzelen Attribute eines Produktes in der Datenbank.
@@ -61,13 +66,16 @@ trait MenuDaoT {
     */
   def addedToMenu: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select id, name, price, category, ordered, active from Menu;")
+      val selectFromMenu = SQL("Select id, name, price, unitOfMeasurement, category, ordered, active from Menu;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
-        row[Double]("price"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
+        row[Double]("price"), row[String]("unitOfMeasurement"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       products
     }
   }
+
+
+
 
   /** Setzt das Produkt als einmal bestellt.
     *
@@ -88,6 +96,19 @@ trait MenuDaoT {
       SQL("Update Menu set active=false where id = {id}").on('id -> id).executeUpdate()
     }
   }
+
+  def countCategories(): Int = {
+    DB.withConnection { implicit  c=>
+      val count = SQL("Select count(distinct category) from Menu").as(scalar[Long].singleOpt)
+      if(count.isDefined) {
+        count.get.toInt
+      } else {
+        -1
+      }
+    }
+  }
+
+
 
 }
 

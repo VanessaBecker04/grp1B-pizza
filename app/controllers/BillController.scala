@@ -7,6 +7,7 @@ import forms.CreateBillForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
+import services.MenuService
 
 
 /** Kontroller für die Rechnungserstellung einer Bestellung.
@@ -41,7 +42,7 @@ object BillController extends Controller {
           if (userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
             Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
           } else {
-            models.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
+            MenuService.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
               userData.beverageNumber, userData.dessertName, userData.dessertNumber)
             val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(request2session.get("user").get.toLong, newOrder.id)
             Redirect(routes.BillController.setOrder(newOrder.id, orderedProducts.toString, sumOfOrder))
@@ -81,7 +82,7 @@ object BillController extends Controller {
     * @return showMenu(Bestellübersicht)
     */
   def cancelOrder: Action[AnyContent] = Action {
-    models.setUndeleteable(null, 0, null, 0, null, 0)
+    MenuService.setUndeleteable(null, 0, null, 0, null, 0)
     services.OrderService.cancelOrder()
     Redirect(routes.MenuController.showMenu())
   }

@@ -9,19 +9,20 @@ import play.api.data.validation.Constraints.min
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
 
+import scala.collection.mutable.ListBuffer
+
 /** Kontroller für die Speisekarte, aus welchem der Kunde seine Wunschprodukte auswählen kann und für den Editor der Speisekarte
   * Created by Hasibullah Faroq on 21.11.2016.
   */
 object MenuController extends Controller {
-
   /**
     * Form Objekte für die Benutzer Daten.
     */
-
   val menuForm = Form(
     mapping(
       "Produktname" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty),
       "Preis je Einheit" -> of[Double],
+      "Maßeinheit" -> text,
       "Kategorie" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty))
     (CreateMenuForm.apply)(CreateMenuForm.unapply))
   val rmForm = Form(mapping("Id" -> longNumber)(CreateRemoveFromMenuForm.apply)(CreateRemoveFromMenuForm.unapply))
@@ -54,8 +55,12 @@ object MenuController extends Controller {
         if (nameExist) {
           Redirect(routes.UserController.attemptFailed("productDoesExist"))
         } else {
-          services.MenuService.addToMenu(userData.name, userData.price, userData.category)
-          Redirect(routes.MenuController.editMenu())
+          val success = services.MenuService.addToMenu(userData.name, userData.price, userData.unitOfMeasurement, userData.category)
+          if (success != null) {
+            Redirect(routes.MenuController.editMenu())
+          } else {
+            Redirect(routes.UserController.attemptFailed("numberOfCategories"))
+          }
         }
       })
   }
@@ -106,7 +111,7 @@ object MenuController extends Controller {
     */
   def editMenu: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      models.putAllMenuIDInList()
+      MenuService.putAllMenuIDInList()
       Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm, controllers.MenuController.updateForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
@@ -118,7 +123,7 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    models.categorize()
+    MenuService.categorize()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
 

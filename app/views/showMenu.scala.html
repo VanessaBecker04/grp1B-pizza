@@ -1,5 +1,5 @@
+@import services.MenuService
 @(products: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
-
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
 
@@ -13,19 +13,18 @@
                 @helper.select(billForm("CustomerID"), helper.options(List("0")),
                     'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
             }
-            <li id="pizzaShowMenu">@helper.select(billForm("Pizza"), models.CategorizedMenu.pizzaList.map(p => p -> p))
+            <li id="pizzaShowMenu">@helper.select(billForm("Pizza"), MenuService.pizzaList.map(p => p -> p))
                 @helper.select(billForm("Pizzagröße"), options = Seq("medium" -> "medium", "large" -> "large",
                     "xl" -> "xl"))
                 @helper.inputText(billForm("Anzahl der Pizzen").copy(value = Some("0")), '_showConstraints -> false)</li>
-            <li id="beverageShowMenu">@helper.select(billForm("Getränk"), models.CategorizedMenu.beverageList.map(p => p -> p))
+            <li id="beverageShowMenu">@helper.select(billForm("Getränk"), MenuService.beverageList.map(p => p -> p))
                 @helper.select(billForm("Getränkegröße"), options = Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l",
                     "1.0l" -> "1.0l"))
                 @helper.inputText(billForm("Anzahl der Getränke").copy(value = Some("0")), '_showConstraints -> false)</li>
-            <li id="dessertShowMenu">@helper.select(billForm("Dessert"), models.CategorizedMenu.dessertList.map(p => p -> p))
+            <li id="dessertShowMenu">@helper.select(billForm("Dessert"), MenuService.dessertList.map(p => p -> p))
                 @helper.inputText(billForm("Anzahl der Desserts").copy(value = Some("0")), '_showConstraints -> false)</li>
             <li><input id="showMenuButton" type="submit" value="Zur Kasse"/></li>
         </ul>
-
     }
 
     <ul id="pizzaSizeShowMenu" style="list-style: none;"> Pizzagrößen in cm

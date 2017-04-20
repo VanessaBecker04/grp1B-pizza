@@ -29,4 +29,8 @@
         <h1>Dieses Produkt existiert bereits. Bei Bedarf bitte aktivieren.</h1>
         <p><a href="/editMenu">Zurück zur Produktverwaltung</a></p>
     }
+    @if(errorcode.equals("numberOfCategories")) {
+        <h1>Es existieren bereits 3 Kategorien. Löschen Sie bitte eine Kategorie, um eine Neue hinzuzufügen.</h1>
+        <p><a href="/editMenu">Zurück zur Produktverwaltung</a></p>
+    }
 }

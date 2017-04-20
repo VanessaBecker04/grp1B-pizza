@@ -4,6 +4,7 @@ import forms.UserIDForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
+import services.MenuService
 
 /**
   * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
@@ -39,13 +40,13 @@ object OrderHistoryController extends Controller {
       request2session.get("currentDate").get
     )
     for (s <- services.MenuService.addedToMenu) {
-      if (s.name.equals(models.UndeleteableProducts.pizza)) {
+      if (s.name.equals(MenuService.pizza)) {
         services.MenuService.setProductOrdered(s.id)
       }
-      if (s.name.equals(models.UndeleteableProducts.beverage)) {
+      if (s.name.equals(MenuService.beverage)) {
         services.MenuService.setProductOrdered(s.id)
       }
-      if (s.name.equals(models.UndeleteableProducts.dessert)) {
+      if (s.name.equals(MenuService.dessert)) {
         services.MenuService.setProductOrdered(s.id)
       }
     }

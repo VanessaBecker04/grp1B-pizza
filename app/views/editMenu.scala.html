@@ -1,3 +1,4 @@
+@import services.MenuService
 @(menuForm: Form[forms.CreateMenuForm], rmForm: Form[forms.CreateRemoveFromMenuForm], upForm: Form[forms.CreateUpdateInMenuForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main("Speisekarte bearbeiten") {
@@ -8,15 +9,15 @@
             @helper.form(action = routes.MenuController.addToMenu()) {
                 <li>@helper.inputText(menuForm("Produktname"))</li>
                 <li>@helper.inputText(menuForm("Preis je Einheit"), '_showConstraints -> false)</li>
-                <li>@helper.select(menuForm("Kategorie"), options = Seq("Pizza" -> "Pizza", "Getränk" -> "Getränk",
-                    "Dessert" -> "Dessert"))</li>
+                <li>@helper.select(menuForm("Maßeinheit"), options = Seq("cm" -> "cm", "ml" -> "ml", "Stk" -> "Stk"))</li>
+                <li>@helper.inputText(menuForm("Kategorie"))</li>
                 <li><input type="submit" value="Hinzufügen"/></li>
             }
         </ul>
 
         <ul id="rmEditMenu" style="list-style: none">Produkt entfernen/deaktivieren:
             @helper.form(action = routes.MenuController.rmFromMenu()) {
-                <li>@helper.select(rmForm("Id"), models.CategorizedMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
+                <li>@helper.select(rmForm("Id"), MenuService.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Löschen"></li>
             }
 
@@ -24,7 +25,7 @@
 
         <ul id="updateEditMenu" style="list-style: none">Produkt abändern:
             @helper.form(action = routes.MenuController.updateInMenu()) {
-                <li>@helper.select(upForm("Id"), models.CategorizedMenu.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
+                <li>@helper.select(upForm("Id"), MenuService.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li>@helper.inputText(upForm("Neuer Name"))</li>
                 <li>@helper.inputText(upForm("Neuer Preis"), '_showConstraints -> false)</li>
                 <li>@helper.inputRadioGroup(upForm("Aktivieren"), options = Seq("true" -> "Ja"), '_showConstraints -> false)</li>
