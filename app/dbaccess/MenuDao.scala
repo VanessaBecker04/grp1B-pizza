@@ -68,7 +68,7 @@ trait MenuDaoT {
 
   def updateCategory(oldCategory: String, newCategory: String): Unit = {
     DB.withConnection { implicit c =>
-      SQL("Update Menu set category={oldCategory} where category = {newCategory}").on('oldCategory -> oldCategory, 'newCategory -> newCategory).executeUpdate()
+      SQL("Update Menu set category={newCategory} where category = {oldCategory}").on('oldCategory -> oldCategory, 'newCategory -> newCategory).executeUpdate()
     }
   }
 
