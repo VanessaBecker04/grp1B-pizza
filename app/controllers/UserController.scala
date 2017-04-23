@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateUserForm, EditUserForm, LoginUserForm, UserIDForm}
+import forms.{CreateUserForm, EditUserForm, LoginUserForm, IDForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -59,7 +59,7 @@ object UserController extends Controller {
   val deleteUserForm = Form {
     mapping(
       "Kunden-ID" -> longNumber
-    )(UserIDForm.apply)(UserIDForm.unapply)
+    )(IDForm.apply)(IDForm.unapply)
   }
 
   /**
@@ -140,7 +140,7 @@ object UserController extends Controller {
         BadRequest(views.html.editUsers(null, null, null, formWithErrors))
       },
       userData => {
-        services.UserService.deleteUser(userData.customerID)
+        services.UserService.deleteUser(userData.id)
         Redirect(routes.UserController.attemptSuccessful("userdeleted"))
       })
   }

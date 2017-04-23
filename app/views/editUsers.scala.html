@@ -1,4 +1,4 @@
-@(users: List[User], userForm: Form[forms.CreateUserForm], editUserForm: Form[forms.EditUserForm], deleteUserForm: Form[forms.UserIDForm])(implicit request: play.api.mvc.RequestHeader)
+@(users: List[User], userForm: Form[forms.CreateUserForm], editUserForm: Form[forms.EditUserForm], deleteUserForm: Form[forms.IDForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main("Kunden bearbeiten") {
     <ul id="addEditUsers" style="list-style: none">Kunden hinzufügen:

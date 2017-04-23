@@ -9,6 +9,6 @@ package forms
   * @param price  neuer Preis vom Produkt
   * @param active Wahrheitswert, ob Produkt aktiv ist oder nicht
   */
-case class CreateUpdateInMenuForm(id: Long, name: String, price: Double, active: Boolean)
+case class EditMenuForm(id: Long, name: String, price: Double, active: Boolean)
 
 

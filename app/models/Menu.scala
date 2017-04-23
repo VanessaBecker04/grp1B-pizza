@@ -1,7 +1,5 @@
 package models
 
-import scala.collection.mutable.ListBuffer
-
 /**
   * Created by Hasibullah Faroq on 21.11.2016.
   */

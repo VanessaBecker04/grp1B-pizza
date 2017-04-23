@@ -1,6 +1,6 @@
 package controllers
 
-import forms.UserIDForm
+import forms.IDForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -17,7 +17,7 @@ object OrderHistoryController extends Controller {
   val userOrdersForm = Form {
     mapping(
       "CustomerID" -> longNumber
-    )(UserIDForm.apply)(UserIDForm.unapply)
+    )(IDForm.apply)(IDForm.unapply)
   }
 
   /** Fügt ein neuen Bestellverlauf des Kunden in das System ein.
@@ -103,7 +103,7 @@ object OrderHistoryController extends Controller {
       userData => {
         var sumOfOrders: Double = 0
         var numberOfOrders: Int = 0
-        val orders = services.OrderHistoryService.showOrdersUser(userData.customerID)
+        val orders = services.OrderHistoryService.showOrdersUser(userData.id)
         for (order <- orders) {
           sumOfOrders = sumOfOrders + order.sumOfOrder
           numberOfOrders = numberOfOrders + 1

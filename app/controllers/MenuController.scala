@@ -1,15 +1,11 @@
 package controllers
 
-import forms.{CreateMenuForm, CreateRemoveFromMenuForm, CreateUpdateInMenuForm, CreateUpdateCategoryForm, CreateRemoveCategoryForm}
+import forms.{CreateProductForm, IDForm, EditMenuForm, UpdateCategoryForm, RemoveCategoryForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.validation.Constraints.min
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
-
-import scala.collection.mutable.ListBuffer
 
 /** Kontroller für die Speisekarte, aus welchem der Kunde seine Wunschprodukte auswählen kann und für den Editor der Speisekarte
   * Created by Hasibullah Faroq on 21.11.2016.
@@ -26,20 +22,27 @@ object MenuController extends Controller {
       "Preis je Einheit" -> of[Double],
       "Maßeinheit" -> text,
       "Kategorie" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty))
-    (CreateMenuForm.apply)(CreateMenuForm.unapply))
-  val rmForm = Form(mapping("Id" -> longNumber)(CreateRemoveFromMenuForm.apply)(CreateRemoveFromMenuForm.unapply))
+    (CreateProductForm.apply)(CreateProductForm.unapply))
+  val rmForm = Form(
+    mapping(
+      "Id" -> longNumber)
+    (IDForm.apply)(IDForm.unapply))
   val updateForm = Form(
     mapping(
       "Id" -> longNumber,
       "Neuer Name" -> text.verifying("Bitte neuen Namen für das Produkt eingeben", !_.isEmpty),
       "Neuer Preis" -> of[Double],
       "Aktivieren" -> of[Boolean])
-  (CreateUpdateInMenuForm.apply)(CreateUpdateInMenuForm.unapply))
+  (EditMenuForm.apply)(EditMenuForm.unapply))
   val updateCategoryForm = Form(
     mapping(
       "Alte Kategorie" -> text,
-    "Neue Kategorie" -> text) (CreateUpdateCategoryForm.apply)(CreateUpdateCategoryForm.unapply))
-  val rmCategoryForm = Form( mapping("Kategorie" -> text) (CreateRemoveCategoryForm.apply)(CreateRemoveCategoryForm.unapply))
+      "Neue Kategorie" -> text)
+    (UpdateCategoryForm.apply)(UpdateCategoryForm.unapply))
+  val rmCategoryForm = Form(
+    mapping(
+      "Kategorie" -> text)
+    (RemoveCategoryForm.apply)(RemoveCategoryForm.unapply))
 
 
   /**
