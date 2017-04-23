@@ -175,5 +175,4 @@ object MenuController extends Controller {
     MenuService.categorize()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
-
 }
