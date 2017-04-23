@@ -50,7 +50,15 @@ object OrderHistoryController extends Controller {
         services.MenuService.setProductOrdered(s.id)
       }
     }
-    Redirect(routes.OrderHistoryController.showDeliveryTime())
+    Redirect(routes.OrderHistoryController.showDeliveryTime()).withSession(
+      request.session
+        .-("orderID")
+        .-("orderedProducts")
+        .-("sumOfOrder")
+        .-("customerData")
+        .-("currentDate")
+        .-("orderedProducts")
+    )
   }
 
   def showOrdersUser(): Action[AnyContent] = Action { implicit request =>
