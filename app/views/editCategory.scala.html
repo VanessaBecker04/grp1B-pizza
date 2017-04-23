@@ -1,0 +1,29 @@
+
+@import services.MenuService
+@(rmCategoryForm: Form[forms.CreateRemoveCategoryForm], updateCategoryForm: Form[forms.CreateUpdateCategoryForm])(implicit request: play.api.mvc.RequestHeader)
+
+@main("Kategorien verwalten") {
+
+    <body id="bodyForEditMenu">
+
+
+        <ul id="addEditMenu" style="list-style: none">Kategorie entfernen:
+            @helper.form(action = routes.MenuController.rmCategory()) {
+                <li>@helper.select(rmCategoryForm("Kategorie"), MenuService.listCategories.map(p => p.toString -> p.toString))</li>
+                <li><input type="submit" value="Entfernen"/></li>
+            }
+        </ul>
+
+        <ul id="updateEditMenu" style="list-style: none">Kategorie abändern:
+            @helper.form(action = routes.MenuController.updateCategory()) {
+                <li>@helper.select(updateCategoryForm("Alte Kategorie"), MenuService.listCategories.map(p => p.toString -> p.toString))</li>
+                <li>@helper.inputText(updateCategoryForm("Neue Kategorie"))</li>
+                <li><input type="submit" value="Ändern"></li>
+            }
+        </ul>
+
+
+        <p><a id="linkToShowMenu" href="/showMenu">Zur Speisekarte</a></p>
+
+    </body>
+}
