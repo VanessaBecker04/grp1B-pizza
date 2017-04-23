@@ -82,7 +82,7 @@
     background-color: #555;
 }
 
-#showBillCancelButton {
+#showBillAddButton {
     text-decoration: none;
     color: #333333;
     text-align: center;
@@ -90,6 +90,24 @@
     border-radius: 25px;
     position: fixed;
     left: 250px;
+    top: 450px;
+    height: 40px;
+    width: 200px;
+    background: floralwhite;
+}
+
+#showBillAddButton:hover {
+    background-color: #555;
+}
+
+#showBillCancelButton {
+    text-decoration: none;
+    color: #333333;
+    text-align: center;
+    padding-top:20px;
+    border-radius: 25px;
+    position: fixed;
+    left: 480px;
     top: 450px;
     height: 40px;
     width: 200px;

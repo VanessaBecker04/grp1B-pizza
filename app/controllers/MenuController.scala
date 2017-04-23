@@ -170,6 +170,8 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
+    Console.println("Value of 'orderedProducts' from Session logged in: " + request2session.get("orderedProducts"))
+    Console.println("Value of 'sumOfOrder' from Session logged in: " + request2session.get("sumOfOrder"))
     MenuService.categorize()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }

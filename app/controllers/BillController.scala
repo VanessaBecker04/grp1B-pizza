@@ -45,7 +45,11 @@ object BillController extends Controller {
             MenuService.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
               userData.beverageNumber, userData.dessertName, userData.dessertNumber)
             val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(request2session.get("user").get.toLong, newOrder.id)
-            Redirect(routes.BillController.setOrder(newOrder.id, orderedProducts.toString, sumOfOrder))
+            if (request2session.get("orderedProducts").isEmpty) {
+              Redirect(routes.BillController.setOrder(newOrder.id, orderedProducts.toString, sumOfOrder))
+            } else {
+              Redirect(routes.BillController.setOrder(newOrder.id, request2session.get("orderedProducts").get + ", " + orderedProducts.toString, request2session.get("sumOfOrder").get.toDouble + sumOfOrder))
+            }
           }
         })
     }
@@ -74,17 +78,29 @@ object BillController extends Controller {
     * @return showBill(Warenkorb)
     */
   def showBill: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.showBill())
+    if (request2session.get("orderedProducts").isDefined) {
+      Ok(views.html.showBill())
+    } else {
+      Redirect(routes.MenuController.showMenu())
+    }
   }
 
   /** Bricht den Bestellvorgang ab und leitet den Kunden zur Bestellübersicht weiter.
     *
     * @return showMenu(Bestellübersicht)
     */
-  def cancelOrder: Action[AnyContent] = Action {
+  def cancelOrder: Action[AnyContent] = Action { implicit request =>
     MenuService.setUndeleteable(null, 0, null, 0, null, 0)
     services.OrderService.cancelOrder()
-    Redirect(routes.MenuController.showMenu())
+    Redirect(routes.MenuController.showMenu()).withSession(
+      request.session
+        .-("orderID")
+        .-("orderedProducts")
+        .-("sumOfOrder")
+        .-("customerData")
+        .-("currentDate")
+        .-("orderedProducts")
+    )
   }
 }
 
