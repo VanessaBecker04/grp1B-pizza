@@ -20,11 +20,15 @@ GET         /attemptSuccessful   controllers.UserController.attemptSuccessful(su
 GET         /loginUser           controllers.UserController.loginUser
 GET         /logoutUser          controllers.UserController.logoutUser
 
+GET         /editCategory        controllers.MenuController.editCategory
 GET         /showMenu            controllers.MenuController.showMenu
 GET         /editMenu            controllers.MenuController.editMenu
 POST        /addToMenu           controllers.MenuController.addToMenu
 POST        /rmFromMenu          controllers.MenuController.rmFromMenu
 POST        /updateInMenu        controllers.MenuController.updateInMenu
+POST        /rmCategory          controllers.MenuController.rmCategory
+POST        /updateCategory      controllers.MenuController.updateCategory
+
 
 POST        /addToBill           controllers.BillController.addToBill
 GET         /setOrder            controllers.BillController.setOrder(orderID: Long, orderedProducts: String, sumOfOrder: Double)

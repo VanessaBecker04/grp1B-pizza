@@ -59,6 +59,19 @@ trait MenuDaoT {
     }
   }
 
+  def rmCategory(category: String): Boolean = {
+    DB.withConnection { implicit c =>
+      val remove = SQL("delete from Menu where category = ({category})").on('category -> category).executeUpdate()
+      remove > 0
+    }
+  }
+
+  def updateCategory(oldCategory: String, newCategory: String): Unit = {
+    DB.withConnection { implicit c =>
+      SQL("Update Menu set category={oldCategory} where category = {newCategory}").on('oldCategory -> oldCategory, 'newCategory -> newCategory).executeUpdate()
+    }
+  }
+
   /**
     * Gibt eine Liste zurück mit allen vorhandenen Produkten.
     *
@@ -71,6 +84,14 @@ trait MenuDaoT {
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
         row[Double]("price"), row[String]("unitOfMeasurement"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       products
+    }
+  }
+
+  def listCategories: List[String] = {
+    DB.withConnection { implicit c =>
+      val selectCategories = SQL("Select distinct category from Menu;")
+      val categories = selectCategories().map(row => row[String]("category")).toList
+      categories
     }
   }
 

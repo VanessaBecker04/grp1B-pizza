@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateMenuForm, CreateRemoveFromMenuForm, CreateUpdateInMenuForm}
+import forms.{CreateMenuForm, CreateRemoveFromMenuForm, CreateUpdateInMenuForm, CreateUpdateCategoryForm, CreateRemoveCategoryForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -15,6 +15,8 @@ import scala.collection.mutable.ListBuffer
   * Created by Hasibullah Faroq on 21.11.2016.
   */
 object MenuController extends Controller {
+
+  var categories: List[String] = services.MenuService.listCategories
   /**
     * Form Objekte für die Benutzer Daten.
     */
@@ -33,6 +35,12 @@ object MenuController extends Controller {
       "Neuer Preis" -> of[Double],
       "Aktivieren" -> of[Boolean])
   (CreateUpdateInMenuForm.apply)(CreateUpdateInMenuForm.unapply))
+  val updateCategoryForm = Form(
+    mapping(
+      "Alte Kategorie" -> text,
+    "Neue Kategorie" -> text) (CreateUpdateCategoryForm.apply)(CreateUpdateCategoryForm.unapply))
+  val rmCategoryForm = Form( mapping("Kategorie" -> text) (CreateRemoveCategoryForm.apply)(CreateRemoveCategoryForm.unapply))
+
 
   /**
     * Fügt ein neues Produkt in die Speisekarte ein.
@@ -80,12 +88,40 @@ object MenuController extends Controller {
       })
   }
 
+  def updateCategory: Action[AnyContent] = Action { implicit request =>
+    updateCategoryForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.editCategory(null, formWithErrors))
+      },
+      userData => {
+        services.MenuService.updateCategory(userData.oldCategory, userData.newCategory)
+        Redirect(routes.MenuController.editCategory())
+      })
+  }
+
   /** Löscht ein Produkt komplett von der Speisekarte, jedoch nur wenn zuvor dieser nicht schon einmal bestellt wurde.
     * Falls jedoch schon mal bestellt wurde wird diese bloß deaktiviert, somit verschwindet sie aus der Bestellübersicht
     * aber nicht aus der Datenbank Menu.
     *
     * @return editMenu(Editor für die Speisekarte)
     */
+  def rmCategory: Action[AnyContent] = Action { implicit request =>
+    rmCategoryForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.editCategory(formWithErrors, null))
+      },
+      userData => {
+        for (k <- services.MenuService.addedToMenu) {
+          if (!k.ordered) {
+            services.MenuService.rmCategory(userData.category)
+          } else {
+            Redirect(routes.MenuController.editCategory())
+          }
+        }
+        Redirect(routes.MenuController.editCategory())
+      })
+  }
+
   def rmFromMenu: Action[AnyContent] = Action { implicit request =>
     rmForm.bindFromRequest.fold(
       formWithErrors => {
@@ -113,6 +149,14 @@ object MenuController extends Controller {
     if (request2session.get("role").get == "Mitarbeiter") {
       MenuService.putAllMenuIDInList()
       Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm, controllers.MenuController.updateForm))
+    } else {
+      Ok(views.html.attemptFailed("permissiondenied"))
+    }
+  }
+
+  def editCategory: Action[AnyContent] = Action { implicit request =>
+    if (request2session.get("role").get == "Mitarbeiter") {
+      Ok(views.html.editCategory(controllers.MenuController.rmCategoryForm, controllers.MenuController.updateCategoryForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }

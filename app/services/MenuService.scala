@@ -17,6 +17,7 @@ trait MenuServiceT {
     * Jede Liste ist nach einer bestimmten Kategorie befüllt (Pizza, Getränk, Dessert)
     *
     */
+  var products: List[List[String]] = _
   var pizzaList: List[String] = _
   var beverageList: List[String] = _
   var dessertList: List[String] = _
@@ -56,6 +57,10 @@ trait MenuServiceT {
     menuDao.updateInMenu(id, name, price, active)
   }
 
+  def updateCategory(oldCategory: String, newCategory: String): Unit = {
+    menuDao.updateCategory(oldCategory, newCategory)
+  }
+
   /**
     * Entfernt ein Produkt aus der Datenbank.
     *
@@ -64,6 +69,8 @@ trait MenuServiceT {
     */
   def rmFromMenu(id: Long): Boolean = menuDao.rmFromMenu(id)
 
+  def rmCategory(category: String): Boolean = menuDao.rmCategory(category)
+
   /**
     * Gibt eine Liste zurück mit allen vorhandenen Produkten.
     *
@@ -71,6 +78,10 @@ trait MenuServiceT {
     */
   def addedToMenu: List[Menu] = {
     menuDao.addedToMenu
+  }
+
+  def listCategories: List[String] = {
+    menuDao.listCategories
   }
 
   /** Setzt das Produkt als einmal bestellt.
@@ -121,6 +132,7 @@ trait MenuServiceT {
     MenuService.allIdFromMenu = allID.toList
   }
 
+
   /** übergibt Werte an das Objekt UndeleteableProducts
     *
     * @param pizza      Name der bestellten Pizza
@@ -142,6 +154,22 @@ trait MenuServiceT {
     if (dessertNr != 0) {
       MenuService.dessert = dessert
     }
+  }
+
+  def countCategories() = menuDao.countCategories()
+
+  def categorize2(): Unit = {
+    var a = new ListBuffer[String]
+    for(k <- listCategories) {
+      for(s <- addedToMenu) {
+        if(k.equals(s.category)) {
+          a += s.name
+        }
+      }
+      val i = a.toList
+      products :: i
+    }
+    a.clear()
   }
 
 }

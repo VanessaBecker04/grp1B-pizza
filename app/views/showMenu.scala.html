@@ -13,16 +13,15 @@
                 @helper.select(billForm("CustomerID"), helper.options(List("0")),
                     'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
             }
-            <li id="pizzaShowMenu">@helper.select(billForm("Pizza"), MenuService.pizzaList.map(p => p -> p))
-                @helper.select(billForm("Pizzagröße"), options = Seq("medium" -> "medium", "large" -> "large",
-                    "xl" -> "xl"))
-                @helper.inputText(billForm("Anzahl der Pizzen").copy(value = Some("0")), '_showConstraints -> false)</li>
-            <li id="beverageShowMenu">@helper.select(billForm("Getränk"), MenuService.beverageList.map(p => p -> p))
-                @helper.select(billForm("Getränkegröße"), options = Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l",
-                    "1.0l" -> "1.0l"))
-                @helper.inputText(billForm("Anzahl der Getränke").copy(value = Some("0")), '_showConstraints -> false)</li>
-            <li id="dessertShowMenu">@helper.select(billForm("Dessert"), MenuService.dessertList.map(p => p -> p))
-                @helper.inputText(billForm("Anzahl der Desserts").copy(value = Some("0")), '_showConstraints -> false)</li>
+            @for(s <- services.MenuService.listCategories) {
+                <li>@helper.select(billForm(s), services.MenuService.addedToMenu.map(f => if(f.category.equals(s)) f.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
+                    @helper.select(billForm(s + "größe"), services.MenuService.addedToMenu.map(f => if(f.category.equals(s)) f.unitOfMeasurement else None).filterNot(_ == None).distinct.map({
+                        case "ml" => "0.5l" -> "0.5l"
+                        case "cm" => "medium" -> "medium"
+                        case _ => "" -> ""
+                    }))
+                @helper.inputText(billForm("Anzahl der " + s).copy(value = Some("0")), '_showConstraints -> false)</li>
+            }
             <li><input id="showMenuButton" type="submit" value="Zur Kasse"/></li>
         </ul>
     }
