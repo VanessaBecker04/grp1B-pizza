@@ -17,4 +17,4 @@ package forms
   */
 case class CreateBillForm(var customerID: Long, var pizzaName: String, var pizzaNumber: Int,
                           var pizzaSize: String, var beverageName: String, var beverageNumber: Int,
-                          var beverageSize: String, var dessertName: String, var dessertNumber: Int)
+                          var beverageSize: String, var dessertName: String, var dessertSize: String, var dessertNumber: Int)
