@@ -5,9 +5,14 @@
         <p> 82057, 82061, 82065, 82069, 82131, 82229, 82234, @models.Company.zip, 82327, 82335, 82340, 82343, 82346</p>
         <p><a href="/register">Registrieren</a></p>
     }
-    @if(errorcode.equals("login")) {
+    @if(errorcode.equals("loginfailed")) {
         <h1>Ihre eingegebenen Login-Daten sind fehlerhaft. Bitte versuchen Sie es erneut.</h1>
         <p><a href="/login">Einloggen</a></p>
+    }
+    @if(errorcode.equals("loginrequired")) {
+        <h1>Melden Sie sich an, um fortzufahren.</h1>
+        <p><a href="/login">Einloggen</a></p>
+        <p><a href="/register">Registrieren</a></p>
     }
     @if(errorcode.equals("permissiondenied")) {
         <h1>Sie haben nicht die nötigen Zugriffsrechte.</h1>
