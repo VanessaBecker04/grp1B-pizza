@@ -78,11 +78,7 @@ object BillController extends Controller {
     * @return showBill(Warenkorb)
     */
   def showBill: Action[AnyContent] = Action { implicit request =>
-    if (request2session.get("orderedProducts").isDefined) {
-      Ok(views.html.showBill())
-    } else {
-      Redirect(routes.MenuController.showMenu())
-    }
+    Ok(views.html.showBill())
   }
 
   /** Bricht den Bestellvorgang ab und leitet den Kunden zur Bestellübersicht weiter.

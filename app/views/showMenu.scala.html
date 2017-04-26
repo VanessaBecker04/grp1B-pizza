@@ -9,7 +9,7 @@
             @if(request.session.get("user").isDefined) {
                 @helper.select(billForm("CustomerID"), helper.options(List(request.session.get("user").get.toString)),
                     'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
-            }else {
+            } else {
                 @helper.select(billForm("CustomerID"), helper.options(List("0")),
                     'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
             }

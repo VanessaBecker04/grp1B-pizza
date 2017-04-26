@@ -1,15 +1,20 @@
 @()(implicit request: play.api.mvc.RequestHeader)
 @main("Rechnung") {
+    @if(request.session.get("orderedProducts").isDefined) {
+        <h1> Warenkorb:</h1>
+        <ul id="showBillView" style="list-style: none">
+            <li>Anschrift: @request.session.get("customerData")</li>
+            <li>Bestellung: @request.session.get("orderedProducts")</li>
+            <li>Gesamtsumme: @request.session.get("sumOfOrder")€</li>
+            <li>Datum: @request.session.get("currentDate")</li>
+        </ul>
 
-    <h1> Rechnung:</h1>
-    <ul id="showBillView" style="list-style: none">
-        <li>Anschrift: @request.session.get("customerData")</li>
-        <li>Bestellung: @request.session.get("orderedProducts")</li>
-        <li>Gesamtsumme: @request.session.get("sumOfOrder")€</li>
-        <li>Datum: @request.session.get("currentDate")</li>
-    </ul>
-
-    <p><a id="showBillConfirmButton" href="/addToHistory" >Kostenpflichtig bestellen</a></p>
-    <p><a id="showBillAddButton" href="/showMenu" > Weitere Produkte hinzufügen</a></p>
-    <p><a id="showBillCancelButton" href="/cancelOrder" >Warenkorb leeren</a></p>
+        <p><a id="showBillConfirmButton" href="/addToHistory" >Kostenpflichtig bestellen</a></p>
+        <p><a id="showBillAddButton" href="/showMenu" > Weitere Produkte hinzufügen</a></p>
+        <p><a id="showBillCancelButton" href="/cancelOrder" >Warenkorb leeren</a></p>
+    } else {
+        <h1>Ihr Warenkorb ist derzeit leer.</h1>
+        <li>Legen Sie Produkte in den Warenkorb, um fortzufahren.</li>
+        <p><a id="showBillConfirmButton" href="/showMenu" >Produkte bestellen</a></p>
+    }
 }
