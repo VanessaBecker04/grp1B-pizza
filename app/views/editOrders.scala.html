@@ -3,7 +3,7 @@
 @main("Bestellungen ansehen") {
     <p><a id="linkToAllOrders" href="/showOrdersEmployee">Alle Bestellungen ansehen</a></p>
     <ul id="selectUserEditOrders" style="list-style: none">Bestellungen eines bestimmten Kunden ansehen:
-        @helper.form(action = routes.OrderHistoryController.showOrdersEmployeeU()) {
+        @helper.form(action = routes.OrderController.showOrdersEmployeeU()) {
             @helper.select(userOrdersForm("CustomerID"), users.map(u => u.id.toString -> u.id.toString))
             <input type="submit" value="Auswahl absenden" />
         }

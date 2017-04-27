@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 import forms.CreateBillForm
+import models.Bill
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -37,25 +38,23 @@ object BillController extends Controller {
         if (request2session.get("user").isDefined) {
           userID = request2session.get("user").get.toLong
         }
-        val newOrder = services.OrderService.addToOrder(userID, userData.pizzaName, userData.pizzaNumber,
-          userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize,
-          userData.dessertName, userData.dessertNumber)
         if (userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
           Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
         } else {
           MenuService.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
             userData.beverageNumber, userData.dessertName, userData.dessertNumber)
-          val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(userID, newOrder.id)
+          val cart: Bill = Bill(userData.pizzaName, userData.pizzaNumber, userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize, userData.dessertName, userData.dessertNumber)
+          val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(cart)
           if (request2session.get("orderedProducts").isEmpty) {
-            Redirect(routes.BillController.setOrder(newOrder.id, orderedProducts.toString, sumOfOrder))
+            Redirect(routes.BillController.setOrder(orderedProducts.toString, sumOfOrder))
           } else {
-            Redirect(routes.BillController.setOrder(newOrder.id, request2session.get("orderedProducts").get + ", " + orderedProducts.toString, request2session.get("sumOfOrder").get.toDouble + sumOfOrder))
+            Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get + ", " + orderedProducts.toString, request2session.get("sumOfOrder").get.toDouble + sumOfOrder))
           }
         }
       })
   }
 
-  def setOrder(orderID: Long, orderedProducts: String, sumOfOrder: Double): Action[AnyContent] = Action { implicit request =>
+  def setOrder(orderedProducts: String, sumOfOrder: Double): Action[AnyContent] = Action { implicit request =>
     var customerData: String = ""
     if (request2session.get("user").isDefined) {
       customerData = request2session.get("forename").get.toString + " " + request2session.get("name").get.toString + ", " + request2session.get("address").get.toString + ", " + request2session.get("zipcode").get.toString + " " + request2session.get("city").get.toString
@@ -69,7 +68,6 @@ object BillController extends Controller {
     }
     if (request2session.get("user").isEmpty) {
       Redirect(routes.UserController.attemptFailed("loginrequired")).withSession(
-        "orderID" -> orderID.toString,
         "orderedProducts" -> orderedProducts.toString,
         "sumOfOrder" -> sumOfOrder.toString,
         "customerData" -> customerData.toString,
@@ -79,7 +77,6 @@ object BillController extends Controller {
     } else {
       Redirect(routes.BillController.showBill()).withSession(
         request.session +
-          ("orderID" -> orderID.toString) +
           ("orderedProducts" -> orderedProducts.toString) +
           ("sumOfOrder" -> sumOfOrder.toString) +
           ("customerData" -> customerData.toString) +
@@ -103,10 +100,8 @@ object BillController extends Controller {
     */
   def cancelOrder: Action[AnyContent] = Action { implicit request =>
     MenuService.setUndeleteable(null, 0, null, 0, null, 0)
-    services.OrderService.cancelOrder()
     Redirect(routes.MenuController.showMenu()).withSession(
       request.session
-        .-("orderID")
         .-("orderedProducts")
         .-("sumOfOrder")
         .-("customerData")

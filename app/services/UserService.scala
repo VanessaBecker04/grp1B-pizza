@@ -67,13 +67,6 @@ trait UserServiceT {
   def loginUser(email: String, password: String): User = {
     userDao.loginUser(email, password)
   }
-
-  /**
-    * Logs out the currently logged in user by resetting the activeUser model.
-    */
-  def logoutUser(): Unit = {
-    services.OrderService.cancelOrder()
-  }
 }
 
 object UserService extends UserServiceT

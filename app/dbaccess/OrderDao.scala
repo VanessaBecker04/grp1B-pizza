@@ -1,70 +1,72 @@
 package dbaccess
 
-import anorm.NamedParameter.symbol
-import anorm.{SQL, _}
-import models.Bill
+import anorm._
+import models.OrderHistory
 import play.api.Play.current
 import play.api.db.DB
 
-/** Datenbankzugriff über Benutzerschnittstellen für die Rechnungserstellung (Orderbill)
-  * Created by Hasi on 28.11.2016.
+/**
+  * Created by Hasibullah Faroq und Maximilian Öttl on 14.12.2016.
+  * Datenbankzugriff über Benutzerschnittstellen für die kompletten Bestellunge Datenbank (Orderhistory)
   */
 
 trait OrderDaoT {
   /**
-    * Fügt eine neue Rechnung zu der Datenbank Orderbill
+    * fügt ein neue Bestellung des Kunden in die Datenbank Orderhistory ein.
     *
-    * @param bill das Bill Objekt was in der Datenbank gespeichert werden soll.
-    * @return das Bill Objekt
+    * @param coh das Orderhistory Objekt was in die Datenbank gespeichert werden soll.
+    * @return die Orderhistory Objekt
     */
-  def addToOrder(bill: Bill): Bill = {
+  def addToHistory(coh: OrderHistory): OrderHistory = {
     DB.withConnection { implicit c =>
-      val id: Option[Long] =
-        SQL("insert into Orderbill(customerID, pizzaName, pizzaNumber, pizzaSize, beverageName, beverageNumber, beverageSize, dessertName, dessertNumber) values ({customerId},{pizzaName},{pizzaNumber},{pizzaSize},{beverageName},{beverageNumber},{beverageSize},{dessertName},{dessertNumber})").on(
-          'customerId -> bill.customerID, 'pizzaName -> bill.pizzaName, 'pizzaNumber -> bill.pizzaNumber, 'pizzaSize -> bill.pizzaSize, 'beverageName -> bill.beverageName, 'beverageNumber -> bill.beverageNumber, 'beverageSize -> bill.beverageSize, 'dessertName -> bill.dessertName, 'dessertNumber -> bill.dessertNumber).executeInsert()
-      bill.id = id.get
+      val orderID: Option[Long] =
+        SQL("insert into Orderhistory(customerID, customerData, orderedProducts, sumOfOrder, orderDate) values ({customerId}, {customerData}, {orderedProducts},{sumOfOrder}, {orderDate})").on(
+          'customerId -> coh.customerID, 'customerData -> coh.customerData, 'orderedProducts -> coh.orderedProducts, 'sumOfOrder -> coh.sumOfOrder, 'orderDate -> coh.orderDate).executeInsert()
+      coh.orderID = orderID.get
     }
-    bill
+    coh
   }
 
   /**
-    * entfernt die Rechnungs Daten von der Datenbank Orderbill für id
+    * Entfernt eine Bestellung aus der Datenbank Orderhistory.
     *
-    * @param id Oderbill id
+    * @param id id der Bestellung
     * @return wahrheitswert ob die Löschung erfolgreich war
     */
-  def rmFromOrder(id: Long): Boolean = {
+  def rmFromHistory(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val rowsCount = SQL("delete from Orderbill where id = {id}").on('id -> id).executeUpdate()
+      val rowsCount = SQL("delete from Menu where id = ({id})").on('id -> id).executeUpdate()
       rowsCount > 0
     }
   }
 
   /**
-    * Gibt eine Liste zurück mit allen vorhandenen Rechnungen
+    * Returns a list of all orders from the database.
     *
-    * @return eine liste von Bill objekten.
+    * @return a list of order objects
     */
-  def addedToOrder: List[Bill] = {
+  def showOrdersEmployee: List[OrderHistory] = {
     DB.withConnection { implicit c =>
-      val selectFromBill = SQL("Select id, customerId, pizzaName, pizzaNumber, pizzaSize," +
-        " beverageName, beverageNumber, beverageSize, dessertName, dessertNumber from Orderbill;")
+      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val order = selectFromBill().map(row => Bill(row[Long]("id"), row[Long]("customerId"), row[String]("pizzaName"),
-        row[Int]("pizzaNumber"), row[String]("pizzaSize"), row[String]("beverageName"),
-        row[Int]("beverageNumber"), row[String]("beverageSize"), row[String]("dessertName"),
-        row[Int]("dessertNumber"))).toList
-      order
+      val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"))).toList
+      history
     }
   }
 
   /**
-    * Entfernt Rechnung, wenn Bestellung abgebrochen wurde.
+    * Returns a list of all orders of a specified user from the database.
+    *
+    * @return a list of order objects
     */
-  def cancelOrder() {
+  def showOrdersUser(id: Long): List[OrderHistory] = {
     DB.withConnection { implicit c =>
-      SQL("Delete from Orderbill where id " +
-        "not in (select orderID from Orderhistory)").executeUpdate()
+      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)
+      // Transform the resulting Stream[Row] to a List[(String,String)]
+      val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"))).toList
+      history
     }
   }
 }

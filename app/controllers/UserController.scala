@@ -87,7 +87,7 @@ object UserController extends Controller {
               }
             } else {
               if (request2session.get("orderedProducts").isDefined) {
-                Redirect(routes.BillController.setOrder(request2session.get("orderID").get.toLong, request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
+                Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
                   request.session +
                     ("user" -> user.id.toString) +
                     ("email" -> user.email.toString) +
@@ -220,7 +220,7 @@ object UserController extends Controller {
           Redirect(routes.UserController.attemptFailed("inactive"))
         } else {
           if (request2session.get("orderedProducts").isDefined) {
-            Redirect(routes.BillController.setOrder(request2session.get("orderID").get.toLong, request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
+            Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
               request.session +
                 ("user" -> loggedinUser.id.toString) +
                 ("email" -> loggedinUser.email.toString) +
@@ -254,7 +254,6 @@ object UserController extends Controller {
     * @return index
     */
   def logoutUser: Action[AnyContent] = Action {
-    services.UserService.logoutUser()
     Redirect(routes.Application.index()).withNewSession
   }
 

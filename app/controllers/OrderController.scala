@@ -9,7 +9,7 @@ import services.MenuService
 /**
   * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
   */
-object OrderHistoryController extends Controller {
+object OrderController extends Controller {
 
   /** Form Objekt für die Benutzerdaten.
     *
@@ -31,8 +31,7 @@ object OrderHistoryController extends Controller {
     Console.println("Value of 'orderID' from Session logged in: " + request2session.get("orderID"))
     Console.println("Value of 'orderedProducts' from Session logged in: " + request2session.get("orderedProducts"))
     Console.println("Value of 'sumOfOrder' from Session logged in: " + request2session.get("sumOfOrder"))
-    services.OrderHistoryService.addToHistory(
-      request2session.get("orderID").get.toLong,
+    services.OrderService.addToHistory(
       request2session.get("user").get.toLong,
       request2session.get("customerData").get,
       request2session.get("orderedProducts").get,
@@ -50,9 +49,8 @@ object OrderHistoryController extends Controller {
         services.MenuService.setProductOrdered(s.id)
       }
     }
-    Redirect(routes.OrderHistoryController.showDeliveryTime()).withSession(
+    Redirect(routes.OrderController.showDeliveryTime()).withSession(
       request.session
-        .-("orderID")
         .-("orderedProducts")
         .-("sumOfOrder")
         .-("customerData")
@@ -65,7 +63,7 @@ object OrderHistoryController extends Controller {
     if (request2session.get("user").isDefined) {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
-      val orders = services.OrderHistoryService.showOrdersUser(request2session.get("user").get.toLong)
+      val orders = services.OrderService.showOrdersUser(request2session.get("user").get.toLong)
       for (order <- orders) {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
@@ -82,7 +80,7 @@ object OrderHistoryController extends Controller {
     if (request2session.get("role").get == "Mitarbeiter") {
       var sumOfOrders: Double = 0
       var numberOfOrders: Int = 0
-      val orders = services.OrderHistoryService.showOrdersEmployee
+      val orders = services.OrderService.showOrdersEmployee
       for (order <- orders) {
         sumOfOrders = sumOfOrders + order.sumOfOrder
         numberOfOrders = numberOfOrders + 1
@@ -111,7 +109,7 @@ object OrderHistoryController extends Controller {
       userData => {
         var sumOfOrders: Double = 0
         var numberOfOrders: Int = 0
-        val orders = services.OrderHistoryService.showOrdersUser(userData.id)
+        val orders = services.OrderService.showOrdersUser(userData.id)
         for (order <- orders) {
           sumOfOrders = sumOfOrders + order.sumOfOrder
           numberOfOrders = numberOfOrders + 1
@@ -124,7 +122,7 @@ object OrderHistoryController extends Controller {
 
   def editOrders: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderHistoryController.userOrdersForm))
+      Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderController.userOrdersForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }

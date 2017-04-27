@@ -60,7 +60,7 @@ trait UserDaoT {
     */
   def deleteUser(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val userOrders = OrderHistoryDao.showOrdersUser(id)
+      val userOrders = OrderDao.showOrdersUser(id)
       if (userOrders.isEmpty) {
         val rowsCount = SQL("Delete from Users where id = {id}").on('id -> id).executeUpdate()
         rowsCount > 0

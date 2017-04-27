@@ -40,30 +40,12 @@ INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) 
 INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Stk', 'Dessert', false, true);
 
 # --- !Downs
+DROP TABLE Menu;
 
-# Orderbill schema
-
-# --- !Ups
-CREATE TABLE Orderbill(
-    id serial PRIMARY KEY,
-    customerId serial NOT NULL,
-    pizzaName varchar(255),
-    pizzaNumber int,
-    pizzaSize varchar(255),
-    beverageName varchar(255),
-    beverageNumber int,
-    beverageSize varchar(255),
-    dessertName varchar(255),
-    dessertNumber int
-);
-
-# --- !Downs
-DROP TABLE Orderbill;
-
-# Orderhistory schema
+# OrderHistory schema
 
 # --- !Ups
-Create Table Orderhistory(
+Create Table OrderHistory(
     orderID serial NOT NULL PRIMARY KEY,
     customerID serial NOT NULL,
     customerData varchar(255),
@@ -73,4 +55,4 @@ Create Table Orderhistory(
 );
 
 # --- !Downs
-DROP TABLE Orderhistory;
+DROP TABLE OrderHistory;
