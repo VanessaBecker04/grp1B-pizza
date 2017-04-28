@@ -20,9 +20,16 @@ object BillController extends Controller {
     */
   val billform = Form(
     mapping(
-      "CustomerID" -> longNumber, "Pizza" -> text, "Anzahl der Pizza" -> number(min = 0, max = 100),
-      "Pizzagröße" -> text, "Getränk" -> text, "Anzahl der Getränk" -> number(min = 0, max = 100), "Getränkgröße" -> text,
-      "Dessert" -> text, "Dessertgröße" -> text, "Anzahl der Dessert" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
+      "CustomerID" -> longNumber,
+      "Pizza" -> text,
+      "Pizza- Größe" -> text,
+      "Pizza- Anzahl" -> number(min = 0, max = 100),
+      "Getränk" -> text,
+      "Getränk- Größe" -> text,
+      "Getränk- Anzahl" -> number(min = 0, max = 100),
+      "Dessert" -> text,
+      "Dessert- Größe" -> text,
+      "Dessert- Anzahl" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
 
   /** Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
     *

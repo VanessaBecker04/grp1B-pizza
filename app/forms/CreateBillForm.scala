@@ -15,6 +15,13 @@ package forms
   * @param dessertName    Name der bestellten Desserts
   * @param dessertNumber  Anzahl der bestellen Desserts
   */
-case class CreateBillForm(var customerID: Long, var pizzaName: String, var pizzaNumber: Int,
-                          var pizzaSize: String, var beverageName: String, var beverageNumber: Int,
-                          var beverageSize: String, var dessertName: String, var dessertSize: String, var dessertNumber: Int)
+case class CreateBillForm(var customerID: Long,
+                          var pizzaName: String,
+                          var pizzaSize: String,
+                          var pizzaNumber: Int,
+                          var beverageName: String,
+                          var beverageSize: String,
+                          var beverageNumber: Int,
+                          var dessertName: String,
+                          var dessertSize: String,
+                          var dessertNumber: Int)

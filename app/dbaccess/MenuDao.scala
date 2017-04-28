@@ -3,7 +3,7 @@ package dbaccess
 import anorm.NamedParameter.symbol
 import anorm.SQL
 import anorm.SqlParser.scalar
-import models.Menu
+import models.{CategoryPlusUnit, Menu}
 import play.api.Play.current
 import play.api.db.DB
 
@@ -95,8 +95,13 @@ trait MenuDaoT {
     }
   }
 
-
-
+  def listCategoriesPlusUnit: List[CategoryPlusUnit] = {
+    DB.withConnection { implicit c =>
+      val selectCategories = SQL("Select distinct category, unitOfMeasurement from Menu;")
+      val categoriesPlusUnit = selectCategories().map(row => CategoryPlusUnit(row[String]("category"), row[String]("unitOfMeasurement"))).toList
+      categoriesPlusUnit
+    }
+  }
 
   /** Setzt das Produkt als einmal bestellt.
     *

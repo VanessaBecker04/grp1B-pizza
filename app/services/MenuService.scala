@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{MenuDao, MenuDaoT}
-import models.Menu
+import models.{CategoryPlusUnit, Menu}
 
 import scala.collection.mutable.ListBuffer
 
@@ -158,19 +158,7 @@ trait MenuServiceT {
 
   def countCategories() = menuDao.countCategories()
 
-  def categorize2(): Unit = {
-    var a = new ListBuffer[String]
-    for(k <- listCategories) {
-      for(s <- addedToMenu) {
-        if(k.equals(s.category)) {
-          a += s.name
-        }
-      }
-      val i = a.toList
-      products :: i
-    }
-    a.clear()
-  }
+  def listCategoriesPlusUnit: List[CategoryPlusUnit] = menuDao.listCategoriesPlusUnit
 
 }
 
