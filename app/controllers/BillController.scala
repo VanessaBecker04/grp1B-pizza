@@ -20,7 +20,6 @@ object BillController extends Controller {
     */
   val billform = Form(
     mapping(
-      "CustomerID" -> longNumber,
       "Pizza" -> text,
       "Pizza- Größe" -> text,
       "Pizza- Anzahl" -> number(min = 0, max = 100),
@@ -41,10 +40,6 @@ object BillController extends Controller {
         BadRequest(views.html.showMenu(List.empty, formWithErrors))
       },
       userData => {
-        var userID : Long = 0
-        if (request2session.get("user").isDefined) {
-          userID = request2session.get("user").get.toLong
-        }
         if (userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
           Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
         } else {

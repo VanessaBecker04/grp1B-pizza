@@ -5,7 +5,6 @@ package forms
   *
   * Form beinhaltet Daten um eine Rechnung zu erstellen.
   *
-  * @param customerID     id des Kunden
   * @param pizzaName      Name der bestellten Pizza
   * @param pizzaNumber    Anzahl der bestellen Pizzen
   * @param pizzaSize      größe der Pizza
@@ -15,8 +14,7 @@ package forms
   * @param dessertName    Name der bestellten Desserts
   * @param dessertNumber  Anzahl der bestellen Desserts
   */
-case class CreateBillForm(var customerID: Long,
-                          var pizzaName: String,
+case class CreateBillForm(var pizzaName: String,
                           var pizzaSize: String,
                           var pizzaNumber: Int,
                           var beverageName: String,

@@ -5,13 +5,6 @@
 
     @helper.form(action = routes.BillController.addToBill()) {
         <ul id="showMenuList" style="list-style: none">
-            @if(request.session.get("user").isDefined) {
-                @helper.select(billForm("CustomerID"), helper.options(List(request.session.get("user").get.toString)),
-                    'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
-            }else {
-                @helper.select(billForm("CustomerID"), helper.options(List("0")),
-                    'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
-            }
             @for(s <- MenuService.listCategories) {
                 <ul style="font-size: 20px">@s</ul>
                 @helper.select(billForm(s), MenuService.addedToMenu.map(f => if(f.category.equals(s)) f.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
