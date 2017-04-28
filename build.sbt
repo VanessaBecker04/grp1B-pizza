@@ -6,6 +6,9 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.8"
 
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature",
+  "-Xfatal-warnings")
+
 resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 
 libraryDependencies ++= Seq(
@@ -18,5 +21,3 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-mock" % "3.5" % "test",
   "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 )
-
-
