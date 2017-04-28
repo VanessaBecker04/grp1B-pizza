@@ -1,5 +1,3 @@
-# Users schema
-
 # --- !Ups
 CREATE TABLE Users(
     id serial PRIMARY KEY,
@@ -16,11 +14,8 @@ CREATE TABLE Users(
 INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(-10, 'padrone@suez.de', 'Suez82346', 'Herbert', 'Padrone', 'Kientalstr. 10', 82346, 'Andechs', 'Mitarbeiter', false);
 INSERT INTO Users(id, email, password, forename, name, address, zipcode, city, role, inactive) VALUES(-20, 'emil@gmx.de', 'Susanne82343', 'Susanne', 'Emil', 'Ulrichstr. 1 ', 82343, 'Pöcking', 'Kunde', false);
 
-
 # --- !Downs
 DROP TABLE Users;
-
-# Menu schema
 
 # --- !Ups
 CREATE TABLE Menu(
@@ -41,8 +36,6 @@ INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) 
 
 # --- !Downs
 DROP TABLE Menu;
-
-# OrderHistory schema
 
 # --- !Ups
 Create Table OrderHistory(

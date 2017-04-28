@@ -15,80 +15,34 @@ trait OrderServiceT {
   /** berechnet die Gesamtsumme der Bestellung
     *
     */
-  def doCalculationForBill(cart: Bill) = {
+  def doCalculationForBill(cart: Bill): (String, Double) = {
 
-    val bill: Bill = cart
     val menu = services.MenuService.addedToMenu
 
-    var pizzaSum: Double = 0
-    var beverageSum: Double = 0
-    var dessertSum: Double = 0
     var wholeSum: Double = 0
     val orderedProducts: StringBuilder = new StringBuilder
-
-    if (bill.pizzaName != null && bill.pizzaNumber > 0) {
-      orderedProducts.append(bill.pizzaNumber + "x ")
-      orderedProducts.append(bill.pizzaName + " ")
-      orderedProducts.append("(" + bill.pizzaSize + ")")
-      if (bill.beverageNumber > 0 || bill.dessertNumber > 0) {
-        orderedProducts.append(", ")
+    for (p <- cart.products) {
+      if (p.name != null && p.number > 0) {
+        orderedProducts.append(p.number + "x ")
+        orderedProducts.append(p.name + " ")
+        orderedProducts.append("(" + p.size + "), ")
       }
       for (m <- menu) {
-        if (m.name.equals(bill.pizzaName)) {
-          if (bill.pizzaSize.equals("medium")) {
-            pizzaSum += m.price
-            pizzaSum = (pizzaSum * 27) * bill.pizzaNumber
-          }
-          if (bill.pizzaSize.equals("large")) {
-            pizzaSum += m.price
-            pizzaSum = (pizzaSum * 32) * bill.pizzaNumber
-          }
-          if (bill.pizzaSize.equals("xl")) {
-            pizzaSum += m.price
-            pizzaSum = (pizzaSum * 36) * bill.pizzaNumber
+        if (m.name.equals(p.name)) {
+          p.size match {
+            case "medium" => wholeSum += m.price * 27 * p.number
+            case "large" => wholeSum += m.price * 32 * p.number
+            case "xl" => wholeSum += m.price * 36 * p.number
+            case "0.5l" => wholeSum += m.price * 5 * p.number
+            case "0.75l" => wholeSum += m.price * 7.5 * p.number
+            case "1.0l" => wholeSum += m.price * 10 * p.number
+            case _ => wholeSum += m.price
           }
         }
       }
-    } else {
     }
-    if (bill.beverageName != null && bill.beverageNumber > 0) {
-      orderedProducts.append(bill.beverageNumber + "x ")
-      orderedProducts.append(bill.beverageName)
-      orderedProducts.append(" (" + bill.beverageSize + ")")
-      if (bill.dessertNumber > 0) {
-        orderedProducts.append(", ")
-      }
-      for (m <- menu) {
-        if (m.name.equals(bill.beverageName)) {
-          if (bill.beverageSize.equals("0.5l")) {
-            beverageSum += m.price
-            beverageSum = (beverageSum * 5) * bill.beverageNumber
-          }
-          if (bill.beverageSize.equals("0.75l")) {
-            beverageSum += m.price
-            beverageSum = (beverageSum * 7.5) * bill.beverageNumber
-          }
-          if (bill.beverageSize.equals("1.0l")) {
-            beverageSum += m.price
-            beverageSum = (beverageSum * 10) * bill.beverageNumber
-          }
-        }
-      }
-    } else {
-    }
-    if (bill.dessertName != null && bill.dessertNumber > 0) {
-      orderedProducts.append(bill.dessertNumber + "x ")
-      orderedProducts.append(bill.dessertName)
-      for (m <- menu) {
-        if (m.name.equals(bill.dessertName)) {
-          dessertSum += m.price
-          dessertSum = dessertSum * bill.dessertNumber
-        }
-      }
-    } else {
-    }
-    wholeSum += (Math.round((pizzaSum + beverageSum + dessertSum) * 100.0) / 100.0)
-    (orderedProducts, wholeSum)
+    Console.println("Georderte Produkte: " + orderedProducts.toString() + " Summe:" + wholeSum)
+    (orderedProducts.toString(), wholeSum * 100.0 / 100.0)
   }
 
   /**

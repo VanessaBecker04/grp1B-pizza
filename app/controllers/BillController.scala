@@ -3,12 +3,14 @@ package controllers
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import forms.CreateBillForm
-import models.Bill
+import forms.{CreateBillForm, ProductForm}
+import models.{Bill, Product}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
+
+import scala.collection.mutable.ListBuffer
 
 
 /** Kontroller für die Rechnungserstellung einer Bestellung.
@@ -18,40 +20,42 @@ object BillController extends Controller {
   /**
     * Form Objekt für die Benutzer Daten.
     */
-  val billform = Form(
+  val billform: Form[CreateBillForm] = Form(
     mapping(
-      "Pizza" -> text,
-      "Pizza- Größe" -> text,
-      "Pizza- Anzahl" -> number(min = 0, max = 100),
-      "Getränk" -> text,
-      "Getränk- Größe" -> text,
-      "Getränk- Anzahl" -> number(min = 0, max = 100),
-      "Dessert" -> text,
-      "Dessert- Größe" -> text,
-      "Dessert- Anzahl" -> number(min = 0, max = 100))(CreateBillForm.apply)(CreateBillForm.unapply))
+      "products" -> list(mapping(
+        "name" -> text,
+        "size" -> text,
+        "number" -> number)(ProductForm.apply)(ProductForm.unapply))
+    )(CreateBillForm.apply)(CreateBillForm.unapply))
 
   /** Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
     *
     * @return entweder attemptFailed, login oder showBill(Rechnung)
     */
   def addToBill: Action[AnyContent] = Action { implicit request =>
-    billform.bindFromRequest.fold(
+    var order = new ListBuffer[Product]()
+      billform.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.showMenu(List.empty, formWithErrors))
       },
       userData => {
-        if (userData.pizzaNumber == 0 && userData.beverageNumber == 0 && userData.dessertNumber == 0) {
-          Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
-        } else {
-          MenuService.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
-            userData.beverageNumber, userData.dessertName, userData.dessertNumber)
-          val cart: Bill = Bill(userData.pizzaName, userData.pizzaNumber, userData.pizzaSize, userData.beverageName, userData.beverageNumber, userData.beverageSize, userData.dessertName, userData.dessertNumber)
-          val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(cart)
-          if (request2session.get("orderedProducts").isEmpty) {
-            Redirect(routes.BillController.setOrder(orderedProducts.toString, sumOfOrder))
-          } else {
-            Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get + ", " + orderedProducts.toString, request2session.get("sumOfOrder").get.toDouble + sumOfOrder))
+        var userData2 = CreateBillForm(List(ProductForm("Pizza Margarita", "medium", 5), ProductForm("Sprite", "1.0l", 2)))
+        Console.println("userData: " + userData2)
+        for (p <- userData2.products) {
+          order += Product(p.name, p.size, p.number)
+          if (p.number == 0) {
+            Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
           }
+        }
+         // MenuService.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
+           // userData.beverageNumber, userData.dessertName, userData.dessertNumber)
+        Console.println("Produkte: " + order.toList)
+        val cart: Bill = Bill(order.toList)
+        val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(cart)
+        if (request2session.get("orderedProducts").isEmpty) {
+          Redirect(routes.BillController.setOrder(orderedProducts, sumOfOrder))
+        } else {
+          Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get + ", " + orderedProducts, request2session.get("sumOfOrder").get.toDouble + sumOfOrder))
         }
       })
   }

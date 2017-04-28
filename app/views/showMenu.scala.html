@@ -1,4 +1,6 @@
 @import services.MenuService
+@import forms.ProductForm
+@import helper._
 @(products: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
@@ -21,7 +23,7 @@
                 }
                 @helper.inputText(billForm(s + "- Anzahl").copy(value = Some("0")), '_showConstraints -> false)
             }
-            <li><input id="showMenuButton" type="submit" value="Zur Kasse"/></li>
+            <li><input id="showMenuButton" type="submit" value="Zum Warenkorb"/></li>
         </ul>
         <ul id="pizzaSizeShowMenu" style="list-style: none;"> Pizzagrößen in cm
             <li>Medium = 27cm</li>
