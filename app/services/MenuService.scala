@@ -3,8 +3,6 @@ package services
 import dbaccess.{MenuDao, MenuDaoT}
 import models.{CategoryPlusUnit, Menu}
 
-import scala.collection.mutable.ListBuffer
-
 /**
   * Created by Hasibullah Faroq on 21.11.2016.
   * Service Klasse für Speisekarte (Menu) bezogene Handlungen.
@@ -12,12 +10,6 @@ import scala.collection.mutable.ListBuffer
 
 trait MenuServiceT {
 
-  /** Objekt, welches vier Listen verwaltet.
-    * Jede Liste beeinhaltet Produkte die sich innerhalb der Menu Datenbank befinden.
-    * Jede Liste ist nach einer bestimmten Kategorie befüllt (Pizza, Getränk, Dessert)
-    *
-    */
-  var allIdFromMenu: List[Long] = _
   val menuDao: MenuDaoT = MenuDao
 
   /**
@@ -28,13 +20,22 @@ trait MenuServiceT {
     * @param category Kategorie des neuen Produktes
     * @return das neue Produkte
     */
-  def addToMenu(name: String, price: Double, unitOfMeasurement: String, category: String): Menu = {
+  def addToMenu(name: String, price: Double, unit: String, category: String): Menu = {
     // create User
     val ordered: Boolean = false
     val active: Boolean = true
-    val newMenu = Menu(-1, name, price, unitOfMeasurement, category, ordered, active)
+    val newMenu = Menu(-1, name, price, unit, category, ordered, active)
     // persist and return User
     menuDao.addToMenu(newMenu)
+  }
+
+  def addCategory(name: String, unit: String): Menu = {
+    if (!listCategories.contains(name)) {
+      val newCategory = Menu(-1, " ", 0, unit, name, false, true)
+      menuDao.addToMenu(newCategory)
+    } else {
+      Menu(-1, "", 0, "", "", false, true)
+    }
   }
 
   /** Verändert einzelen Attribute eines Produktes in der Datenbank.
@@ -48,8 +49,8 @@ trait MenuServiceT {
     menuDao.updateInMenu(id, name, price, active)
   }
 
-  def updateCategory(oldCategory: String, newCategory: String): Unit = {
-    menuDao.updateCategory(oldCategory, newCategory)
+  def editCategory(oldCategory: String, newCategory: String): Unit = {
+    menuDao.editCategory(oldCategory, newCategory)
   }
 
   /**
@@ -87,17 +88,6 @@ trait MenuServiceT {
     * @param id die id des Produktes welches inaktiv gestellt werden
     */
   def setProductInactive(id: Long): Unit = menuDao.setProductInactive(id)
-
-  /** befüllt die Liste mit allen Produkt-IDs
-    *
-    */
-  def putAllMenuIDInList() {
-    val allID = new ListBuffer[Long]
-    for (s <- services.MenuService.addedToMenu) {
-      allID += s.id
-    }
-    MenuService.allIdFromMenu = allID.toList
-  }
 
   def listCategoriesPlusUnit: List[CategoryPlusUnit] = menuDao.listCategoriesPlusUnit
 }

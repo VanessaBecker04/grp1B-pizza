@@ -24,10 +24,12 @@ GET         /editCategory        controllers.MenuController.editCategory
 GET         /showMenu            controllers.MenuController.showMenu
 GET         /editMenu            controllers.MenuController.editMenu
 POST        /addToMenu           controllers.MenuController.addToMenu
-POST        /rmFromMenu          controllers.MenuController.rmFromMenu
 POST        /updateInMenu        controllers.MenuController.updateInMenu
-POST        /rmCategory          controllers.MenuController.rmCategory
+POST        /rmFromMenu          controllers.MenuController.rmFromMenu
+POST        /addCategory         controllers.MenuController.addCategory
 POST        /updateCategory      controllers.MenuController.updateCategory
+POST        /rmCategory          controllers.MenuController.rmCategory
+
 
 
 POST        /addToBill           controllers.BillController.addToBill

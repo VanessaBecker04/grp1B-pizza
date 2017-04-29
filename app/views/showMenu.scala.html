@@ -2,20 +2,19 @@
 @(products: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
-
     @helper.form(action = routes.BillController.addToBill()) {
         <ul id="showMenuList" style="list-style: none">
-            @for((s, count) <- MenuService.listCategories.zipWithIndex) {
-                <ul style="font-size: 20px">@s</ul>
-                @helper.select(billForm("names[" + count + "]"), products.map(p => if(p.category.equals(s)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
-                @for(x <- MenuService.listCategoriesPlusUnit) {
-                    @if(x.category.equals(s) && x.unitOfMeasurement.equals("ml")) {
+            @for((c, count) <- MenuService.listCategories.zipWithIndex) {
+                <ul style="font-size: 20px">@c</ul>
+                @helper.select(billForm("names[" + count + "]"), products.map(p => if(p.category.equals(c)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
+                @for(p <- MenuService.listCategoriesPlusUnit) {
+                    @if(p.category.equals(c) && p.unit.equals("ml")) {
                         @helper.select(billForm("sizes[" + count + "]"), Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l", "1.0l" -> "1.0l"))
                     }
-                    @if(x.category.equals(s) && x.unitOfMeasurement.equals("cm")) {
+                    @if(p.category.equals(c) && p.unit.equals("cm")) {
                         @helper.select(billForm("sizes[" + count + "]"), Seq("medium" -> "medium", "large" -> "large", "xl" -> "xl"))
                     }
-                    @if(x.category.equals(s) && x.unitOfMeasurement.equals("Stk")) {
+                    @if(p.category.equals(c) && p.unit.equals("Stk")) {
                         @helper.select(billForm("sizes[" + count + "]"), Seq("Stk" -> "Stk"))
                     }
                 }

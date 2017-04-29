@@ -9,5 +9,9 @@
     @if(successcode.equals("userdeleted")) {
         <h1>Der Nutzer wurde erfolgreich gelöscht und/oder auf den Status inaktiv gesetzt.</h1>
     }
+    @if(successcode.equals("categorycreated")) {
+        <h1>Die Kategorie wurde erfolgreich hinzugefügt. Fügen Sie nun Produkte zur Kategorie hinzu.</h1>
+        <p><a href="/editMenu">Produkte hinzufügen</a></p>
+    }
     <p><a href="/">Home</a></p>
 }

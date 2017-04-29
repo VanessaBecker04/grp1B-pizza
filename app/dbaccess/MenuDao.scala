@@ -22,8 +22,8 @@ trait MenuDaoT {
   def addToMenu(menu: Menu): Menu = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into Menu(name, price, unitOfMeasurement, category, ordered, active) values ({name}, {price}, {unitOfMeasurement}, {category}, {ordered}, {active})").on(
-          'name -> menu.name, 'price -> menu.price, 'unitOfMeasurement -> menu.unitOfMeasurement, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
+        SQL("insert into Menu(name, price, unit, category, ordered, active) values ({name}, {price}, {unit}, {category}, {ordered}, {active})").on(
+          'name -> menu.name, 'price -> menu.price, 'unit -> menu.unit, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
       menu.id = id.get
       menu
     }
@@ -62,7 +62,7 @@ trait MenuDaoT {
     }
   }
 
-  def updateCategory(oldCategory: String, newCategory: String): Unit = {
+  def editCategory(oldCategory: String, newCategory: String): Unit = {
     DB.withConnection { implicit c =>
       SQL("Update Menu set category={newCategory} where category = {oldCategory}").on('oldCategory -> oldCategory, 'newCategory -> newCategory).executeUpdate()
     }
@@ -75,10 +75,10 @@ trait MenuDaoT {
     */
   def addedToMenu: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select id, name, price, unitOfMeasurement, category, ordered, active from Menu;")
+      val selectFromMenu = SQL("Select id, name, price, unit, category, ordered, active from Menu;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
-        row[Double]("price"), row[String]("unitOfMeasurement"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
+        row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       products
     }
   }
@@ -93,8 +93,8 @@ trait MenuDaoT {
 
   def listCategoriesPlusUnit: List[CategoryPlusUnit] = {
     DB.withConnection { implicit c =>
-      val selectCategories = SQL("Select distinct category, unitOfMeasurement from Menu;")
-      val categoriesPlusUnit = selectCategories().map(row => CategoryPlusUnit(row[String]("category"), row[String]("unitOfMeasurement"))).toList
+      val selectCategories = SQL("Select distinct category, unit from Menu;")
+      val categoriesPlusUnit = selectCategories().map(row => CategoryPlusUnit(row[String]("category"), row[String]("unit"))).toList
       categoriesPlusUnit
     }
   }

@@ -1,5 +1,5 @@
 @import services.MenuService
-@(menuForm: Form[forms.CreateProductForm], rmForm: Form[forms.IDForm], upForm: Form[forms.EditMenuForm])(implicit request: play.api.mvc.RequestHeader)
+@(menuForm: Form[forms.CreateProductForm], rmForm: Form[forms.LongForm], upForm: Form[forms.EditMenuForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main("Speisekarte bearbeiten") {
 
@@ -9,15 +9,14 @@
             @helper.form(action = routes.MenuController.addToMenu()) {
                 <li>@helper.inputText(menuForm("Produktname"))</li>
                 <li>@helper.inputText(menuForm("Preis je Einheit"), '_showConstraints -> false)</li>
-                <li>@helper.select(menuForm("Maßeinheit"), options = Seq("cm" -> "cm", "ml" -> "ml", "Stk" -> "Stk"))</li>
-                <li>@helper.inputText(menuForm("Kategorie"))</li>
+                <li>@helper.select(menuForm("Kategorie"), MenuService.listCategories.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Hinzufügen"/></li>
             }
         </ul>
 
         <ul id="rmEditMenu" style="list-style: none">Produkt entfernen/deaktivieren:
             @helper.form(action = routes.MenuController.rmFromMenu()) {
-                <li>@helper.select(rmForm("Id"), MenuService.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
+                <li>@helper.select(rmForm("Id"), MenuService.addedToMenu.map(p => p.id.toString -> p.id.toString), '_showConstraints -> false) </li>
                 <li><input type="submit" value="Löschen"></li>
             }
 
@@ -25,7 +24,7 @@
 
         <ul id="updateEditMenu" style="list-style: none">Produkt abändern:
             @helper.form(action = routes.MenuController.updateInMenu()) {
-                <li>@helper.select(upForm("Id"), MenuService.allIdFromMenu.map(p => p.toString -> p.toString), '_showConstraints -> false)</li>
+                <li>@helper.select(upForm("Id"), MenuService.addedToMenu.map(p => p.id.toString -> p.id.toString), '_showConstraints -> false)</li>
                 <li>@helper.inputText(upForm("Neuer Name"))</li>
                 <li>@helper.inputText(upForm("Neuer Preis"), '_showConstraints -> false)</li>
                 <li>@helper.inputRadioGroup(upForm("Aktivieren"), options = Seq("true" -> "Ja"), '_showConstraints -> false)</li>
@@ -36,13 +35,15 @@
 
         <ul id="showMenuInEditMenu" style="list-style: none"> Bereits in der Speisekarte:
             @for(m <- services.MenuService.addedToMenu) {
-                <li>#@m.id @m.name, Preis: @{
-                    if(m.category.equals("Dessert")) m.price + " €" else m.price + " €/cm"
-                }, @m.category, bestellt: @{
-                    if(m.ordered) "Ja" else "Nein"
-                }, active: @{
-                    if(m.active) "Ja" else "Nein"
-                }</li>
+                @if(m.name != " ") {
+                    <li>#@m.id @m.name, Preis: @{
+                        if(m.category.equals("Dessert")) m.price + " €" else m.price + " €/cm"
+                    }, @m.category, bestellt: @{
+                        if(m.ordered) "Ja" else "Nein"
+                    }, active: @{
+                        if(m.active) "Ja" else "Nein"
+                    }</li>
+                }
             }
         </ul>
 

@@ -9,4 +9,4 @@ package forms
   * @param price    €/cm des Produktes
   * @param category Kategorie des Produktes
   */
-case class CreateProductForm(name: String, price: Double, unitOfMeasurement: String, category: String)
+case class CreateProductForm(name: String, price: Double, category: String)
