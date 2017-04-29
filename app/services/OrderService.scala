@@ -33,7 +33,7 @@ trait OrderServiceT {
             case "0.5l" => wholeSum += m.price * 5 * p.number
             case "0.75l" => wholeSum += m.price * 7.5 * p.number
             case "1.0l" => wholeSum += m.price * 10 * p.number
-            case _ =>
+            case _ => wholeSum += m.price * p.number
           }
         }
       }
