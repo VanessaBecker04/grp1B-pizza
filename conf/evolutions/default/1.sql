@@ -22,17 +22,17 @@ CREATE TABLE Menu(
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
     price double precision NOT NULL,
-    unitOfMeasurement varchar(255),
+    unit varchar(255),
     category varchar(255) NOT NULL,
     ordered boolean,
     active boolean
 );
-INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'cm', 'Pizza', false, true);
-INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'cm', 'Pizza', false, true);
-INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'ml', 'Getränk', false, true);
-INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(202, 'Cola', 0.3, 'ml', 'Getränk', false, true);
-INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Stk', 'Dessert', false, true);
-INSERT INTO Menu(id, name, price, unitOfMeasurement, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Stk', 'Dessert', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'cm', 'Pizza', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'cm', 'Pizza', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'ml', 'Getränk', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(202, 'Cola', 0.3, 'ml', 'Getränk', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Stk', 'Dessert', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(302, 'Schokoeis', 2.0, 'Stk', 'Dessert', false, true);
 
 # --- !Downs
 DROP TABLE Menu;

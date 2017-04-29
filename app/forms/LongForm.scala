@@ -6,4 +6,4 @@ package forms
   * @author Maximilan Öttl
   * @version 1.0, 24.04.2017
   */
-case class IDForm(id: Long)
+case class LongForm(value: Long)

@@ -1,6 +1,6 @@
 package controllers
 
-import forms.{CreateProductForm, IDForm, EditMenuForm, UpdateCategoryForm, RemoveCategoryForm}
+import forms.{CreateProductForm, CreateCategoryForm, LongForm, EditMenuForm, EditCategoryForm, StringForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -20,13 +20,12 @@ object MenuController extends Controller {
     mapping(
       "Produktname" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty),
       "Preis je Einheit" -> of[Double],
-      "Maßeinheit" -> text,
       "Kategorie" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty))
     (CreateProductForm.apply)(CreateProductForm.unapply))
   val rmForm = Form(
     mapping(
       "Id" -> longNumber)
-    (IDForm.apply)(IDForm.unapply))
+    (LongForm.apply)(LongForm.unapply))
   val updateForm = Form(
     mapping(
       "Id" -> longNumber,
@@ -34,15 +33,21 @@ object MenuController extends Controller {
       "Neuer Preis" -> of[Double],
       "Aktivieren" -> of[Boolean])
   (EditMenuForm.apply)(EditMenuForm.unapply))
-  val updateCategoryForm = Form(
+
+  val addCategoryForm = Form(
     mapping(
-      "Alte Kategorie" -> text,
-      "Neue Kategorie" -> text)
-    (UpdateCategoryForm.apply)(UpdateCategoryForm.unapply))
+      "Name" -> text,
+      "Maßeinheit" -> text)(CreateCategoryForm.apply)(CreateCategoryForm.unapply)
+  )
+  val editCategoryForm = Form(
+    mapping(
+      "Alter Name" -> text,
+      "Neuer Name" -> text)
+    (EditCategoryForm.apply)(EditCategoryForm.unapply))
   val rmCategoryForm = Form(
     mapping(
       "Kategorie" -> text)
-    (RemoveCategoryForm.apply)(RemoveCategoryForm.unapply))
+    (StringForm.apply)(StringForm.unapply))
 
 
   /**
@@ -58,20 +63,38 @@ object MenuController extends Controller {
       },
       userData => {
         var nameExist: Boolean = false
+        var unit: String = ""
         for (p <- services.MenuService.addedToMenu) {
           if (p.name.equals(userData.name) && p.category.equals(userData.category)) {
             nameExist = true
+          } else {
+            unit = p.unit
           }
         }
         if (nameExist) {
           Redirect(routes.UserController.attemptFailed("productDoesExist"))
         } else {
-          val success = services.MenuService.addToMenu(userData.name, userData.price, userData.unitOfMeasurement, userData.category)
+          val success = services.MenuService.addToMenu(userData.name, userData.price, unit, userData.category)
           if (success != null) {
             Redirect(routes.MenuController.editMenu())
           } else {
             Redirect(routes.UserController.attemptFailed("numberOfCategories"))
           }
+        }
+      })
+  }
+
+  def addCategory: Action[AnyContent] = Action { implicit request =>
+    addCategoryForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.editCategory(formWithErrors, null, null))
+      },
+      userData => {
+        val category = services.MenuService.addCategory(userData.name, userData.unit)
+        if (category.id == -1) {
+          Redirect(routes.UserController.attemptFailed("categorieused"))
+        } else {
+          Redirect(routes.UserController.attemptSuccessful("categorycreated"))
         }
       })
   }
@@ -92,12 +115,12 @@ object MenuController extends Controller {
   }
 
   def updateCategory: Action[AnyContent] = Action { implicit request =>
-    updateCategoryForm.bindFromRequest.fold(
+    editCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(null, formWithErrors))
+        BadRequest(views.html.editCategory(null, formWithErrors, null))
       },
       userData => {
-        services.MenuService.updateCategory(userData.oldCategory, userData.newCategory)
+        services.MenuService.editCategory(userData.oldCategory, userData.newCategory)
         Redirect(routes.MenuController.editCategory())
       })
   }
@@ -111,12 +134,12 @@ object MenuController extends Controller {
   def rmCategory: Action[AnyContent] = Action { implicit request =>
     rmCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(formWithErrors, null))
+        BadRequest(views.html.editCategory(null, null, formWithErrors))
       },
       userData => {
         for (k <- services.MenuService.addedToMenu) {
           if (!k.ordered) {
-            services.MenuService.rmCategory(userData.category)
+            services.MenuService.rmCategory(userData.value)
           } else {
             Redirect(routes.MenuController.editCategory())
           }
@@ -132,10 +155,10 @@ object MenuController extends Controller {
       },
       userData => {
         for (k <- services.MenuService.addedToMenu) {
-          if (k.id == userData.id && !k.ordered) {
-            services.MenuService.rmFromMenu(userData.id)
-          } else if (k.id == userData.id && k.ordered) {
-            services.MenuService.setProductInactive(userData.id)
+          if (k.id == userData.value && !k.ordered) {
+            services.MenuService.rmFromMenu(userData.value)
+          } else if (k.id == userData.value && k.ordered) {
+            services.MenuService.setProductInactive(userData.value)
           } else {
             Redirect(routes.MenuController.editMenu())
           }
@@ -150,8 +173,7 @@ object MenuController extends Controller {
     */
   def editMenu: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      MenuService.putAllMenuIDInList()
-      Ok(views.html.editMenu(controllers.MenuController.menuForm, controllers.MenuController.rmForm, controllers.MenuController.updateForm))
+      Ok(views.html.editMenu(menuForm, rmForm, updateForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -159,7 +181,7 @@ object MenuController extends Controller {
 
   def editCategory: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      Ok(views.html.editCategory(controllers.MenuController.rmCategoryForm, controllers.MenuController.updateCategoryForm))
+      Ok(views.html.editCategory(addCategoryForm, editCategoryForm, rmCategoryForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -170,7 +192,6 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    MenuService.categorize()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
 }

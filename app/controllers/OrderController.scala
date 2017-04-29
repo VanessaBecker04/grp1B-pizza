@@ -1,10 +1,10 @@
 package controllers
 
-import forms.IDForm
+import forms.LongForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
-import services.MenuService
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
@@ -17,7 +17,7 @@ object OrderController extends Controller {
   val userOrdersForm = Form {
     mapping(
       "CustomerID" -> longNumber
-    )(IDForm.apply)(IDForm.unapply)
+    )(LongForm.apply)(LongForm.unapply)
   }
 
   /** Fügt ein neuen Bestellverlauf des Kunden in das System ein.
@@ -32,17 +32,13 @@ object OrderController extends Controller {
       request2session.get("sumOfOrder").get.toDouble,
       request2session.get("currentDate").get
     )
+    var products = new ListBuffer[Long]
     for (s <- services.MenuService.addedToMenu) {
-      if (s.name.equals(MenuService.pizza)) {
-        services.MenuService.setProductOrdered(s.id)
-      }
-      if (s.name.equals(MenuService.beverage)) {
-        services.MenuService.setProductOrdered(s.id)
-      }
-      if (s.name.equals(MenuService.dessert)) {
-        services.MenuService.setProductOrdered(s.id)
+      if (request2session.get("orderedProducts").get.contains(s.name) && !s.ordered) {
+        products += s.id
       }
     }
+    services.MenuService.setProductOrdered(products.toList)
     Redirect(routes.OrderController.showDeliveryTime()).withSession(
       request.session
         .-("orderedProducts")
@@ -103,7 +99,7 @@ object OrderController extends Controller {
       userData => {
         var sumOfOrders: Double = 0
         var numberOfOrders: Int = 0
-        val orders = services.OrderService.showOrdersUser(userData.id)
+        val orders = services.OrderService.showOrdersUser(userData.value)
         for (order <- orders) {
           sumOfOrders = sumOfOrders + order.sumOfOrder
           numberOfOrders = numberOfOrders + 1
