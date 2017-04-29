@@ -1,6 +1,5 @@
 package services
 
-import controllers.UserController.request2session
 import dbaccess.{OrderDao, OrderDaoT}
 import models.{Bill, Company, DeliveryTime, OrderHistory}
 
