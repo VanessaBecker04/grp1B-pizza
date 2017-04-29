@@ -20,16 +20,12 @@ trait MenuDaoT {
     * @return das Menu Objekt
     */
   def addToMenu(menu: Menu): Menu = {
-    if (countCategories() < 3) {
-      DB.withConnection { implicit c =>
-        val id: Option[Long] =
-          SQL("insert into Menu(name, price, unitOfMeasurement, category, ordered, active) values ({name}, {price}, {unitOfMeasurement}, {category}, {ordered}, {active})").on(
-            'name -> menu.name, 'price -> menu.price, 'unitOfMeasurement -> menu.unitOfMeasurement, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
-        menu.id = id.get
-        menu
-      }
-    } else {
-      null
+    DB.withConnection { implicit c =>
+      val id: Option[Long] =
+        SQL("insert into Menu(name, price, unitOfMeasurement, category, ordered, active) values ({name}, {price}, {unitOfMeasurement}, {category}, {ordered}, {active})").on(
+          'name -> menu.name, 'price -> menu.price, 'unitOfMeasurement -> menu.unitOfMeasurement, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
+      menu.id = id.get
+      menu
     }
   }
 
@@ -105,10 +101,10 @@ trait MenuDaoT {
 
   /** Setzt das Produkt als einmal bestellt.
     *
-    * @param id die Id des bestellten Produktes
     */
-  def setProductOrdered(id: Long): Unit = {
+  def setProductOrdered(products: List[Long]): Unit = {
     DB.withConnection { implicit c =>
+      for (id <- products)
       SQL("Update Menu set ordered=true where id = {id}").on('id -> id).executeUpdate()
     }
   }
@@ -122,19 +118,6 @@ trait MenuDaoT {
       SQL("Update Menu set active=false where id = {id}").on('id -> id).executeUpdate()
     }
   }
-
-  def countCategories(): Int = {
-    DB.withConnection { implicit  c=>
-      val count = SQL("Select count(distinct category) from Menu").as(scalar[Long].singleOpt)
-      if(count.isDefined) {
-        count.get.toInt
-      } else {
-        -1
-      }
-    }
-  }
-
-
 
 }
 

@@ -2,14 +2,11 @@ package controllers
 
 import java.text.SimpleDateFormat
 import java.util.Date
-
-import forms.{CreateBillForm, ProductForm}
+import forms.CreateBillForm
 import models.{Bill, Product}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
-import services.MenuService
-
 import scala.collection.mutable.ListBuffer
 
 /** Kontroller für die Rechnungserstellung einer Bestellung.
@@ -50,8 +47,6 @@ object BillController extends Controller {
       if (count == 0) {
         Redirect(routes.UserController.attemptFailed("atLeastOneProduct"))
       } else {
-        // MenuService.setUndeleteable(userData.pizzaName, userData.pizzaNumber, userData.beverageName,
-        // userData.beverageNumber, userData.dessertName, userData.dessertNumber)
         val cart: Bill = Bill(order.toList)
         val (orderedProducts, sumOfOrder) = services.OrderService.doCalculationForBill(cart)
         if (request2session.get("orderedProducts").isEmpty) {
@@ -108,7 +103,6 @@ object BillController extends Controller {
     * @return showMenu(Bestellübersicht)
     */
   def cancelOrder: Action[AnyContent] = Action { implicit request =>
-    MenuService.setUndeleteable(null, 0, null, 0, null, 0)
     Redirect(routes.MenuController.showMenu()).withSession(
       request.session
         .-("orderedProducts")

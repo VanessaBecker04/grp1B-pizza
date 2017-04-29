@@ -170,7 +170,6 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    MenuService.categorize()
     Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
   }
 }

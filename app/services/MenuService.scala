@@ -17,16 +17,7 @@ trait MenuServiceT {
     * Jede Liste ist nach einer bestimmten Kategorie befüllt (Pizza, Getränk, Dessert)
     *
     */
-  var products: List[List[String]] = _
-  var pizzaList: List[String] = _
-  var beverageList: List[String] = _
-  var dessertList: List[String] = _
   var allIdFromMenu: List[Long] = _
-
-  var pizza: String = _
-  var beverage: String = _
-  var dessert: String = _
-
   val menuDao: MenuDaoT = MenuDao
 
   /**
@@ -84,42 +75,18 @@ trait MenuServiceT {
     menuDao.listCategories
   }
 
-  /** Setzt das Produkt als einmal bestellt.
+  /** Setzt das Produkt als bestellt.
     *
-    * @param id die Id des bestellten Produktes
     */
-  def setProductOrdered(id: Long): Unit = menuDao.setProductOrdered(id)
+  def setProductOrdered(products: List[Long]): Unit = {
+    menuDao.setProductOrdered(products)
+  }
 
   /** Setzt das Produkt Inaktiv, damit sie nicht weiterhin bestellt werden kann.
     *
     * @param id die id des Produktes welches inaktiv gestellt werden
     */
   def setProductInactive(id: Long): Unit = menuDao.setProductInactive(id)
-
-  def categorize() {
-
-    val pizzaList = new ListBuffer[String]
-    val beverageList = new ListBuffer[String]
-    val dessertList = new ListBuffer[String]
-
-    val menuList = services.MenuService.addedToMenu
-    for (m <- menuList) {
-      if (m.category.equals("Pizza") && m.active) {
-        pizzaList += m.name
-      }
-      if (m.category.equals("Getränk") && m.active) {
-        beverageList += m.name
-      }
-      if (m.category.equals("Dessert") && m.active) {
-        dessertList += m.name
-      }
-    }
-
-    MenuService.pizzaList = pizzaList.toList
-    MenuService.beverageList = beverageList.toList
-    MenuService.dessertList = dessertList.toList
-
-  }
 
   /** befüllt die Liste mit allen Produkt-IDs
     *
@@ -132,35 +99,7 @@ trait MenuServiceT {
     MenuService.allIdFromMenu = allID.toList
   }
 
-
-  /** übergibt Werte an das Objekt UndeleteableProducts
-    *
-    * @param pizza      Name der bestellten Pizza
-    * @param pizzaNr    Anzahl der bestellten Pizza
-    * @param beverage   Name der bestellten Produkte
-    * @param beverageNr Anzahl der bestellten Getränke
-    * @param dessert    Name des bestellten Desserts
-    * @param dessertNr  Anzahl der bestellten Desserts
-    *
-    */
-  def setUndeleteable(pizza: String, pizzaNr: Int, beverage: String, beverageNr: Int, dessert: String, dessertNr: Int) {
-
-    if (pizzaNr != 0) {
-      MenuService.pizza = pizza
-    }
-    if (beverageNr != 0) {
-      MenuService.beverage = beverage
-    }
-    if (dessertNr != 0) {
-      MenuService.dessert = dessert
-    }
-  }
-
-  def countCategories() = menuDao.countCategories()
-
   def listCategoriesPlusUnit: List[CategoryPlusUnit] = menuDao.listCategoriesPlusUnit
-
 }
 
 object MenuService extends MenuServiceT
-
