@@ -18,15 +18,12 @@ trait OrderServiceT {
   def doCalculationForBill(cart: Bill): (String, Double) = {
 
     val menu = services.MenuService.addedToMenu
-
+    var count = 0
     var wholeSum: Double = 0
     val orderedProducts: StringBuilder = new StringBuilder
     for (p <- cart.products) {
-      if (p.name != null && p.number > 0) {
-        orderedProducts.append(p.number + "x ")
-        orderedProducts.append(p.name + " ")
-        orderedProducts.append("(" + p.size + "), ")
-      }
+      count += 1
+      orderedProducts.append(p.number + "x " + p.name + " " + "(" + p.size + ")" + (if(count < cart.products.length && cart.products.length > 1) ", " else ""))
       for (m <- menu) {
         if (m.name.equals(p.name)) {
           p.size match {
@@ -36,12 +33,11 @@ trait OrderServiceT {
             case "0.5l" => wholeSum += m.price * 5 * p.number
             case "0.75l" => wholeSum += m.price * 7.5 * p.number
             case "1.0l" => wholeSum += m.price * 10 * p.number
-            case _ => wholeSum += m.price
+            case _ =>
           }
         }
       }
     }
-    Console.println("Georderte Produkte: " + orderedProducts.toString() + " Summe:" + wholeSum)
     (orderedProducts.toString(), wholeSum * 100.0 / 100.0)
   }
 
@@ -50,7 +46,7 @@ trait OrderServiceT {
     */
   def calculateDeliveryTime(customerZIP: Int): Double = {
     var km: Int = 0
-    var kmpm: Double = DeliveryTime.kilometersperminute
+    val kmpm: Double = DeliveryTime.kilometersperminute
 
     customerZIP match {
       case Company.zip => km = 4

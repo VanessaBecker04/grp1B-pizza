@@ -25,12 +25,6 @@ object OrderController extends Controller {
     * @return erwartete Lieferzeit
     */
   def addToHistory(): Action[AnyContent] = Action { implicit request =>
-    Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
-    Console.println("Value of 'forename' from Session logged in: " + request2session.get("forename"))
-    Console.println("Value of 'name' from Session logged in: " + request2session.get("name"))
-    Console.println("Value of 'orderID' from Session logged in: " + request2session.get("orderID"))
-    Console.println("Value of 'orderedProducts' from Session logged in: " + request2session.get("orderedProducts"))
-    Console.println("Value of 'sumOfOrder' from Session logged in: " + request2session.get("sumOfOrder"))
     services.OrderService.addToHistory(
       request2session.get("user").get.toLong,
       request2session.get("customerData").get,

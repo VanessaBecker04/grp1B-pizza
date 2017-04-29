@@ -167,9 +167,6 @@ object UserController extends Controller {
     if (request2session.get("role").get == "Mitarbeiter") {
       Redirect(routes.UserController.welcomeEmployee())
     } else {
-      Console.println("Value of 'user' from Session logged in: " + request2session.get("user"))
-      Console.println("Value of 'forename' from Session logged in: " + request2session.get("forename"))
-      Console.println("Value of 'name' from Session logged in: " + request2session.get("name"))
       Ok(views.html.welcomeUser())
     }
   }

@@ -14,4 +14,12 @@ package forms
   * @param dessertName    Name der bestellten Desserts
   * @param dessertNumber  Anzahl der bestellen Desserts
   */
-case class CreateBillForm(products: List[ProductForm])
+case class CreateBillForm(var p1Name: String,
+                          var p1Size: String,
+                          var p1Number: Int,
+                          var p2Name: String,
+                          var p2Size: String,
+                          var p2Number: Int,
+                          var p3Name: String,
+                          var p3Size: String,
+                          var p3Number: Int)

@@ -1,6 +1,4 @@
 @import services.MenuService
-@import forms.ProductForm
-@import helper._
 @(products: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
@@ -9,7 +7,7 @@
         <ul id="showMenuList" style="list-style: none">
             @for(s <- MenuService.listCategories) {
                 <ul style="font-size: 20px">@s</ul>
-                @helper.select(billForm(s), MenuService.addedToMenu.map(f => if(f.category.equals(s)) f.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
+                @helper.select(billForm(s), products.map(p => if(p.category.equals(s)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
                 @for(x <- MenuService.listCategoriesPlusUnit) {
                     @if(x.category.equals(s) && x.unitOfMeasurement.equals("ml")) {
                         @helper.select(billForm(s + "- Größe"), Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l", "1.0l" -> "1.0l"))
@@ -32,5 +30,4 @@
         </ul>
     }
 }
-
 
