@@ -5,17 +5,17 @@
         <ul id="showMenuList" style="list-style: none">
             @for((c, count) <- categories.zipWithIndex) {
                 <ul style="font-size: 20px">@c.category</ul>
-                @helper.select(billForm("names[" + count + "]"), products.map(p => if(p.category.equals(c.category)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
+                @helper.select(billForm("names[" + count + "]"), products.map(p => if(p.category.equals(c.category)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString), '_label -> "Produkt")
                 @if(c.unit.equals("ml")) {
-                    @helper.select(billForm("sizes[" + count + "]"), Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l", "1.0l" -> "1.0l"))
+                    @helper.select(billForm("sizes[" + count + "]"), Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l", "1.0l" -> "1.0l"), '_label -> "Größe")
                 }
                 @if(c.unit.equals("cm")) {
-                    @helper.select(billForm("sizes[" + count + "]"), Seq("medium" -> "medium", "large" -> "large", "xl" -> "xl"))
+                    @helper.select(billForm("sizes[" + count + "]"), Seq("medium" -> "medium", "large" -> "large", "xl" -> "xl"), '_label -> "Größe")
                 }
                 @if(c.unit.equals("Stk")) {
-                    @helper.select(billForm("sizes[" + count + "]"), Seq("Stk" -> "Stk"))
+                    @helper.select(billForm("sizes[" + count + "]"), Seq("Stk" -> "Stk"), '_label -> "Größe")
                 }
-                @helper.inputText(billForm("numbers[" + count + "]").copy(value = Some("0")), '_showConstraints -> false)
+                @helper.inputText(billForm("numbers[" + count + "]").copy(value = Some("0")), '_showConstraints -> false, '_label -> "Anzahl")
             }
             <li><input id="showMenuButton" type="submit" value="Zum Warenkorb"/></li>
         </ul>
