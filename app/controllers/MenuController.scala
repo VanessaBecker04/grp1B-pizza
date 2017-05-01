@@ -61,16 +61,13 @@ object MenuController extends Controller {
         BadRequest(views.html.editMenu(formWithErrors, null, null))
       },
       userData => {
-        var nameExist: Boolean = false
         var unit: String = ""
-        for (p <- services.MenuService.listOfProducts) {
-          if (p.name.equals(userData.name) && p.category.equals(userData.category)) {
-            nameExist = true
-          } else {
-            unit = p.unit
+        if (!MenuService.listOfAllProducts.exists(p => p.name == userData.name && p.category == userData.category)) {
+          for (p <- services.MenuService.listOfAllProducts) {
+            if (p.category.equals(userData.category)) {
+              unit = p.unit
+            }
           }
-        }
-        if (!MenuService.listOfProducts.exists(p => p.name == userData.name && p.category == userData.category)) {
           services.MenuService.addToMenu(userData.name, userData.price, unit, userData.category)
           Redirect(routes.MenuController.editMenu())
         } else {
@@ -85,7 +82,7 @@ object MenuController extends Controller {
         BadRequest(views.html.editCategory(formWithErrors, null, null))
       },
       userData => {
-        if (!MenuService.listOfCategories.exists(c => c.category == userData.name)){
+        if (!MenuService.listOfActiveCategories.exists(c => c.category == userData.name)) {
           services.MenuService.addCategory(userData.name, userData.unit)
           Redirect(routes.UserController.attemptSuccessful("categorycreated"))
         } else {
@@ -132,13 +129,7 @@ object MenuController extends Controller {
         BadRequest(views.html.editCategory(null, null, formWithErrors))
       },
       userData => {
-        for (k <- services.MenuService.listOfProducts) {
-          if (!k.ordered) {
-            services.MenuService.rmCategory(userData.value)
-          } else {
-            Redirect(routes.MenuController.editCategory())
-          }
-        }
+        services.MenuService.rmCategory(userData.value)
         Redirect(routes.MenuController.editCategory())
       })
   }
@@ -149,15 +140,7 @@ object MenuController extends Controller {
         BadRequest(views.html.editMenu(null, formWithErrors, null))
       },
       userData => {
-        for (k <- services.MenuService.listOfProducts) {
-          if (k.id == userData.value && !k.ordered) {
-            services.MenuService.rmFromMenu(userData.value)
-          } else if (k.id == userData.value && k.ordered) {
-            services.MenuService.setProductInactive(userData.value)
-          } else {
-            Redirect(routes.MenuController.editMenu())
-          }
-        }
+        services.MenuService.rmFromMenu(userData.value)
         Redirect(routes.MenuController.editMenu())
       })
   }
@@ -187,6 +170,6 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.showMenu(MenuService.listOfProducts, MenuService.listOfCategories, controllers.BillController.billform))
+    Ok(views.html.showMenu(MenuService.listOfProducts, MenuService.listOfActiveCategories, controllers.BillController.billform))
   }
 }

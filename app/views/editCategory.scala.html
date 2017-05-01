@@ -16,14 +16,14 @@
 
         <ul id="rmEditMenu" style="list-style: none">Kategorie entfernen:
             @helper.form(action = routes.MenuController.rmCategory()) {
-                <li>@helper.select(rmCategoryForm("Kategorie"), MenuService.listOfCategories.map(p => p.category.toString -> p.category.toString))</li>
+                <li>@helper.select(rmCategoryForm("Kategorie"), MenuService.listOfActiveCategories.map(p => p.category.toString -> p.category.toString))</li>
                 <li><input type="submit" value="Entfernen"/></li>
             }
         </ul>
 
         <ul id="updateEditMenu" style="list-style: none">Kategorie abändern:
             @helper.form(action = routes.MenuController.updateCategory()) {
-                <li>@helper.select(updateCategoryForm("Alter Name"), MenuService.listOfCategories.map(p => p.category.toString -> p.category.toString))</li>
+                <li>@helper.select(updateCategoryForm("Alter Name"), MenuService.listOfActiveCategories.map(p => p.category.toString -> p.category.toString))</li>
                 <li>@helper.inputText(updateCategoryForm("Neuer Name"))</li>
                 <li><input type="submit" value="Ändern"></li>
             }

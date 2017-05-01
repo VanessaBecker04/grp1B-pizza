@@ -62,8 +62,12 @@ trait MenuServiceT {
     menuDao.listOfProducts
   }
 
-  def listOfCategories: List[Menu] = {
-    menuDao.listOfCategories
+  def listOfAllProducts: List[Menu] = {
+    menuDao.listOfAllProducts
+  }
+
+  def listOfActiveCategories: List[Menu] = {
+    menuDao.listOfActiveCategories
   }
 
   /** Setzt das Produkt als bestellt.
@@ -72,12 +76,6 @@ trait MenuServiceT {
   def setProductOrdered(products: List[Long]): Unit = {
     menuDao.setProductOrdered(products)
   }
-
-  /** Setzt das Produkt Inaktiv, damit sie nicht weiterhin bestellt werden kann.
-    *
-    * @param id die id des Produktes welches inaktiv gestellt werden
-    */
-  def setProductInactive(id: Long): Unit = menuDao.setProductInactive(id)
 }
 
 object MenuService extends MenuServiceT

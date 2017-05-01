@@ -5,6 +5,7 @@ import anorm.SQL
 import models.Menu
 import play.api.Play.current
 import play.api.db.DB
+import anorm.SqlParser._
 
 /** Datenbankzugriff über Benutzerschnittstellen für die Speisekarten Datenbank (MENU)
   * Created by Hasibullah Faroq on 21.11.2016.
@@ -20,10 +21,15 @@ trait MenuDaoT {
     */
   def addToMenu(menu: Menu): Menu = {
     DB.withConnection { implicit c =>
-      val id: Option[Long] =
-        SQL("insert into Menu(name, price, unit, category, ordered, active) values ({name}, {price}, {unit}, {category}, {ordered}, {active})").on(
-          'name -> menu.name, 'price -> menu.price, 'unit -> menu.unit, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
-      menu.id = id.get
+      val exists = SQL("select distinct category from Menu where category = {category} and active = false;").on('category -> menu.category).as(scalar[String].singleOpt)
+      if (exists.isDefined) {
+        SQL("Update Menu set active = true where category = {category};").on('category -> menu.category).executeUpdate()
+      } else {
+        val id: Option[Long] =
+          SQL("insert into Menu(name, price, unit, category, ordered, active) values ({name}, {price}, {unit}, {category}, {ordered}, {active})").on(
+            'name -> menu.name, 'price -> menu.price, 'unit -> menu.unit, 'category -> menu.category, 'ordered -> menu.ordered, 'active -> menu.active).executeInsert()
+        menu.id = id.get
+      }
       menu
     }
   }
@@ -49,7 +55,13 @@ trait MenuDaoT {
     */
   def rmFromMenu(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val rowsCount = SQL("delete from Menu where id = ({id})").on('id -> id).executeUpdate()
+      val category = SQL("Select category from Menu where id = {id}").on('id -> id).as(scalar[String].singleOpt)
+      val count = SQL("Select count(id) from Menu where category = {category}").on('category -> category).as(scalar[Long].singleOpt)
+      if (count.get == 2) {
+        SQL("Delete from Menu where name='' and category = {category}").on('category -> category).executeUpdate()
+      }
+      val rowsCount = SQL("Delete from Menu where id = {id} and ordered=false").on('id -> id).executeUpdate()
+      SQL("Update Menu set active=false where id = {id};").on('id -> id).executeUpdate()
       rowsCount > 0
     }
   }
@@ -83,7 +95,17 @@ trait MenuDaoT {
     }
   }
 
-  def listOfCategories: List[Menu] = {
+  def listOfAllProducts: List[Menu] = {
+    DB.withConnection { implicit c =>
+      val selectFromMenu = SQL("Select * from Menu;")
+      // Transform the resulting Stream[Row] to a List[(Menu,Menu)]
+      val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
+        row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
+      products
+    }
+  }
+
+  def listOfActiveCategories: List[Menu] = {
     DB.withConnection { implicit c =>
       val selectCategories = SQL("SELECT * FROM Menu where id in (select min(id) from Menu group by category) and active = true;")
       val categories = selectCategories().map(row => Menu(row[Long]("id"), row[String]("name"),
@@ -101,18 +123,6 @@ trait MenuDaoT {
       SQL("Update Menu set ordered=true where id = {id}").on('id -> id).executeUpdate()
     }
   }
-
-  /** Setzt das Produkt Inaktiv, damit sie nicht weiterhin bestellt werden kann.
-    *
-    * @param id die id des Produktes welches inaktiv gestellt werden
-    */
-  def setProductInactive(id: Long): Unit = {
-    DB.withConnection { implicit c =>
-      SQL("Update Menu set active=false where id = {id}").on('id -> id).executeUpdate()
-    }
-  }
-
 }
 
 object MenuDao extends MenuDaoT
-

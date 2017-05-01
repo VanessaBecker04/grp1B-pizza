@@ -9,7 +9,7 @@
             @helper.form(action = routes.MenuController.addToMenu()) {
                 <li>@helper.inputText(menuForm("Produktname"))</li>
                 <li>@helper.inputText(menuForm("Preis je Einheit"), '_showConstraints -> false)</li>
-                <li>@helper.select(menuForm("Kategorie"), MenuService.listOfCategories.map(p => p.category.toString -> p.category.toString), '_showConstraints -> false)</li>
+                <li>@helper.select(menuForm("Kategorie"), MenuService.listOfActiveCategories.map(p => p.category.toString -> p.category.toString), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Hinzufügen"/></li>
             }
         </ul>
