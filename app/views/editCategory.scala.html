@@ -1,5 +1,4 @@
-@import services.MenuService
-@(addCategoryForm: Form[forms.CreateCategoryForm], updateCategoryForm: Form[forms.EditCategoryForm], rmCategoryForm: Form[forms.StringForm])(implicit request: play.api.mvc.RequestHeader)
+@(categories: List[models.Menu], allCategories: List[models.Menu], addCategoryForm: Form[forms.CreateCategoryForm], updateCategoryForm: Form[forms.EditCategoryForm], rmCategoryForm: Form[forms.StringForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main("Kategorien verwalten") {
 
@@ -15,21 +14,21 @@
 
         <ul id="rmEditMenu" style="list-style: none">Kategorie entfernen/deaktivieren:
             @helper.form(action = routes.MenuController.rmCategory()) {
-                <li>@helper.select(rmCategoryForm("Kategorie"), MenuService.listOfAllCategories.map(p => p.category.toString -> p.category.toString))</li>
+                <li>@helper.select(rmCategoryForm("Kategorie"), categories.map(p => p.category.toString -> p.category.toString))</li>
                 <li><input type="submit" value="Entfernen"/></li>
             }
         </ul>
 
         <ul id="updateEditMenu" style="list-style: none">Kategorie abändern:
             @helper.form(action = routes.MenuController.updateCategory()) {
-                <li>@helper.select(updateCategoryForm("Alter Name"), MenuService.listOfAllCategories.map(p => p.category.toString -> p.category.toString))</li>
+                <li>@helper.select(updateCategoryForm("Alter Name"), allCategories.map(p => p.category.toString -> p.category.toString))</li>
                 <li>@helper.inputText(updateCategoryForm("Neuer Name"))</li>
                 <li><input type="submit" value="Ändern"></li>
             }
         </ul>
 
         <ul id="showMenuInEditMenu" style="list-style: none"> Bereits in der Speisekarte:
-            @for((c, count) <- services.MenuService.listOfAllCategories.zipWithIndex) {
+            @for((c, count) <- allCategories.zipWithIndex) {
                 <li>#@count @c.category, Preis: @{
                     if(c.unit.equals("cm")) c.price + " €/cm" else if(c.unit.equals("ml")) c.price + " €/ml" else c.price + " €/Stk"
                 }, active: @{

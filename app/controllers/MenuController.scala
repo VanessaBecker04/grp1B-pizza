@@ -58,7 +58,7 @@ object MenuController extends Controller {
   def addToMenu: Action[AnyContent] = Action { implicit request =>
     menuForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(formWithErrors, null, null))
+        BadRequest(views.html.editMenu(List.empty, List.empty, formWithErrors, null, null))
       },
       userData => {
         var unit: String = ""
@@ -79,12 +79,12 @@ object MenuController extends Controller {
   def addCategory: Action[AnyContent] = Action { implicit request =>
     addCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(formWithErrors, null, null))
+        BadRequest(views.html.editCategory(List.empty, List.empty, formWithErrors, null, null))
       },
       userData => {
-        if (!MenuService.listOfActiveCategories.exists(c => c.category == userData.name)) {
+        if (!MenuService.listOfOrderableCategories.exists(c => c.category == userData.name)) {
           services.MenuService.addCategory(userData.name, userData.unit)
-          Redirect(routes.UserController.attemptSuccessful("categorycreated"))
+          Redirect(routes.MenuController.editCategory())
         } else {
           Redirect(routes.UserController.attemptFailed("categoryused"))
         }
@@ -98,7 +98,7 @@ object MenuController extends Controller {
   def updateInMenu: Action[AnyContent] = Action { implicit request =>
     updateForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(null, null, formWithErrors))
+        BadRequest(views.html.editMenu(List.empty, List.empty, null, null, formWithErrors))
       },
       userData => {
         services.MenuService.updateInMenu(userData.id, userData.name, userData.price, userData.active)
@@ -109,7 +109,7 @@ object MenuController extends Controller {
   def updateCategory: Action[AnyContent] = Action { implicit request =>
     editCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(null, formWithErrors, null))
+        BadRequest(views.html.editCategory(List.empty, List.empty, null, formWithErrors, null))
       },
       userData => {
         services.MenuService.editCategory(userData.oldCategory, userData.newCategory)
@@ -126,7 +126,7 @@ object MenuController extends Controller {
   def rmCategory: Action[AnyContent] = Action { implicit request =>
     rmCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(null, null, formWithErrors))
+        BadRequest(views.html.editCategory(List.empty, List.empty, null, null, formWithErrors))
       },
       userData => {
         services.MenuService.rmCategory(userData.value)
@@ -137,7 +137,7 @@ object MenuController extends Controller {
   def rmFromMenu: Action[AnyContent] = Action { implicit request =>
     rmForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(null, formWithErrors, null))
+        BadRequest(views.html.editMenu(List.empty, List.empty, null, formWithErrors, null))
       },
       userData => {
         services.MenuService.rmFromMenu(userData.value)
@@ -151,7 +151,7 @@ object MenuController extends Controller {
     */
   def editMenu: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      Ok(views.html.editMenu(menuForm, rmForm, updateForm))
+      Ok(views.html.editMenu(MenuService.listOfAddableCategories, MenuService.listOfActualProducts, menuForm, rmForm, updateForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -159,7 +159,7 @@ object MenuController extends Controller {
 
   def editCategory: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      Ok(views.html.editCategory(addCategoryForm, editCategoryForm, rmCategoryForm))
+      Ok(views.html.editCategory(MenuService.listOfAddableCategories, MenuService.listOfAllCategories, addCategoryForm, editCategoryForm, rmCategoryForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -170,6 +170,6 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.showMenu(MenuService.listOfActualProducts, MenuService.listOfActiveCategories, controllers.BillController.billform))
+    Ok(views.html.showMenu(MenuService.listOfActualProducts, MenuService.listOfOrderableCategories, controllers.BillController.billform))
   }
 }

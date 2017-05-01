@@ -75,7 +75,14 @@ trait MenuServiceT {
     menuDao.listOfCategories
   }
 
-  def listOfActiveCategories: List[Menu] = {
+  def listOfAddableCategories: List[Menu] = {
+    var categories = new ListBuffer[Menu]
+    for (p <- listOfAllCategories)
+      if (p.active) categories += p
+    categories.toList
+  }
+
+  def listOfOrderableCategories: List[Menu] = {
     var categories = new ListBuffer[Menu]
     for (p <- listOfAllCategories)
       if (!p.name.equals("") && p.active) categories += p
