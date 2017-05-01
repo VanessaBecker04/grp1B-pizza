@@ -33,7 +33,7 @@ object OrderController extends Controller {
       request2session.get("currentDate").get
     )
     var products = new ListBuffer[Long]
-    for (s <- services.MenuService.listOfProducts) {
+    for (s <- services.MenuService.listOfActualProducts) {
       if (request2session.get("orderedProducts").get.contains(s.name) && !s.ordered) {
         products += s.id
       }

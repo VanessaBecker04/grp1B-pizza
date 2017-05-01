@@ -2,6 +2,7 @@ package services
 
 import dbaccess.{MenuDao, MenuDaoT}
 import models.Menu
+import scala.collection.mutable.ListBuffer
 
 /**
   * Created by Hasibullah Faroq on 21.11.2016.
@@ -25,7 +26,7 @@ trait MenuServiceT {
   }
 
   def addCategory(name: String, unit: String): Menu = {
-      menuDao.addToMenu(Menu(-1, "", 0, unit, name, false, true))
+      menuDao.addCategoryToMenu(Menu(-1, "", 0, unit, name, false, true))
   }
 
   /** Verändert einzelen Attribute eines Produktes in der Datenbank.
@@ -58,16 +59,27 @@ trait MenuServiceT {
     *
     * @return eine Liste von Produkten
     */
-  def listOfProducts: List[Menu] = {
+
+  def listOfAllProducts: List[Menu] = {
     menuDao.listOfProducts
   }
 
-  def listOfAllProducts: List[Menu] = {
-    menuDao.listOfAllProducts
+  def listOfActualProducts: List[Menu] = {
+    var products = new ListBuffer[Menu]
+    for (p <- listOfAllProducts)
+      if (!p.name.equals("")) products += p
+    products.toList
+  }
+
+  def listOfAllCategories: List[Menu] = {
+    menuDao.listOfCategories
   }
 
   def listOfActiveCategories: List[Menu] = {
-    menuDao.listOfActiveCategories
+    var categories = new ListBuffer[Menu]
+    for (p <- listOfAllCategories)
+      if (!p.name.equals("") && p.active) categories += p
+    categories.toList
   }
 
   /** Setzt das Produkt als bestellt.
