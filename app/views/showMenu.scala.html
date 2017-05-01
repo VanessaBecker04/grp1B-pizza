@@ -1,22 +1,19 @@
-@import services.MenuService
-@(products: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
+@(products: List[models.Menu], categories: List[models.Menu], billForm: Form[forms.CreateBillForm])(implicit request: play.api.mvc.RequestHeader)
 @main("Speisekarte") {
     <h1>Willkommen zur Speisekarte</h1>
     @helper.form(action = routes.BillController.addToBill()) {
         <ul id="showMenuList" style="list-style: none">
-            @for((c, count) <- MenuService.listCategories.zipWithIndex) {
-                <ul style="font-size: 20px">@c</ul>
-                @helper.select(billForm("names[" + count + "]"), products.map(p => if(p.category.equals(c)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
-                @for(p <- MenuService.listCategoriesPlusUnit) {
-                    @if(p.category.equals(c) && p.unit.equals("ml")) {
-                        @helper.select(billForm("sizes[" + count + "]"), Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l", "1.0l" -> "1.0l"))
-                    }
-                    @if(p.category.equals(c) && p.unit.equals("cm")) {
-                        @helper.select(billForm("sizes[" + count + "]"), Seq("medium" -> "medium", "large" -> "large", "xl" -> "xl"))
-                    }
-                    @if(p.category.equals(c) && p.unit.equals("Stk")) {
-                        @helper.select(billForm("sizes[" + count + "]"), Seq("Stk" -> "Stk"))
-                    }
+            @for((c, count) <- categories.zipWithIndex) {
+                <ul style="font-size: 20px">@c.category</ul>
+                @helper.select(billForm("names[" + count + "]"), products.map(p => if(p.category.equals(c.category)) p.name else None).filterNot(_ == None).map(p => p.toString -> p.toString))
+                @if(c.unit.equals("ml")) {
+                    @helper.select(billForm("sizes[" + count + "]"), Seq("0.5l" -> "0.5l", "0.75l" -> "0.75l", "1.0l" -> "1.0l"))
+                }
+                @if(c.unit.equals("cm")) {
+                    @helper.select(billForm("sizes[" + count + "]"), Seq("medium" -> "medium", "large" -> "large", "xl" -> "xl"))
+                }
+                @if(c.unit.equals("Stk")) {
+                    @helper.select(billForm("sizes[" + count + "]"), Seq("Stk" -> "Stk"))
                 }
                 @helper.inputText(billForm("numbers[" + count + "]").copy(value = Some("0")), '_showConstraints -> false)
             }

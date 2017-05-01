@@ -12,7 +12,6 @@ import services.MenuService
   */
 object MenuController extends Controller {
 
-  var categories: List[String] = services.MenuService.listCategories
   /**
     * Form Objekte für die Benutzer Daten.
     */
@@ -64,22 +63,18 @@ object MenuController extends Controller {
       userData => {
         var nameExist: Boolean = false
         var unit: String = ""
-        for (p <- services.MenuService.addedToMenu) {
+        for (p <- services.MenuService.listOfProducts) {
           if (p.name.equals(userData.name) && p.category.equals(userData.category)) {
             nameExist = true
           } else {
             unit = p.unit
           }
         }
-        if (nameExist) {
-          Redirect(routes.UserController.attemptFailed("productDoesExist"))
+        if (!MenuService.listOfProducts.exists(p => p.name == userData.name && p.category == userData.category)) {
+          services.MenuService.addToMenu(userData.name, userData.price, unit, userData.category)
+          Redirect(routes.MenuController.editMenu())
         } else {
-          val success = services.MenuService.addToMenu(userData.name, userData.price, unit, userData.category)
-          if (success != null) {
-            Redirect(routes.MenuController.editMenu())
-          } else {
-            Redirect(routes.UserController.attemptFailed("numberOfCategories"))
-          }
+          Redirect(routes.UserController.attemptFailed("productDoesExist"))
         }
       })
   }
@@ -90,11 +85,11 @@ object MenuController extends Controller {
         BadRequest(views.html.editCategory(formWithErrors, null, null))
       },
       userData => {
-        val category = services.MenuService.addCategory(userData.name, userData.unit)
-        if (category.id == -1) {
-          Redirect(routes.UserController.attemptFailed("categorieused"))
-        } else {
+        if (!MenuService.listOfCategories.exists(c => c.category == userData.name)){
+          services.MenuService.addCategory(userData.name, userData.unit)
           Redirect(routes.UserController.attemptSuccessful("categorycreated"))
+        } else {
+          Redirect(routes.UserController.attemptFailed("categoryused"))
         }
       })
   }
@@ -137,7 +132,7 @@ object MenuController extends Controller {
         BadRequest(views.html.editCategory(null, null, formWithErrors))
       },
       userData => {
-        for (k <- services.MenuService.addedToMenu) {
+        for (k <- services.MenuService.listOfProducts) {
           if (!k.ordered) {
             services.MenuService.rmCategory(userData.value)
           } else {
@@ -154,7 +149,7 @@ object MenuController extends Controller {
         BadRequest(views.html.editMenu(null, formWithErrors, null))
       },
       userData => {
-        for (k <- services.MenuService.addedToMenu) {
+        for (k <- services.MenuService.listOfProducts) {
           if (k.id == userData.value && !k.ordered) {
             services.MenuService.rmFromMenu(userData.value)
           } else if (k.id == userData.value && k.ordered) {
@@ -192,6 +187,6 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.showMenu(MenuService.addedToMenu, controllers.BillController.billform))
+    Ok(views.html.showMenu(MenuService.listOfProducts, MenuService.listOfCategories, controllers.BillController.billform))
   }
 }

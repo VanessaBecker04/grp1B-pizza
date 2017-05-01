@@ -34,7 +34,7 @@ object BillController extends Controller {
     var order = new ListBuffer[Product]
     billform.bindFromRequest.fold(
     formWithErrors => {
-      BadRequest(views.html.showMenu(List.empty, null))
+      BadRequest(views.html.showMenu(List.empty, List.empty, null))
     },
     userData => {
       for (p <- userData.numbers) {

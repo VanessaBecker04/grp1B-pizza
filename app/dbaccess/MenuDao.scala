@@ -2,8 +2,7 @@ package dbaccess
 
 import anorm.NamedParameter.symbol
 import anorm.SQL
-import anorm.SqlParser.scalar
-import models.{CategoryPlusUnit, Menu}
+import models.Menu
 import play.api.Play.current
 import play.api.db.DB
 
@@ -73,29 +72,22 @@ trait MenuDaoT {
     *
     * @return eine Liste von Produkten
     */
-  def addedToMenu: List[Menu] = {
+  def listOfProducts: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select id, name, price, unit, category, ordered, active from Menu;")
-      // Transform the resulting Stream[Row] to a List[(String,String)]
+      val selectFromMenu = SQL("Select * from Menu where name NOT IN('');")
+      // Transform the resulting Stream[Row] to a List[(Menu,Menu)]
       val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
         row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       products
     }
   }
 
-  def listCategories: List[String] = {
+  def listOfCategories: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectCategories = SQL("Select distinct category from Menu;")
-      val categories = selectCategories().map(row => row[String]("category")).toList
+      val selectCategories = SQL("SELECT * FROM Menu where id in (select min(id) from Menu group by category);")
+      val categories = selectCategories().map(row => Menu(row[Long]("id"), row[String]("name"),
+        row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       categories
-    }
-  }
-
-  def listCategoriesPlusUnit: List[CategoryPlusUnit] = {
-    DB.withConnection { implicit c =>
-      val selectCategories = SQL("Select distinct category, unit from Menu;")
-      val categoriesPlusUnit = selectCategories().map(row => CategoryPlusUnit(row[String]("category"), row[String]("unit"))).toList
-      categoriesPlusUnit
     }
   }
 

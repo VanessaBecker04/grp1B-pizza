@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{MenuDao, MenuDaoT}
-import models.{CategoryPlusUnit, Menu}
+import models.Menu
 
 /**
   * Created by Hasibullah Faroq on 21.11.2016.
@@ -21,21 +21,11 @@ trait MenuServiceT {
     * @return das neue Produkte
     */
   def addToMenu(name: String, price: Double, unit: String, category: String): Menu = {
-    // create User
-    val ordered: Boolean = false
-    val active: Boolean = true
-    val newMenu = Menu(-1, name, price, unit, category, ordered, active)
-    // persist and return User
-    menuDao.addToMenu(newMenu)
+    menuDao.addToMenu(Menu(-1, name, price, unit, category, false, true))
   }
 
   def addCategory(name: String, unit: String): Menu = {
-    if (!listCategories.contains(name)) {
-      val newCategory = Menu(-1, " ", 0, unit, name, false, true)
-      menuDao.addToMenu(newCategory)
-    } else {
-      Menu(-1, "", 0, "", "", false, true)
-    }
+      menuDao.addToMenu(Menu(-1, "", 0, unit, name, false, true))
   }
 
   /** Verändert einzelen Attribute eines Produktes in der Datenbank.
@@ -68,12 +58,12 @@ trait MenuServiceT {
     *
     * @return eine Liste von Produkten
     */
-  def addedToMenu: List[Menu] = {
-    menuDao.addedToMenu
+  def listOfProducts: List[Menu] = {
+    menuDao.listOfProducts
   }
 
-  def listCategories: List[String] = {
-    menuDao.listCategories
+  def listOfCategories: List[Menu] = {
+    menuDao.listOfCategories
   }
 
   /** Setzt das Produkt als bestellt.
@@ -88,8 +78,6 @@ trait MenuServiceT {
     * @param id die id des Produktes welches inaktiv gestellt werden
     */
   def setProductInactive(id: Long): Unit = menuDao.setProductInactive(id)
-
-  def listCategoriesPlusUnit: List[CategoryPlusUnit] = menuDao.listCategoriesPlusUnit
 }
 
 object MenuService extends MenuServiceT
