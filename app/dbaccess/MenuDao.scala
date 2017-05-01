@@ -56,7 +56,8 @@ trait MenuDaoT {
 
   def rmCategory(category: String): Boolean = {
     DB.withConnection { implicit c =>
-      val remove = SQL("delete from Menu where category = ({category})").on('category -> category).executeUpdate()
+      val remove = SQL("Delete from Menu where category = {category} and ordered=false;").on('category -> category).executeUpdate()
+      SQL("Update Menu set active=false where category = {category};").on('category -> category).executeUpdate()
       remove > 0
     }
   }
@@ -84,7 +85,7 @@ trait MenuDaoT {
 
   def listOfCategories: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectCategories = SQL("SELECT * FROM Menu where id in (select min(id) from Menu group by category);")
+      val selectCategories = SQL("SELECT * FROM Menu where id in (select min(id) from Menu group by category) and active = true;")
       val categories = selectCategories().map(row => Menu(row[Long]("id"), row[String]("name"),
         row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
       categories
