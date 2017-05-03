@@ -24,7 +24,7 @@ object OrderController extends Controller {
 
   val newStatusForm = Form(mapping(
     "BestellID" -> longNumber,
-    "NeuerStatus" -> text
+    "Neuer Status" -> text
   )(NewStatusForm.apply)(NewStatusForm.unapply))
 
 

@@ -18,7 +18,6 @@
                 <li>@helper.select(rmForm("Id"), products.map(p => p.id.toString -> p.id.toString), '_showConstraints -> false) </li>
                 <li><input type="submit" value="Löschen"></li>
             }
-
         </ul>
 
         <ul id="updateEditMenu" style="list-style: none">Produkt abändern:
@@ -29,7 +28,6 @@
                 <li>@helper.inputRadioGroup(editForm("Aktivieren"), options = Seq("true" -> "Ja"), '_showConstraints -> false)</li>
                 <li><input type="submit" value="Ändern"></li>
             }
-
         </ul>
 
         <ul id="showMenuInEditMenu" style="list-style: none"> Bereits in der Speisekarte:

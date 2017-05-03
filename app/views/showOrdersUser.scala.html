@@ -2,20 +2,18 @@
 
 @main(models.Company.name) {
     <ul id="simpleboxsmall" style="list-style: none">
+    @if(sumOfOrders != 0) {
         Folgende Bestellungen wurden aufgegeben:
         @for(order <- orders) {
+            <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate Bestellstatus: @order.status</li>
             @if(order.status.equals("in Bearbeitung")) {
-                <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate Bestellstatus: @order.status<p><a id="orderCancel"  href=@routes.OrderController.cancelOrderHistory(order.orderID) >Bestellung stornieren</a></p></li>
-            } else {
-                <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate Bestellstatus: @order.status</li>
+                <a id="orderCancel" href=@routes.OrderController.cancelOrderHistory(order.orderID)>Bestellung stornieren<br/></a>
             }
         }
-        @if(sumOfOrders != 0) {
-            <br/>
-            Gesamtsumme der Bestellungen: @sumOfOrders €<br/>
-            Durchschnittsbestellwert: @averageOrderSum €
-        } else {
-            Es wurden keine Bestellungen aufgegeben.
-        }
+        <br/>Gesamtsumme der Bestellungen: @sumOfOrders €<br/>
+        Durchschnittsbestellwert: @averageOrderSum €
+    } else {
+        <br/>Es wurden keine Bestellungen aufgegeben.
+    }
     </ul>
 }
