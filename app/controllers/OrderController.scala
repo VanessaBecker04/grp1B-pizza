@@ -1,9 +1,11 @@
 package controllers
 
-import forms.LongForm
+import forms.{LongForm, StringForm, NewStatusForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
+import services.OrderService
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -19,6 +21,12 @@ object OrderController extends Controller {
       "CustomerID" -> longNumber
     )(LongForm.apply)(LongForm.unapply)
   }
+
+  val newStatusForm = Form(mapping(
+    "BestellID" -> longNumber,
+    "NeuerStatus" -> text
+  )(NewStatusForm.apply)(NewStatusForm.unapply))
+
 
   /** Fügt ein neuen Bestellverlauf des Kunden in das System ein.
     *
@@ -77,7 +85,7 @@ object OrderController extends Controller {
       }
       val averageOrderSum: Double = Math.round((sumOfOrders / numberOfOrders) * 100.0) / 100.0
       sumOfOrders = Math.round(sumOfOrders * 100.0) / 100.0
-      Ok(views.html.showOrdersEmployee(orders, sumOfOrders, averageOrderSum))
+      Ok(views.html.showOrdersEmployee(orders, sumOfOrders, averageOrderSum, newStatusForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -116,5 +124,21 @@ object OrderController extends Controller {
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
+  }
+
+  def cancelOrderHistory(orderID: Long): Action[AnyContent] = Action { implicit request =>
+    services.OrderService.rmFromHistory(orderID)
+    Redirect(routes.OrderController.showOrdersUser())
+  }
+
+  def setStatusForOrder(): Action[AnyContent] = Action { implicit request =>
+    newStatusForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.showOrdersEmployee(List.empty, 0, 0, formWithErrors))
+      },
+    userData => {
+      services.OrderService.setStatusForOrder(userData.orderID, userData.status)
+      Redirect(routes.OrderController.showOrdersEmployee())
+    })
   }
 }

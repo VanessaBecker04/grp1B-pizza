@@ -43,6 +43,8 @@ GET         /showOrdersUser      controllers.OrderController.showOrdersUser
 GET         /showOrdersEmployee  controllers.OrderController.showOrdersEmployee
 GET         /showOrdersEmployeeU controllers.OrderController.showOrdersEmployeeU
 GET         /editOrders          controllers.OrderController.editOrders
+GET         /cancelOrderHistory   controllers.OrderController.cancelOrderHistory(orderID: Long)
+GET         /setStatusForOrder  controllers.OrderController.setStatusForOrder
 
 # REST API
 GET         /api                 rest.Api.api

@@ -20,8 +20,8 @@ trait OrderDaoT {
   def addToHistory(coh: OrderHistory): OrderHistory = {
     DB.withConnection { implicit c =>
       val orderID: Option[Long] =
-        SQL("insert into Orderhistory(customerID, customerData, orderedProducts, sumOfOrder, orderDate) values ({customerId}, {customerData}, {orderedProducts},{sumOfOrder}, {orderDate})").on(
-          'customerId -> coh.customerID, 'customerData -> coh.customerData, 'orderedProducts -> coh.orderedProducts, 'sumOfOrder -> coh.sumOfOrder, 'orderDate -> coh.orderDate).executeInsert()
+        SQL("insert into Orderhistory(customerID, customerData, orderedProducts, sumOfOrder, orderDate, status) values ({customerId}, {customerData}, {orderedProducts},{sumOfOrder}, {orderDate}, {status})").on(
+          'customerId -> coh.customerID, 'customerData -> coh.customerData, 'orderedProducts -> coh.orderedProducts, 'sumOfOrder -> coh.sumOfOrder, 'orderDate -> coh.orderDate, 'status -> coh.status).executeInsert()
       coh.orderID = orderID.get
     }
     coh
@@ -35,7 +35,7 @@ trait OrderDaoT {
     */
   def rmFromHistory(id: Long): Boolean = {
     DB.withConnection { implicit c =>
-      val rowsCount = SQL("delete from Menu where id = ({id})").on('id -> id).executeUpdate()
+      val rowsCount = SQL("delete from OrderHistory where orderID = ({id})").on('id -> id).executeUpdate()
       rowsCount > 0
     }
   }
@@ -47,10 +47,10 @@ trait OrderDaoT {
     */
   def showOrdersEmployee: List[OrderHistory] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory")
+      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate, status from Orderhistory")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
-        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"))).toList
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"), row[String]("status"))).toList
       history
     }
   }
@@ -62,11 +62,17 @@ trait OrderDaoT {
     */
   def showOrdersUser(id: Long): List[OrderHistory] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate from Orderhistory where customerId = {id}").on('id -> id)
+      val selectFromMenu = SQL("Select orderID, customerID, customerData, orderedProducts, sumOfOrder, orderDate, status from Orderhistory where customerId = {id}").on('id -> id)
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val history = selectFromMenu().map(row => OrderHistory(row[Long]("orderID"), row[Long]("customerID"), row[String]("customerData"),
-        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"))).toList
+        row[String]("orderedProducts"), row[Double]("sumOfOrder"), row[String]("orderDate"), row[String]("status"))).toList
       history
+    }
+  }
+
+  def setStatusForOrder(id: Long, newStatus: String): Unit = {
+    DB.withConnection { implicit c =>
+      SQL("Update OrderHistory set status={newStatus} where orderID = {id}").on('newStatus -> newStatus, 'id -> id).executeUpdate()
     }
   }
 }

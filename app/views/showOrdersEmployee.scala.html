@@ -1,10 +1,19 @@
-@(orders: List[models.OrderHistory], sumOfOrders: Double, averageOrderSum: Double)(implicit request: play.api.mvc.RequestHeader)
+@(orders: List[models.OrderHistory], sumOfOrders: Double, averageOrderSum: Double, status: Form[forms.NewStatusForm])(implicit request: play.api.mvc.RequestHeader)
 
 @main(models.Company.name) {
     <ul id="simpleboxsmall" style="list-style: none">
     Folgende Bestellungen wurden aufgegeben:
     @for(order <- orders) {
-        <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate</li>
+        <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate Bestellstatus: @order.status</li>
+        @if(!order.status.equals("ausgeliefert")) {
+            <li>
+            @helper.form(action = routes.OrderController.setStatusForOrder()) {
+                @helper.select(status("BestellID"), Seq(order.orderID.toString -> order.orderID.toString), 'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
+                @helper.select(status("NeuerStatus"), Seq("in Lieferung" -> "in Lieferung", "ausgeliefert" -> "ausgeliefert"))
+                <input type="submit" value="Status aktualisieren">
+                }
+            </li>
+        }
     }
     @if(sumOfOrders != 0) {
         <br/>

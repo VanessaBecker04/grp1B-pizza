@@ -4,7 +4,11 @@
     <ul id="simpleboxsmall" style="list-style: none">
         Folgende Bestellungen wurden aufgegeben:
         @for(order <- orders) {
-            <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate</li>
+            @if(order.status.equals("in Bearbeitung")) {
+                <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate Bestellstatus: @order.status<p><a id="orderCancel"  href=@routes.OrderController.cancelOrderHistory(order.orderID) >Bestellung stornieren</a></p></li>
+            } else {
+                <li>Nutzer-ID: @order.customerID Bestell-ID: @order.orderID Nutzerdaten: @order.customerData Bestellung: @order.orderedProducts Betrag: @order.sumOfOrder Bestelldatum: @order.orderDate Bestellstatus: @order.status</li>
+            }
         }
         @if(sumOfOrders != 0) {
             <br/>

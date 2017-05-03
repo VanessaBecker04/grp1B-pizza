@@ -44,7 +44,8 @@ Create Table OrderHistory(
     customerData varchar(255),
     orderedProducts varchar(255),
     sumOfOrder double precision,
-    orderDate varchar(255)
+    orderDate varchar(255),
+    status varchar(255)
 );
 
 # --- !Downs

@@ -74,7 +74,7 @@ trait OrderServiceT {
   def addToHistory(customerID: Long, customerData: String, orderedProducts: String, sumOfOrder: Double,
                    orderDate: String): OrderHistory = {
     // create User
-    val newHistory = OrderHistory(-1, customerID, customerData, orderedProducts, sumOfOrder, orderDate)
+    val newHistory = OrderHistory(-1, customerID, customerData, orderedProducts, sumOfOrder, orderDate, "in Bearbeitung")
     // persist and return User
     orderDao.addToHistory(newHistory)
   }
@@ -100,6 +100,8 @@ trait OrderServiceT {
   def showOrdersEmployee: List[OrderHistory] = {
     orderDao.showOrdersEmployee
   }
+
+  def setStatusForOrder(orderID: Long, newStatus: String) = orderDao.setStatusForOrder(orderID, newStatus)
 }
 
 object OrderService extends OrderServiceT

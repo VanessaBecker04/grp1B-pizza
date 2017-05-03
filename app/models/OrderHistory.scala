@@ -5,4 +5,4 @@ package models
   * Bestellungs Entität
   */
 case class OrderHistory(var orderID: Long, var customerID: Long, var customerData: String, var orderedProducts: String,
-                        var sumOfOrder: Double, var orderDate: String)
+                        var sumOfOrder: Double, var orderDate: String, var status: String)
