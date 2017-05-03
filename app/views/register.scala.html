@@ -11,7 +11,7 @@
         @helper.inputText(userForm("Vorname"))
         @helper.inputText(userForm("Name"))
         @helper.inputText(userForm("Straße und Hausnummer"))
-        @helper.inputText(userForm("Postleitzahl"))
+        @helper.inputText(userForm("Postleitzahl"), '_showConstraints -> false)
         @helper.inputText(userForm("Stadt"))
         @helper.select(userForm("Rolle"), helper.options(List("Kunde")), 'hidden -> "hidden", '_label -> "", '_showConstraints -> false)
         <input type="submit" value="Speichern" />
