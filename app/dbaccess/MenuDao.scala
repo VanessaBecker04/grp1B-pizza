@@ -90,18 +90,8 @@ trait MenuDaoT {
     DB.withConnection { implicit c =>
       val selectFromMenu = SQL("Select * from Menu;")
       // Transform the resulting Stream[Row] to a List[(Menu,Menu)]
-      val products = selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
+      selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
         row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
-      products
-    }
-  }
-
-  def listOfCategories: List[Menu] = {
-    DB.withConnection { implicit c =>
-      val selectCategories = SQL("SELECT * FROM Menu where id in (select min(id) from Menu group by category);")
-      val categories = selectCategories().map(row => Menu(row[Long]("id"), row[String]("name"),
-        row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList
-      categories
     }
   }
 

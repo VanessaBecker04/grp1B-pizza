@@ -1,11 +1,9 @@
 package controllers
 
-import forms.{LongForm, StringForm, NewStatusForm}
+import forms.{LongForm, NewStatusForm}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
-import services.OrderService
-
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -41,7 +39,7 @@ object OrderController extends Controller {
       request2session.get("currentDate").get
     )
     var products = new ListBuffer[Long]
-    for (s <- services.MenuService.listOfActualProducts) {
+    for (s <- services.MenuService.listOfOrderableProducts) {
       if (request2session.get("orderedProducts").get.contains(s.name) && !s.ordered) {
         products += s.id
       }

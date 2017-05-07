@@ -27,8 +27,8 @@ CREATE TABLE Menu(
     ordered boolean,
     active boolean
 );
-INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(101, 'Pizza Margarita', 0.23, 'cm', 'Pizza', false, true);
-INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(102, 'Pizza Regina', 0.27, 'cm', 'Pizza', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(101, 'Margarita', 0.23, 'cm', 'Pizza', false, true);
+INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(102, 'Regina', 0.27, 'cm', 'Pizza', false, true);
 INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(201, 'Sprite', 0.3, 'ml', 'Getränk', false, true);
 INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(202, 'Cola', 0.3, 'ml', 'Getränk', false, true);
 INSERT INTO Menu(id, name, price, unit, category, ordered, active) VALUES(301, 'Schokokuchen', 2.0, 'Stk', 'Dessert', false, true);

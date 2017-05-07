@@ -64,15 +64,30 @@ trait MenuServiceT {
     menuDao.listOfProducts
   }
 
-  def listOfActualProducts: List[Menu] = {
+  def listOfEditableProducts: List[Menu] = {
     var products = new ListBuffer[Menu]
     for (p <- listOfAllProducts)
       if (!p.name.equals("")) products += p
     products.toList
   }
 
+  def listOfOrderableProducts: List[Menu] = {
+    var products = new ListBuffer[Menu]
+    for (p <- listOfEditableProducts)
+      if (p.active) products += p
+    products.toList
+  }
+
   def listOfAllCategories: List[Menu] = {
-    menuDao.listOfCategories
+    var categories = new ListBuffer[Menu]
+    for (p <- listOfAllProducts) {
+      if (p.active)
+        if (!categories.toList.exists(c => c.category == p.category)) categories += p
+    }
+    for (p <- listOfAllProducts) {
+      if (!categories.toList.exists(c => c.category == p.category)) categories += p
+    }
+    categories.toList
   }
 
   def listOfAddableCategories: List[Menu] = {

@@ -16,7 +16,7 @@ trait OrderServiceT {
     */
   def doCalculationForBill(cart: Bill): (String, Double) = {
 
-    val menu = services.MenuService.listOfActualProducts
+    val menu = services.MenuService.listOfOrderableProducts
     var count = 0
     var wholeSum: Double = 0
     val orderedProducts: StringBuilder = new StringBuilder

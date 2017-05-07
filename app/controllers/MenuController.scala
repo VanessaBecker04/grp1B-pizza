@@ -151,7 +151,7 @@ object MenuController extends Controller {
     */
   def editMenu: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
-      Ok(views.html.editMenu(MenuService.listOfAddableCategories, MenuService.listOfActualProducts, menuForm, rmForm, updateForm))
+      Ok(views.html.editMenu(MenuService.listOfEditableProducts, MenuService.listOfAddableCategories, menuForm, rmForm, updateForm))
     } else {
       Ok(views.html.attemptFailed("permissiondenied"))
     }
@@ -170,6 +170,6 @@ object MenuController extends Controller {
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.showMenu(MenuService.listOfActualProducts, MenuService.listOfOrderableCategories, controllers.BillController.billform))
+    Ok(views.html.showMenu(MenuService.listOfOrderableProducts, MenuService.listOfOrderableCategories, controllers.BillController.billform))
   }
 }
