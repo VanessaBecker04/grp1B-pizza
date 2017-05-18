@@ -1,8 +1,6 @@
-/**
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
-
 import play.api.test._
 import play.api.test.Helpers._
 import services.UserService
@@ -17,32 +15,23 @@ class UserServiceSpec extends Specification {
 
   "The UserService" should {
 
-    "return a empty list of users first" in memDB {
-      UserService.registeredUsers must beEmpty
+    "add a new user" in memDB {
+      UserService.addUser("paula@gmx.de", "1", "Paula", "Huber", "Zeisigweg. 4", 82346, "München", "Kunde") must be_!==(null)
     }
-
-    "add a user Helge" in memDB {
-      UserService.addUser("Helge").name must be equalTo("Helge")
+    "edit an existing user" in memDB {
+      UserService.editUser(-20, "paula@gmx.de", "1", "Paula", "Huber", "Zeisigweg. 4", 82346, "München", "Kunde") must be_!==(null)
     }
-
-    "add a user Helga" in memDB {
-      UserService.addUser("Helga").name must be equalTo("Helga")
+    "delete a user" in memDB {
+      UserService.deleteUser(-10) must beTrue
     }
-
-    "return a list containing just Helge after adding user Helge" in memDB {
-      UserService.addUser("Helge")
-      val registeredUsers = UserService.registeredUsers
-      registeredUsers.length must be equalTo(1)
-      registeredUsers(0).name must be equalTo("Helge")
+    "delete an unexisting user" in memDB {
+      UserService.deleteUser(1) must beFalse
     }
-
-    "return a list of two users after adding two users Helge" in memDB {
-      UserService.addUser("Helge")
-      UserService.addUser("Helge")
-      UserService.registeredUsers.length must be equalTo(2)
+    "return list of users" in memDB {
+      UserService.registeredUsers.length must be_==(2)
     }
-
+    "login user" in memDB {
+      UserService.loginUser("padrone@suez.de", "Suez82346").id must be equalTo(-10)
+    }
   }
-
 }
-*/
