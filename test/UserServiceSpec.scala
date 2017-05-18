@@ -4,6 +4,7 @@ import org.junit.runner._
 import play.api.test._
 import play.api.test.Helpers._
 import services.UserService
+
 @RunWith(classOf[JUnitRunner])
 class UserServiceSpec extends Specification {
 
@@ -18,7 +19,7 @@ class UserServiceSpec extends Specification {
     "add a new user" in memDB {
       UserService.addUser("paula@gmx.de", "1", "Paula", "Huber", "Zeisigweg. 4", 82346, "München", "Kunde") must be_!==(null)
     }
-    "edit an existing user" in memDB {
+    "edit a user" in memDB {
       UserService.editUser(-20, "paula@gmx.de", "1", "Paula", "Huber", "Zeisigweg. 4", 82346, "München", "Kunde") must be_!==(null)
     }
     "delete a user" in memDB {
