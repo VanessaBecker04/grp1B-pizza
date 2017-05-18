@@ -4,7 +4,7 @@ scala:
 jdk:
   - oraclejdk8
 script:
-  - travis_wait sbt clean coverage test
+  - sbt clean coverage test
 after_success:
   - sbt coverageReport
   - sbt codacyCoverage
