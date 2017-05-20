@@ -4,7 +4,7 @@ import models.User
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import play.api.test.Helpers.{running, status, redirectLocation, contentAsString, SEE_OTHER, OK, GET, POST}
+import play.api.test.Helpers.{running, status, redirectLocation, contentAsString, SEE_OTHER, OK, GET, POST, defaultAwaitTimeout}
 import play.api.test.{FakeApplication, FakeRequest}
 
 @RunWith(classOf[JUnitRunner])
