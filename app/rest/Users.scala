@@ -2,7 +2,7 @@ package rest
 
 import models.User
 import play.api.libs.json.{JsError, JsValue, Json, Writes}
-import play.api.mvc._
+import play.api.mvc.{Action, AnyContent, Controller, RequestHeader, BodyParsers}
 import services.UserService
 
 /**

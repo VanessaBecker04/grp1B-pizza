@@ -1,6 +1,6 @@
 package dbaccess
 
-import anorm._
+import anorm.SQL
 import models.OrderHistory
 import play.api.Play.current
 import play.api.db.DB

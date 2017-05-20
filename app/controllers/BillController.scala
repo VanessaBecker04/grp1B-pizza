@@ -5,7 +5,7 @@ import java.util.Date
 import forms.CreateBillForm
 import models.{Bill, Product}
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.{mapping, list, text, number}
 import play.api.mvc.{Action, AnyContent, Controller}
 import scala.collection.mutable.ListBuffer
 

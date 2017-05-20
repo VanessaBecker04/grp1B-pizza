@@ -1,9 +1,9 @@
 package controllers
 
-import forms.{CreateProductForm, CreateCategoryForm, LongForm, EditMenuForm, EditCategoryForm, StringForm}
+import forms.{CreateProductForm, LongForm, EditMenuForm, CreateCategoryForm, EditCategoryForm, StringForm}
 import play.api.data.Form
-import play.api.data.Forms._
-import play.api.data.format.Formats._
+import play.api.data.Forms.{mapping, text, of, longNumber}
+import play.api.data.format.Formats.{doubleFormat, booleanFormat}
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
 

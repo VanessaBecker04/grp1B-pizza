@@ -1,11 +1,11 @@
 import controllers.UserController
 import dbaccess.UserDao
 import models.User
-import org.specs2.mutable._
-import org.specs2.runner._
-import org.junit.runner._
-import play.api.test._
-import play.api.test.Helpers._
+import org.junit.runner.RunWith
+import org.specs2.mutable.Specification
+import org.specs2.runner.JUnitRunner
+import play.api.test.Helpers.{running, status, redirectLocation, contentAsString, SEE_OTHER, OK, GET, POST}
+import play.api.test.{FakeApplication, FakeRequest}
 
 @RunWith(classOf[JUnitRunner])
 class UserControllerSpec extends Specification {

@@ -2,7 +2,7 @@ package controllers
 
 import forms.{LongForm, NewStatusForm}
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.{mapping, longNumber, text}
 import play.api.mvc.{Action, AnyContent, Controller}
 import scala.collection.mutable.ListBuffer
 

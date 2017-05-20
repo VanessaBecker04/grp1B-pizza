@@ -2,7 +2,7 @@ package controllers
 
 import forms.{CreateUserForm, EditUserForm, LoginUserForm, LongForm}
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.{mapping, text, number, longNumber}
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.UserService
 

@@ -1,9 +1,9 @@
 import models.{Bill, Product}
-import org.junit.runner._
-import org.specs2.mutable._
-import org.specs2.runner._
-import play.api.test.Helpers._
-import play.api.test._
+import org.junit.runner.RunWith
+import org.specs2.mutable.Specification
+import org.specs2.runner.JUnitRunner
+import play.api.test.Helpers.running
+import play.api.test.FakeApplication
 import services.OrderService
 
 @RunWith(classOf[JUnitRunner])
@@ -61,14 +61,14 @@ class OrderServiceSpec extends Specification {
       OrderService.addToHistory(-10, "Herbert Padrone, Kientalstr. 10, 82346 Andechs", "1x Regina (medium)", 7.29, "20.05.2017")
       val orders = OrderService.showOrdersUser(-20)
       orders.length must be equalTo 1
-      orders.head.orderedProducts.contains("Margarita")
+      orders(0).orderedProducts.contains("Margarita")
     }
 
     "update status for order" in memDB {
       OrderService.addToHistory(-20, "Susanne Emil, Ulrichstr. 1, 82343 Pöcking", "1x Margarita (medium)", 6.21, "20.05.2017")
       OrderService.setStatusForOrder(1, "in Auslieferung")
       val orders = OrderService.showOrdersUser(-20)
-      orders.head.status must be equalTo "in Auslieferung"
+      orders(0).status must be equalTo "in Auslieferung"
     }
   }
 }

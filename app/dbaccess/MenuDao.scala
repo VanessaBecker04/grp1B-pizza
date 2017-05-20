@@ -2,10 +2,10 @@ package dbaccess
 
 import anorm.NamedParameter.symbol
 import anorm.SQL
+import anorm.SqlParser.scalar
 import models.Menu
 import play.api.Play.current
 import play.api.db.DB
-import anorm.SqlParser._
 
 /** Datenbankzugriff über Benutzerschnittstellen für die Speisekarten Datenbank (MENU)
   * Created by Hasibullah Faroq on 21.11.2016.
