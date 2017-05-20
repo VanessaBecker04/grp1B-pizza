@@ -73,7 +73,7 @@ object Users extends Controller {
   def user(id: Long): Action[AnyContent] = Action { implicit request =>
     UserService.registeredUsers.find {
       _.id == id
-    }.headOption.map { user =>
+    }.map { user =>
       Ok(Json.toJson(mkHateoasUser(user)))
     }.getOrElse(NotFound)
   }
@@ -117,10 +117,11 @@ object Users extends Controller {
     */
   def rmUser(id: Long): Action[AnyContent] = Action { implicit request =>
     val success = UserService.deleteUser(id)
-    if (success)
+    if (success) {
       Ok(Json.obj("status" -> "OK"))
-    else
+    } else {
       NotFound
+    }
   }
 
   private case class HateoasUser(user: User, url: String)
