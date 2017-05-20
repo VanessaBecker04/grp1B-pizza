@@ -213,6 +213,19 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/welcomeUser")
     }
 
+    "log in user with preexisting order" in memDB {
+      val request = FakeRequest(POST, "/loginUser").withFormUrlEncodedBody(
+        "Email" -> "emil@gmx.de",
+        "Passwort" -> "Susanne82343"
+      ).withSession(
+        "orderedProducts" -> "1x Margarita (medium)",
+        "sumOfOrder" -> "6.21"
+      )
+      val result = UserController.loginUser()(request)
+      status(result) must equalTo(SEE_OTHER)
+      redirectLocation(result) must beSome("/setOrder?orderedProducts=1x+Margarita+%28medium%29&sumOfOrder=6.21")
+    }
+
     "log in unexisting user" in memDB {
       val request = FakeRequest(POST, "/loginUser").withFormUrlEncodedBody(
         "Email" -> "",
