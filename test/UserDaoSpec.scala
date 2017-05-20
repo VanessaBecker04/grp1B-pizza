@@ -20,19 +20,28 @@ class UserDaoSpec extends Specification {
     "add a new user" in memDB {
       UserDao.addUser(User(-1, "paula@gmx.de", "1", "Paula", "Huber", "Zeisigweg 4", 82346, "München", "Kunde", false)) must be_!==(null)
     }
+
     "add an existing user" in memDB {
       UserDao.addUser(User(-1, "padrone@suez.de", "", "", "", "", 1, "", "", false)) must be_==(null)
     }
+
     "edit a user" in memDB {
       val user = User(-20, "paula@gmx.de", "1", "Paula", "Huber", "Zeisigweg 4", 82346, "München", "Kunde", false)
       UserDao.editUser(user) must be_==(user)
     }
+
     "delete a user" in memDB {
       UserDao.deleteUser(-10) must beTrue
     }
+
+    "delete an unexisting user" in memDB {
+      UserDao.deleteUser(-11) must beFalse
+    }
+
     "return list of users" in memDB {
       UserDao.registeredUsers.length must be_==(2)
     }
+
     "login user" in memDB {
       UserDao.loginUser("padrone@suez.de", "Suez82346").id must be equalTo(-10)
     }
