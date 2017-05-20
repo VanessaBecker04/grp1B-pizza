@@ -12,7 +12,7 @@ class UserControllerSpec extends Specification {
 
   def memDB[T](code: => T) =
     running(FakeApplication(additionalConfiguration = Map(
-      "db.default.driver" -> "org.h2.Driver",
+      "db.default.driver" -> "org.postgresql.Driver",
       "db.default.url" -> "jdbc:h2:mem:test;MODE=PostgreSQL"
     )))(code)
 

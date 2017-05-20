@@ -65,7 +65,7 @@ trait UserDaoT {
         val rowsCount = SQL("Delete from Users where id = {id}").on('id -> id).executeUpdate()
         rowsCount > 0
       } else {
-        val rowsCount = SQL("Update Users set inactive=B'1' where id = {id}").on('id -> id).executeUpdate()
+        val rowsCount = SQL("Update Users set inactive=true where id = {id}").on('id -> id).executeUpdate()
         rowsCount > 0
       }
     }

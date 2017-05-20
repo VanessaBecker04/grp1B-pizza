@@ -93,12 +93,12 @@ trait OrderServiceT {
     * @return list of users.
     */
 
-  def showOrdersUser(id: Long): List[OrderHistory] = {
-    orderDao.showOrdersUser(id)
-  }
-
   def showOrdersEmployee: List[OrderHistory] = {
     orderDao.showOrdersEmployee
+  }
+
+  def showOrdersUser(id: Long): List[OrderHistory] = {
+    orderDao.showOrdersUser(id)
   }
 
   def setStatusForOrder(orderID: Long, newStatus: String) = orderDao.setStatusForOrder(orderID, newStatus)
