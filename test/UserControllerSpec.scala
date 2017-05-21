@@ -4,8 +4,8 @@ import models.User
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import play.api.test.Helpers.{running, status, redirectLocation, contentAsString, SEE_OTHER, OK, GET, POST, defaultAwaitTimeout}
-import play.api.test.{FakeApplication, FakeRequest}
+import play.api.test.Helpers.{GET, POST, OK, SEE_OTHER, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
+import play.api.test.{FakeApplication, FakeRequest, WithApplication}
 
 @RunWith(classOf[JUnitRunner])
 class UserControllerSpec extends Specification {
@@ -161,7 +161,7 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptSuccessful?successcode=userdeleted")
     }
 
-    "show welcomeUser View" in memDB {
+    "show welcomeUser View" in new WithApplication {
       val request = FakeRequest(POST, "/welcomeUser").withSession(
         "role" -> "Kunde"
       )
@@ -170,7 +170,7 @@ class UserControllerSpec extends Specification {
       contentAsString(result) must contain ("Kunde")
     }
 
-    "show welcomeEmployee View" in memDB {
+    "show welcomeEmployee View" in new WithApplication {
       val request = FakeRequest(GET, "/welcomeUser").withSession(
         "role" -> "Mitarbeiter"
       )
@@ -182,14 +182,14 @@ class UserControllerSpec extends Specification {
       contentAsString(page) must contain ("Mitarbeiter")
     }
 
-    "show attemptFailed View" in memDB {
+    "show attemptFailed View" in new WithApplication {
       val request = FakeRequest(POST, "/attemptFailed")
       val result = UserController.attemptFailed("loginfailed")(request)
       status(result) must equalTo(OK)
       contentAsString(result) must contain ("fehlerhaft")
     }
 
-    "show attemptSuccessful View" in memDB {
+    "show attemptSuccessful View" in new WithApplication {
       val request = FakeRequest(POST, "/attemptSuccessful")
       val result = UserController.attemptSuccessful("usercreated")(request)
       status(result) must equalTo(OK)
@@ -256,7 +256,7 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/welcomeEmployee")
     }
 
-    "log out user" in memDB {
+    "log out user" in new WithApplication {
       val request = FakeRequest(GET, "/logoutUser")
       val result = UserController.logoutUser()(request)
       status(result) must equalTo(SEE_OTHER)
@@ -272,7 +272,7 @@ class UserControllerSpec extends Specification {
       contentAsString(result) must contain ("Kunden ändern:")
     }
 
-    "show editUsers View if not employee" in memDB {
+    "show editUsers View if not employee" in new WithApplication {
       val request = FakeRequest(GET, "/editUsers").withSession(
         "role" -> "Kunde"
       )

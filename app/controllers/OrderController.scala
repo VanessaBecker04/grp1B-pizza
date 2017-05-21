@@ -89,14 +89,6 @@ object OrderController extends Controller {
     }
   }
 
-  /** Zeigt die erwartete Lieferzeit der aufgegebenen Bestellung an.
-    *
-    * @return erwartete Lieferzeit
-    */
-  def showDeliveryTime: Action[AnyContent] = Action { implicit request =>
-    Ok(views.html.deliveryTime())
-  }
-
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
     userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
@@ -114,6 +106,14 @@ object OrderController extends Controller {
         sumOfOrders = Math.round(sumOfOrders * 100.0) / 100.0
         Ok(views.html.showOrdersUser(orders, sumOfOrders, averageOrderSum))
       })
+  }
+
+  /** Zeigt die erwartete Lieferzeit der aufgegebenen Bestellung an.
+    *
+    * @return erwartete Lieferzeit
+    */
+  def showDeliveryTime: Action[AnyContent] = Action { implicit request =>
+    Ok(views.html.deliveryTime())
   }
 
   def editOrders: Action[AnyContent] = Action { implicit request =>
