@@ -28,17 +28,20 @@ class ApplicationControllerSpec extends Specification {
       browser.pageSource must contain("Frische Pizza aus dem Steinofen")
     }
   }
-/*
+
   "Application" should {
 
-      "work from within a browser" in new WithBrowser with memDB{
+      "work from within a browser" in new WithBrowser (app = FakeApplication(additionalConfiguration = Map(
+        "db.default.driver" -> "org.postgresql.Driver",
+        "db.default.url" -> "jdbc:h2:mem:test;MODE=PostgreSQL"
+      )) ) {
 
         browser.goTo("http://localhost:" + port + "/showMenu")
 
         browser.pageSource must contain("Willkommen zur Speisekarte")
       }
   }
-  */
+
 
   "Application" should {
 
