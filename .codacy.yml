@@ -1,3 +1,4 @@
+---
 engines:
   coverage:
     enabled: true
@@ -8,4 +9,8 @@ engines:
       - conf/**/*
       - public/**/*
       - test/*
-      - scalastyle-config.xml
+      - 'scalastyle-config.xml'
+
+exclude_paths:
+  - app/rest/*
+  - test/*
