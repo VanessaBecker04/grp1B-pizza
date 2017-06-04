@@ -115,7 +115,6 @@ object BillController extends Controller {
         .-("sumOfOrder")
         .-("customerData")
         .-("currentDate")
-        .-("orderedProducts")
     )
   }
 }

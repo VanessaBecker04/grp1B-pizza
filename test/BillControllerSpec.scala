@@ -119,7 +119,12 @@ class BillControllerSpec extends Specification {
     }
 
     "cancel an order" in new WithApplication {
-      val request = FakeRequest(GET, "/cancelOrder")
+      val request = FakeRequest(GET, "/cancelOrder").withSession(
+        "orderedProducts" -> "1x Magarita (medium)",
+        "sumOfOrder" -> "6.21",
+        "customerData" -> "John Claude Bahnhofstraße 10",
+        "currentDate" -> "10.10.10"
+      )
       val result = BillController.cancelOrder()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/showMenu")
