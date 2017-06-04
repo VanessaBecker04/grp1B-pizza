@@ -4,9 +4,8 @@ scala:
 jdk:
   - oraclejdk8
 script:
+  - coverageExcludedPackages := "app\\.forms.*;app\\.models.*;app\\.rest.*;conf.*;public.*;test.*"
   - sbt clean coverage test
 after_success:
-  - coverageExcludedPackages := "app\\.forms\\.*;app\\.models\\.*;app\\.rest\\.*;conf\\.*;public\\.*;test\\.*"
   - sbt coverageReport
   - sbt codacyCoverage
-
