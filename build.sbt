@@ -21,3 +21,5 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2-mock" % "3.5" % "test",
   "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 )
+
+coverageExcludedPackages := "app\\.forms\\..*;app\\.models\\..*;app\\.rest\\..*;conf\\..*;public\\..*;test\\..*"
