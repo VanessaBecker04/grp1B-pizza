@@ -4,7 +4,7 @@ scala:
 jdk:
   - oraclejdk8
 script:
-  - sbt clean coverage test
+  - sbt clean coverage test it:test
 after_success:
   - sbt coverageReport
   - sbt codacyCoverage
