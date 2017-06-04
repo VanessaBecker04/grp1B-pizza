@@ -34,8 +34,10 @@ lazy val root = project.in(file("."))
   .settings(commonSettings)
   .enablePlugins(PlayScala)
 
+lazy val testConfig = config("test")
+
 lazy val test = project
-  .configs(IntegrationTest)
+  .configs(testConfig)
   .settings(moduleName := "grp1b-pizza-Test")
   .settings(commonSettings)
   .settings(libraryDependencies ++= testDependencies)
