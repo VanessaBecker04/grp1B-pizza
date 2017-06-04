@@ -30,7 +30,8 @@ trait MenuServiceT {
       menuDao.addCategoryToMenu(Menu(-1, "", 0, unit, name, false, true))
   }
 
-  /** Verändert einzelen Attribute eines Produktes in der Datenbank.
+  /**
+    * Verändert einzelen Attribute eines Produktes in der Datenbank.
     *
     * @param id     id des Produktes was sich in der Datenbank befindet
     * @param name   neuer Name für das bestehende Produkt
@@ -105,7 +106,8 @@ trait MenuServiceT {
     categories.toList
   }
 
-  /** Setzt das Produkt als bestellt.
+  /**
+    * Setzt das Produkt als bestellt.
     *
     */
   def setProductOrdered(products: List[Long]): Unit = {

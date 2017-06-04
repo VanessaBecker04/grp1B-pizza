@@ -2,8 +2,9 @@ package controllers
 
 import forms.{LongForm, NewStatusForm}
 import play.api.data.Form
-import play.api.data.Forms.{mapping, longNumber, text}
+import play.api.data.Forms.{longNumber, mapping, text}
 import play.api.mvc.{Action, AnyContent, Controller}
+
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -26,7 +27,8 @@ object OrderController extends Controller {
   )(NewStatusForm.apply)(NewStatusForm.unapply))
 
 
-  /** Fügt ein neuen Bestellverlauf des Kunden in das System ein.
+  /**
+    * Fügt ein neuen Bestellverlauf des Kunden in das System ein.
     *
     * @return erwartete Lieferzeit
     */
@@ -108,7 +110,8 @@ object OrderController extends Controller {
       })
   }
 
-  /** Zeigt die erwartete Lieferzeit der aufgegebenen Bestellung an.
+  /**
+    * Zeigt die erwartete Lieferzeit der aufgegebenen Bestellung an.
     *
     * @return erwartete Lieferzeit
     */

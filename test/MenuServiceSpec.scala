@@ -104,10 +104,6 @@ class MenuServiceSpec extends Specification {
       MenuService.listOfOrderableProducts.length must be equalTo 6
     }
 
-    "return List of orderable Products" in memDB {
-      MenuService.listOfOrderableProducts.length must be equalTo 6
-    }
-
     "return List of addable Categories" in memDB {
       MenuService.listOfAddableCategories.length must be equalTo 3
     }

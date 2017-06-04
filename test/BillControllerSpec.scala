@@ -56,6 +56,33 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptFailed?errorcode=atLeastOneProduct")
     }
 
+    "set Order" in memDB {
+      val request = FakeRequest(GET, "/setOrder").withSession(
+        "user" -> "-20",
+        "forename" -> "John",
+        "name" -> "Claude",
+        "address" -> "Leopoldstraße 2",
+        "zipcode" -> "82340",
+        "city" -> "Starnberg"
+      )
+      val result = BillController.setOrder("1x Margarita (medium)", 6.21)(request)
+      status(result) must equalTo(SEE_OTHER)
+      redirectLocation(result) must beSome("/showBill")
+    }
+
+    "set Order user is empty" in memDB {
+      val request = FakeRequest(GET, "/setOrder").withSession(
+        "forename" -> "John",
+        "name" -> "Claude",
+        "address" -> "Leopoldstraße 2",
+        "zipcode" -> "82340",
+        "city" -> "Starnberg"
+      )
+      val result = BillController.setOrder("1x Margarita (medium)", 6.21)(request)
+      status(result) must equalTo(SEE_OTHER)
+      redirectLocation(result) must beSome("/attemptFailed?errorcode=loginrequired")
+    }
+
     "add Order with two Product with number < 1" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",

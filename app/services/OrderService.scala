@@ -3,7 +3,8 @@ package services
 import dbaccess.{OrderDao, OrderDaoT}
 import models.{Bill, Company, DeliveryTime, OrderHistory}
 
-/** Service Klasse für Rechnungsbezogene (Orderbill) Handlungen.
+/**
+  * Service Klasse für Rechnungsbezogene (Orderbill) Handlungen.
   * Created by Hasibullah Faroq on 28.11.2016.
   */
 
@@ -11,7 +12,8 @@ trait OrderServiceT {
 
   val orderDao: OrderDaoT = OrderDao
 
-  /** berechnet die Gesamtsumme der Bestellung
+  /**
+    * berechnet die Gesamtsumme der Bestellung
     *
     */
   def doCalculationForBill(cart: Bill): (String, Double) = {

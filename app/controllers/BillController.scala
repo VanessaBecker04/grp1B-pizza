@@ -2,14 +2,17 @@ package controllers
 
 import java.text.SimpleDateFormat
 import java.util.Date
+
 import forms.CreateBillForm
 import models.{Bill, Product}
 import play.api.data.Form
-import play.api.data.Forms.{mapping, list, text, number}
+import play.api.data.Forms.{list, mapping, number, text}
 import play.api.mvc.{Action, AnyContent, Controller}
+
 import scala.collection.mutable.ListBuffer
 
-/** Kontroller für die Rechnungserstellung einer Bestellung.
+/**
+  * Kontroller für die Rechnungserstellung einer Bestellung.
   * Created by Hasibullah Faroq on 28.11.2016.
   */
 object BillController extends Controller {
@@ -24,7 +27,8 @@ object BillController extends Controller {
     )(CreateBillForm.apply)(CreateBillForm.unapply)
   )
 
-  /** Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
+  /**
+    * Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
     *
     * @return entweder attemptFailed, login oder showBill(Rechnung)
     */
@@ -90,7 +94,8 @@ object BillController extends Controller {
     }
   }
 
-  /** Leitet Kunden zum Warenkorb weiter.
+  /**
+    * Leitet Kunden zum Warenkorb weiter.
     *
     * @return showBill(Warenkorb)
     */
@@ -98,7 +103,8 @@ object BillController extends Controller {
     Ok(views.html.showBill())
   }
 
-  /** Bricht den Bestellvorgang ab und leitet den Kunden zur Bestellübersicht weiter.
+  /**
+    * Bricht den Bestellvorgang ab und leitet den Kunden zur Bestellübersicht weiter.
     *
     * @return showMenu(Bestellübersicht)
     */

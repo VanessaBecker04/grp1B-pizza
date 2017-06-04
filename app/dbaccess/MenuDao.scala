@@ -7,7 +7,8 @@ import models.Menu
 import play.api.Play.current
 import play.api.db.DB
 
-/** Datenbankzugriff über Benutzerschnittstellen für die Speisekarten Datenbank (MENU)
+/**
+  * Datenbankzugriff über Benutzerschnittstellen für die Speisekarten Datenbank (MENU)
   * Created by Hasibullah Faroq on 21.11.2016.
   */
 
@@ -45,7 +46,8 @@ trait MenuDaoT {
     }
   }
 
-  /** Verändert einzelen Attribute eines Produktes in der Datenbank.
+  /**
+    * Verändert einzelen Attribute eines Produktes in der Datenbank.
     *
     * @param id     id des Produktes was sich in der Datenbank befindet
     * @param name   neuer Name für das bestehende Produkt
@@ -95,7 +97,8 @@ trait MenuDaoT {
     }
   }
 
-  /** Setzt das Produkt als einmal bestellt.
+  /**
+    * Setzt das Produkt als einmal bestellt.
     *
     */
   def setProductOrdered(products: List[Long]): Unit = {
