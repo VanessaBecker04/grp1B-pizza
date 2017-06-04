@@ -1,14 +1,3 @@
-coverage:
-  enabled: true
-  exclude_paths:
-    - app/forms/*
-    - app/models/*
-    - app/rest/*
-    - conf/**/*
-    - public/**/*
-    - test/*
-    - 'scalastyle-config.xml'
-
 exclude_paths:
   - app/rest/*
   - test/*
