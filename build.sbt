@@ -1,6 +1,3 @@
-import sbt.Keys.{libraryDependencies, resolvers}
-import scoverage.ScoverageSbtPlugin.autoImport.coverageExcludedPackages
-
 lazy val compilerOptions = Seq(
   "-unchecked",
   "-deprecation",
@@ -32,14 +29,7 @@ lazy val testDependencies = Seq(
 lazy val root = project.in(file("."))
   .settings(moduleName := "grp1b-pizza")
   .settings(commonSettings)
-  .enablePlugins(PlayScala)
-
-lazy val testConfig = config("test")
-
-lazy val test = project
-  .configs(testConfig)
-  .settings(moduleName := "grp1b-pizza-Test")
-  .settings(commonSettings)
   .settings(libraryDependencies ++= testDependencies)
+  // .settings(coverageMinimum := 80)
   .settings(coverageExcludedPackages := "app\\.forms\\..*;app\\.models\\..*;app\\.rest\\..*;conf\\..*;public\\..*;test\\..*")
   .enablePlugins(PlayScala)
