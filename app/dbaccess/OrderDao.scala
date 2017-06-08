@@ -6,16 +6,18 @@ import play.api.Play.current
 import play.api.db.DB
 
 /**
+  * Database access via user interfaces for the order Database. (Orderhistory)
+  *
   * Created by Hasibullah Faroq und Maximilian Öttl on 14.12.2016.
-  * Datenbankzugriff über Benutzerschnittstellen für die kompletten Bestellunge Datenbank (Orderhistory)
   */
 
 trait OrderDaoT {
+
   /**
-    * fügt ein neue Bestellung des Kunden in die Datenbank Orderhistory ein.
+    * Adds a new order of the customer to the database Orderhistory.
     *
-    * @param coh das Orderhistory Objekt was in die Datenbank gespeichert werden soll.
-    * @return die Orderhistory Objekt
+    * @param coh Orderhistory object which is back uo in the database
+    * @return Orderhistory object
     */
   def addToHistory(coh: OrderHistory): OrderHistory = {
     DB.withConnection { implicit c =>
@@ -28,10 +30,10 @@ trait OrderDaoT {
   }
 
   /**
-    * Entfernt eine Bestellung aus der Datenbank Orderhistory.
+    * Deletes an order of the database.
     *
-    * @param id id der Bestellung
-    * @return wahrheitswert ob die Löschung erfolgreich war
+    * @param id id of order
+    * @return success of deletion
     */
   def rmFromHistory(id: Long): Boolean = {
     DB.withConnection { implicit c =>
@@ -41,7 +43,7 @@ trait OrderDaoT {
   }
 
   /**
-    * Returns a list of all orders from the database.
+    * Returns a list of all orders that were taken by employee.
     *
     * @return a list of order objects
     */
@@ -70,6 +72,12 @@ trait OrderDaoT {
     }
   }
 
+  /**
+    * Sets the status for an order.
+    *
+    * @param id id of order
+    * @param newStatus new Statuss of order
+    */
   def setStatusForOrder(id: Long, newStatus: String): Unit = {
     DB.withConnection { implicit c =>
       SQL("Update OrderHistory set status={newStatus} where orderID = {id}").on('newStatus -> newStatus, 'id -> id).executeUpdate()

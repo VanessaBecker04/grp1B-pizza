@@ -10,9 +10,9 @@ import play.api.mvc.{Action, AnyContent, Controller}
 object Application extends Controller {
 
   /**
-    * Shows the start page of the application.
+    * Shows the welcomeUser view or the index view
     *
-    * @return main web page
+    * @return main web page or welcome User view
     */
   def index: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("user").isDefined) {

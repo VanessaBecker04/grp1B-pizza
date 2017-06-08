@@ -9,12 +9,13 @@ import play.api.data.Forms.{mapping, list, text, number}
 import play.api.mvc.{Action, AnyContent, Controller}
 import scala.collection.mutable.ListBuffer
 
-/** Kontroller für die Rechnungserstellung einer Bestellung.
+/**
+  * Controller for the bill creation.
   * Created by Hasibullah Faroq on 28.11.2016.
   */
 object BillController extends Controller {
   /**
-    * Form Objekt für die Benutzer Daten.
+    * Form for User Data
     */
   val billform = Form(
     mapping(
@@ -24,9 +25,10 @@ object BillController extends Controller {
     )(CreateBillForm.apply)(CreateBillForm.unapply)
   )
 
-  /** Übergibt Daten die über die Bestellübersicht(showMenu) eingegeben werden, an die Datenbank Orderbill.
+  /**
+    * Passes the order data to the database.
     *
-    * @return entweder attemptFailed, login oder showBill(Rechnung)
+    * @return  attemptFailed, login or showBill
     */
   def addToBill: Action[AnyContent] = Action { implicit request =>
     var countAll = 0
@@ -58,6 +60,13 @@ object BillController extends Controller {
     })
   }
 
+
+  /**
+    * Passes the user data to the next page.
+    * @param orderedProducts ordered produkts
+    * @param sumOfOrder sum of order
+    * @return User data, order, sum of the order
+    */
   def setOrder(orderedProducts: String, sumOfOrder: Double): Action[AnyContent] = Action { implicit request =>
     var customerData: String = ""
     if (request2session.get("user").isDefined) {
@@ -90,17 +99,18 @@ object BillController extends Controller {
     }
   }
 
-  /** Leitet Kunden zum Warenkorb weiter.
+  /**
+    * Forward the customer to the shopping cart.
     *
-    * @return showBill(Warenkorb)
+    * @return showBill(shopping cart)
     */
   def showBill: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.showBill())
   }
 
-  /** Bricht den Bestellvorgang ab und leitet den Kunden zur Bestellübersicht weiter.
-    *
-    * @return showMenu(Bestellübersicht)
+  /**
+    * Cancel the Order and forward the customer to the shopping cart.
+    * @return Order data
     */
   def cancelOrder: Action[AnyContent] = Action { implicit request =>
     Redirect(routes.MenuController.showMenu()).withSession(

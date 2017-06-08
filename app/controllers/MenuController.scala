@@ -7,13 +7,14 @@ import play.api.data.format.Formats.{doubleFormat, booleanFormat}
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
 
-/** Kontroller für die Speisekarte, aus welchem der Kunde seine Wunschprodukte auswählen kann und für den Editor der Speisekarte
+/**
+  * Controller for the menu.
   * Created by Hasibullah Faroq on 21.11.2016.
   */
 object MenuController extends Controller {
 
   /**
-    * Form Objekte für die Benutzer Daten.
+    * Form object for the user data.
     */
   val menuForm = Form(
     mapping(
@@ -50,9 +51,9 @@ object MenuController extends Controller {
 
 
   /**
-    * Fügt ein neues Produkt in die Speisekarte ein.
+    * Add a new product to the menu.
     *
-    * @return editMenu(Editor für die Speisekarte)
+    * @return editMenu
     */
 
   def addToMenu: Action[AnyContent] = Action { implicit request =>
@@ -76,6 +77,10 @@ object MenuController extends Controller {
       })
   }
 
+  /**
+    * Adds a new category to the menu.
+    * @return editCatefory
+    */
   def addCategory: Action[AnyContent] = Action { implicit request =>
     addCategoryForm.bindFromRequest.fold(
       formWithErrors => {
@@ -91,9 +96,10 @@ object MenuController extends Controller {
       })
   }
 
-  /** Verändert einzelne Attribute eines schon vorhandenen Produktes in der Speisekarte
+  /**
+    * Infromation of available products can be change.
     *
-    * @return editMenu(Editor für die Speisekarte)
+    * @return editMenu
     */
   def updateInMenu: Action[AnyContent] = Action { implicit request =>
     updateForm.bindFromRequest.fold(
@@ -117,11 +123,9 @@ object MenuController extends Controller {
       })
   }
 
-  /** Löscht ein Produkt komplett von der Speisekarte, jedoch nur wenn zuvor dieser nicht schon einmal bestellt wurde.
-    * Falls jedoch schon mal bestellt wurde wird diese bloß deaktiviert, somit verschwindet sie aus der Bestellübersicht
-    * aber nicht aus der Datenbank Menu.
-    *
-    * @return editMenu(Editor für die Speisekarte)
+  /**
+    * Category can be delete.
+    * @return editCategory
     */
   def rmCategory: Action[AnyContent] = Action { implicit request =>
     rmCategoryForm.bindFromRequest.fold(
@@ -134,6 +138,13 @@ object MenuController extends Controller {
       })
   }
 
+  /**
+    * Products who aren't ordered now, can be delete.
+    * Products who already be ordred, can't be completely delete.
+    * This products are only delete in the overvie but not in the database
+    *
+    * @return editMenu
+    */
   def rmFromMenu: Action[AnyContent] = Action { implicit request =>
     rmForm.bindFromRequest.fold(
       formWithErrors => {
@@ -145,7 +156,7 @@ object MenuController extends Controller {
       })
   }
 
-  /** Zeigt den Editor für die Speisekarte an.
+  /** Shows the editor for the menu.
     *
     * @return editMenu
     */
@@ -157,6 +168,11 @@ object MenuController extends Controller {
     }
   }
 
+  /**
+    * Shows the editer for the category.
+    *
+    * @return editCategory
+    */
   def editCategory: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
       Ok(views.html.editCategory(MenuService.listOfAddableCategories, MenuService.listOfAllCategories, addCategoryForm, editCategoryForm, rmCategoryForm))
@@ -165,8 +181,8 @@ object MenuController extends Controller {
     }
   }
 
-  /** Zeigt die Speisekarte an.
-    *
+  /**
+    *Shows the menu.
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>
