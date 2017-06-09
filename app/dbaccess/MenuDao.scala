@@ -7,17 +7,19 @@ import models.Menu
 import play.api.Play.current
 import play.api.db.DB
 
-/** Datenbankzugriff über Benutzerschnittstellen für die Speisekarten Datenbank (MENU)
+/**
+  * Database access via user interfaces for the menus Database.
+  *
   * Created by Hasibullah Faroq on 21.11.2016.
   */
 
 trait MenuDaoT {
 
   /**
-    * fügt ein neues Produkt in die Datenbank Menu ein.
+    * Adds a new product to the menu.
     *
-    * @param menu das Menu Objekt was in die Datenbank gespeichert werden soll.
-    * @return das Menu Objekt
+    * @param menu menu object
+    * @return menu object
     */
   def addToMenu(menu: Menu): Menu = {
     DB.withConnection { implicit c =>
@@ -33,6 +35,11 @@ trait MenuDaoT {
     }
   }
 
+  /**
+    *Adds a new category to the menu.
+    * @param menu object menu
+    * @return menu
+    */
   def addCategoryToMenu(menu: Menu): Menu = {
     DB.withConnection { implicit c =>
       val exists = SQL("select distinct category from Menu where category = {category} and active = false;").on('category -> menu.category).as(scalar[String].singleOpt)
@@ -45,12 +52,13 @@ trait MenuDaoT {
     }
   }
 
-  /** Verändert einzelen Attribute eines Produktes in der Datenbank.
+  /**
+    *Changes information about products in the databaase.
     *
-    * @param id     id des Produktes was sich in der Datenbank befindet
-    * @param name   neuer Name für das bestehende Produkt
-    * @param price  neuer Preis für das bestehende Produkt
-    * @param active neuer Status für das Produkt
+    * @param id     id of product database
+    * @param name   new name fot the existing product
+    * @param price  new price for the existing product
+    * @param active new status for the existing product
     */
   def updateInMenu(id: Long, name: String, price: Double, active: Boolean): Unit = {
     DB.withConnection { implicit c =>
@@ -59,10 +67,10 @@ trait MenuDaoT {
   }
 
   /**
-    * Entfernt ein Produkt aus der Datenbank.
+    * Deletes a product from the database.
     *
-    * @param id id des Produktes
-    * @return wahrheitswert ob die Löschung erfolgreich war
+    * @param id id of the product
+    * @return  success of deletion
     */
   def rmFromMenu(id: Long): Boolean = {
     DB.withConnection { implicit c =>
@@ -72,6 +80,12 @@ trait MenuDaoT {
     }
   }
 
+  /**
+    * Deletes a category from the database.
+    *
+    * @param category category
+    * @return success of the deletion
+    */
   def rmCategory(category: String): Boolean = {
     DB.withConnection { implicit c =>
       val remove = SQL("Delete from Menu where category = {category} and ordered=false;").on('category -> category).executeUpdate()
@@ -80,12 +94,23 @@ trait MenuDaoT {
     }
   }
 
+  /**
+    * Changes the name of a category. ??
+    *
+    * @param oldCategory
+    * @param newCategory
+    */
   def editCategory(oldCategory: String, newCategory: String): Unit = {
     DB.withConnection { implicit c =>
       SQL("Update Menu set category={newCategory} where category = {oldCategory}").on('oldCategory -> oldCategory, 'newCategory -> newCategory).executeUpdate()
     }
   }
 
+  /**
+    * ??
+    *
+    * @return
+    */
   def listOfProducts: List[Menu] = {
     DB.withConnection { implicit c =>
       val selectFromMenu = SQL("Select * from Menu;")
@@ -95,7 +120,8 @@ trait MenuDaoT {
     }
   }
 
-  /** Setzt das Produkt als einmal bestellt.
+  /**
+    * Sets the product status to ordered.
     *
     */
   def setProductOrdered(products: List[Long]): Unit = {

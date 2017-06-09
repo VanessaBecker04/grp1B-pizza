@@ -7,12 +7,13 @@ import play.api.mvc.{Action, AnyContent, Controller}
 import scala.collection.mutable.ListBuffer
 
 /**
+  * Controller for the Order.
   * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
   */
 object OrderController extends Controller {
 
-  /** Form Objekt für die Benutzerdaten.
-    *
+  /**
+    * Form object for the user data.
     */
   val userOrdersForm = Form {
     mapping(
@@ -26,9 +27,10 @@ object OrderController extends Controller {
   )(NewStatusForm.apply)(NewStatusForm.unapply))
 
 
-  /** Fügt ein neuen Bestellverlauf des Kunden in das System ein.
+  /**
+    *Adds a new order history of the customer into the system.
     *
-    * @return erwartete Lieferzeit
+    * @return Expected delivery time
     */
   def addToHistory(): Action[AnyContent] = Action { implicit request =>
     services.OrderService.addToHistory(
@@ -55,6 +57,11 @@ object OrderController extends Controller {
     )
   }
 
+  /**
+    * Shows a new page with information about the order, sum of the order and the average sum of all orders.
+    *
+    * @return orders, sumOfOrders, averageOrderSum
+    */
   def showOrdersUser(): Action[AnyContent] = Action { implicit request =>
     if (request2session.get("user").isDefined) {
       var sumOfOrders: Double = 0
@@ -72,6 +79,11 @@ object OrderController extends Controller {
     }
   }
 
+  /**
+    * Shows the status of the order.
+    *
+    * @return orders, sumOfOrders, averageOrderSum, newStatusForm
+    */
   def showOrdersEmployee(): Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
       var sumOfOrders: Double = 0
@@ -89,6 +101,11 @@ object OrderController extends Controller {
     }
   }
 
+  /**
+    * Shows the orders, the sum and the average.
+    *
+    * @return orders, sumOfOrders and averageOrderSum or Error page
+    */
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
     userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
@@ -108,14 +125,20 @@ object OrderController extends Controller {
       })
   }
 
-  /** Zeigt die erwartete Lieferzeit der aufgegebenen Bestellung an.
+  /**
+    * Shows the delivery time of the new order.
     *
-    * @return erwartete Lieferzeit
+    * @return expected delivery time
     */
   def showDeliveryTime: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.deliveryTime())
   }
 
+  /**
+    * Shows the page with all order information.
+    *
+    * @return All orders
+    */
   def editOrders: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
       Ok(views.html.editOrders(services.UserService.registeredUsers, controllers.OrderController.userOrdersForm))
@@ -124,11 +147,20 @@ object OrderController extends Controller {
     }
   }
 
+  /**
+    * Cancels an order and deletes them from the OrderHistory table.
+    * @param orderID
+    * @return
+    */
   def cancelOrderHistory(orderID: Long): Action[AnyContent] = Action { implicit request =>
     services.OrderService.rmFromHistory(orderID)
     Redirect(routes.OrderController.showOrdersUser())
   }
 
+  /**
+    * Sets the status of the order.
+    * @return status
+    */
   def setStatusForOrder(): Action[AnyContent] = Action { implicit request =>
     newStatusForm.bindFromRequest.fold(
       formWithErrors => {
