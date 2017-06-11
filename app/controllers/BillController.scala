@@ -61,7 +61,6 @@ object BillController extends Controller {
     })
   }
 
-
   /**
     * Passes the user data to the next page (cart).
     *
