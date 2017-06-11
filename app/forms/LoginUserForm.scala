@@ -1,7 +1,7 @@
 package forms
 
 /**
-  * Description of Class.
+  * Form to log in user.
   *
   * @author Maximilan Öttl
   * @version 1.0, 25.11.2016

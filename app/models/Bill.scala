@@ -1,7 +1,8 @@
 package models
 
 /**
-  * Created by Hasibullah Faroq on 28.11.2016.
-  * Bill Entität
+  * Entity of the bill.
+  *
+  * @author Hasibullah Faroq
   */
 case class Bill(var products: List[Product])

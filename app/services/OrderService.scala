@@ -3,16 +3,21 @@ package services
 import dbaccess.{OrderDao, OrderDaoT}
 import models.{Bill, Company, DeliveryTime, OrderHistory}
 
-/** Service Klasse für Rechnungsbezogene (Orderbill) Handlungen.
-  * Created by Hasibullah Faroq on 28.11.2016.
+/**
+  * Class for service to invoice-related actions (orderbill).
+  *
+  * @author Hasibullah Faroq
   */
 
 trait OrderServiceT {
 
   val orderDao: OrderDaoT = OrderDao
 
-  /** berechnet die Gesamtsumme der Bestellung
+  /**
+    * Calculation of the total sum of the order.
     *
+    * @param cart Cart ordered products
+    * @return     Total sum of the order.
     */
   def doCalculationForBill(cart: Bill): (String, Double) = {
 
@@ -41,7 +46,10 @@ trait OrderServiceT {
   }
 
   /**
-    * Berechnung der Lieferzeit.
+    * Calculation of the delivery time.
+    *
+    * @param customerZIP  Zip of the Customer.
+    * @return             Delivey time.
     */
   def calculateDeliveryTime(customerZIP: Int): Double = {
     var km: Int = 0
@@ -63,13 +71,14 @@ trait OrderServiceT {
     }
   }
   /**
-    * fügt ein neue Bestellung des Kunden in die Datenbank Orderhistory ein.
+    * Adds a new order from the customer to the orderhistory database.
     *
-    * @param customerID      Kundennummer
-    * @param customerData    Kundendaten
-    * @param orderedProducts bestellte Produkte
-    * @param sumOfOrder      Gesamtsummer der Bestellung
-    * @param orderDate       Datum der Bestellung
+    * @param customerID      Number of the customer.
+    * @param customerData    Data of the customer.
+    * @param orderedProducts Ordered products.
+    * @param sumOfOrder      Total sum of the order.
+    * @param orderDate       Date of the order.
+    * @return                New Order from the Customer.
     */
   def addToHistory(customerID: Long, customerData: String, orderedProducts: String, sumOfOrder: Double,
                    orderDate: String): OrderHistory = {
@@ -80,10 +89,10 @@ trait OrderServiceT {
   }
 
   /**
-    * Entfernt eine Bestellung aus der Datenbank Orderhistory.
+    * Removes an order from the orderhistory database.
     *
-    * @param id id der Bestellung
-    * @return wahrheitswert ob die Löschung erfolgreich war
+    * @param id Number of the order.
+    * @return True worth whether the deletion was successful.
     */
   def rmFromHistory(id: Long): Boolean = orderDao.rmFromHistory(id)
 
@@ -92,15 +101,26 @@ trait OrderServiceT {
     *
     * @return list of users.
     */
-
   def showOrdersEmployee: List[OrderHistory] = {
     orderDao.showOrdersEmployee
   }
 
+  /**
+    * Gets a list of all orders from users.
+    *
+    * @param id Number of the order.
+    * @return   list of users.
+    */
   def showOrdersUser(id: Long): List[OrderHistory] = {
     orderDao.showOrdersUser(id)
   }
 
+  /**
+    * Statute of an order.
+    *
+    * @param orderID    Number of the order.
+    * @param newStatus  New status uf the order.
+    */
   def setStatusForOrder(orderID: Long, newStatus: String) = orderDao.setStatusForOrder(orderID, newStatus)
 }
 

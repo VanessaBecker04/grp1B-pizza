@@ -1,7 +1,9 @@
 package models
 
-/** Lieferzeit Objekt, welches Lieferzeit und weitere Variablen verwaltete die für die Berechnung der Lieferzeit benötigt wird.
-  * Created by Hasibullah Faroq on 18.12.2016.
+/**
+  * Object of the delivery time, which managed the delivery time and other variables which is required for the calculation of the delivery time.
+  *
+  * @author Hasibullah Faroq
   */
 object DeliveryTime {
   var kilometersperminute: Double = 0.5
