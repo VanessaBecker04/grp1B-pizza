@@ -30,6 +30,7 @@ object Users extends Controller {
       )
     )
   }
+
   private implicit val usernameReads = Json.reads[Username]
 
   /**
@@ -78,6 +79,12 @@ object Users extends Controller {
     }.getOrElse(NotFound)
   }
 
+  /**
+    *
+    * @param user
+    * @param request
+    * @return
+    */
   private def mkHateoasUser(user: User)(implicit request: RequestHeader): HateoasUser = {
     val url = routes.Users.user(user.id).absoluteURL()
     HateoasUser(user, url)
@@ -124,8 +131,27 @@ object Users extends Controller {
     }
   }
 
+  /**
+    * URL for the user.
+    *
+    * @param user User.
+    * @param url  URL for the user.
+    */
   private case class HateoasUser(user: User, url: String)
 
-  private case class Username(email: String, password: String, forename: String, name: String, address: String, zipcode: String, city: String, role: String)
+  /**
+    * Data of the User.
+    *
+    * @param email    E-Mail of the user.
+    * @param password Password of the user.
+    * @param forename Forename of the user.
+    * @param name     Name of the user.
+    * @param address  Address of the user.
+    * @param zipcode  Zip-Code of the user.
+    * @param city     City of the user.
+    * @param role     Role of the user.
+    */
+  private case class Username(email: String, password: String, forename: String, name: String, address: String,
+                              zipcode: String, city: String, role: String)
 
 }

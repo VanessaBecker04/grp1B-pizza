@@ -1,14 +1,13 @@
 package forms
 
 /**
-  * Created by Hasibullah Faroq on 27.12.2016.
-  * Form beinhaltet Daten um Eigenschaften eines bestehenden Produktes abzuändern.
+  * Form containing data to edit a property of an existing product.
   *
-  * @param id     id des bestehenden Produktes, welcher abgeändert werden soll
-  * @param name   neuer Name des Produktes
-  * @param price  neuer Preis vom Produkt
-  * @param active Wahrheitswert, ob Produkt aktiv ist oder nicht
+  * @author Hasibullah Faroq
+  *
+  * @param id     Number of the existing product which should be changed.
+  * @param name   New name of the product.
+  * @param price  New price of the product which should be changed.
+  * @param active True worth, if the product is active  or inactive.
   */
 case class EditMenuForm(id: Long, name: String, price: Double, active: Boolean)
-
-

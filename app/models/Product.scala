@@ -1,6 +1,12 @@
 package models
 
 /**
-  * Created by Maximilian on 28.04.2017.
+  * Entity of the product.
+  *
+  * @param name   Name of the product.
+  * @param size   Size of the product.
+  * @param number Numer of the product.
+  *
+  * @author Maximilian Oettl
   */
 case class Product(name: String, size:String, number: Int)

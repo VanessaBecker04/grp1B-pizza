@@ -3,16 +3,16 @@ package forms
 import java.util.Date
 
 /**
-  * Created by Hasibullah Faroq on 14.11.2016.
+  * Form containing data to create an orderprocess for a customer. (Bill)
   *
-  * Form beinhaltet Daten um ein Bestellverlauf für einen Kunden zu erstellen.
+  * @author Hasibullah Faroq
   *
-  * @param orderID         Bestellnummer
-  * @param customerID      Kundennummer
-  * @param customerData    Daten des Kunden
-  * @param orderedProducts bestellte Produkte
-  * @param sumOfOrder      Gesamtsumme der Bestellung
-  * @param orderDate       Datum der Bestellung
+  * @param orderID         Number of the order.
+  * @param customerID      Number of the customer.
+  * @param customerData    Data of the customer.
+  * @param orderedProducts Ordered products.
+  * @param sumOfOrder      Total of the order.
+  * @param orderDate       Date of the order.
   */
 case class CreateOrderHistoryForm(orderID: Long, customerID: Long, customerData: String, orderedProducts: String,
                                   sumOfOrder: Double, orderDate: Date)

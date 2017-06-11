@@ -6,65 +6,89 @@ import models.Menu
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Created by Hasibullah Faroq on 21.11.2016.
-  * Service Klasse für Speisekarte (Menu) bezogene Handlungen.
+  * Class for service to act on menu.
+  *
+  * @author Hasibullah Faroq.
   */
-
 trait MenuServiceT {
 
   val menuDao: MenuDaoT = MenuDao
 
   /**
-    * Fügt ein neues Produkt in die Datenbank Menu.
+    * Adds a new product to the database menu.
     *
-    * @param name     Name des neuen Produktes
-    * @param price    Preis/Unit für das neue Produkt
-    * @param category Kategorie des neuen Produktes
-    * @return das neue Produkte
+    * @param name     Name of the new product.
+    * @param price    Price per unit of the new product.
+    * @param unit     Unit of the new product.
+    * @param category Category of the new product.
+    * @return         New product.
     */
   def addToMenu(name: String, price: Double, unit: String, category: String): Menu = {
     menuDao.addToMenu(Menu(-1, name, price, unit, category, false, true))
   }
-
+  /**
+    * Adds a new category to the database category.
+    *
+    * @param name     Name of the new category.
+    * @param unit     Unit of the new category.
+    * @return         New category.
+    */
   def addCategory(name: String, unit: String): Menu = {
       menuDao.addCategoryToMenu(Menu(-1, "", 0, unit, name, false, true))
   }
 
-  /** Verändert einzelen Attribute eines Produktes in der Datenbank.
+  /**
+    * Modifies individual attributes of the product in the database.
     *
-    * @param id     id des Produktes was sich in der Datenbank befindet
-    * @param name   neuer Name für das bestehende Produkt
-    * @param price  neuer Preis für das bestehende Produkt
-    * @param active neuer Status für das Produkt
+    * @param id     ID of the Product which is saved in the database.
+    * @param name   New name for the existing product.
+    * @param price  New price for the existing product.
+    * @param active New status for the product.
     */
   def updateInMenu(id: Long, name: String, price: Double, active: Boolean): Unit = {
     menuDao.updateInMenu(id, name, price, active)
   }
 
+  /**
+    * Modifies individual attributes of the category in the database.
+    *
+    * @param oldCategory   Old category.
+    * @param newCategory   New category.
+    */
   def editCategory(oldCategory: String, newCategory: String): Unit = {
     menuDao.editCategory(oldCategory, newCategory)
   }
 
   /**
-    * Entfernt ein Produkt aus der Datenbank.
+    * Remove a product of the database menu.
     *
-    * @param id id des Produktes
-    * @return wahrheitswert ob die Löschung erfolgreich war
+    * @param id Number of the product.
+    * @return   True worth whether the deletion was successful.
     */
   def rmFromMenu(id: Long): Boolean = menuDao.rmFromMenu(id)
 
+  /**
+    * Remove a category of the database category.
+    *
+    * @param category Name of the category.
+    * @return         True worth whether the deletion was successful.
+    */
   def rmCategory(category: String): Boolean = menuDao.rmCategory(category)
 
   /**
-    * Gibt eine Liste zurück mit allen vorhandenen Produkten.
+    * Returns a list of all existing products.
     *
-    * @return eine Liste von Produkten
+    * @return List of products.
     */
-
   def listOfAllProducts: List[Menu] = {
     menuDao.listOfProducts
   }
 
+  /**
+    * Returns a list of editable products.
+    *
+    * @return List of etitable products.
+    */
   def listOfEditableProducts: List[Menu] = {
     var products = new ListBuffer[Menu]
     for (p <- listOfAllProducts)
@@ -72,6 +96,11 @@ trait MenuServiceT {
     products.toList
   }
 
+  /**
+    * Returns a list of orderable products.
+    *
+    * @return List of orderable products.
+    */
   def listOfOrderableProducts: List[Menu] = {
     var products = new ListBuffer[Menu]
     for (p <- listOfEditableProducts)
@@ -79,6 +108,11 @@ trait MenuServiceT {
     products.toList
   }
 
+  /**
+    * Returns a list of all categories.
+    *
+    * @return List of all categories.
+    */
   def listOfAllCategories: List[Menu] = {
     var categories = new ListBuffer[Menu]
     for (p <- listOfAllProducts) {
@@ -91,6 +125,11 @@ trait MenuServiceT {
     categories.toList
   }
 
+  /**
+    * Returns a list of adable categories.
+    *
+    * @return List of adable categories.
+    */
   def listOfAddableCategories: List[Menu] = {
     var categories = new ListBuffer[Menu]
     for (p <- listOfAllCategories)
@@ -98,6 +137,11 @@ trait MenuServiceT {
     categories.toList
   }
 
+  /**
+    * Returns a list of orderable categories.
+    *
+    * @return List of orderable categories.
+    */
   def listOfOrderableCategories: List[Menu] = {
     var categories = new ListBuffer[Menu]
     for (p <- listOfAllCategories)
@@ -105,8 +149,10 @@ trait MenuServiceT {
     categories.toList
   }
 
-  /** Setzt das Produkt als bestellt.
+  /**
+    * Marks the product as ordered.
     *
+    * @param products Products which were ordered.
     */
   def setProductOrdered(products: List[Long]): Unit = {
     menuDao.setProductOrdered(products)

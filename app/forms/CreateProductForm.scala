@@ -1,12 +1,12 @@
 package forms
 
 /**
-  * Created by Hasibullah Faroq on 21.11.2016.
+  * Form containing data to create a product.
   *
-  * Form beinhaltet Daten um ein Produkt zu erstellen.
+  * @author Hasibullah Faroq
   *
-  * @param name     name des Produktes
-  * @param price    €/cm des Produktes
-  * @param category Kategorie des Produktes
+  * @param name     Name of the product.
+  * @param price    Price per €/cm of the product.
+  * @param category Category of the product.
   */
 case class CreateProductForm(name: String, price: Double, category: String)

@@ -1,6 +1,8 @@
 package forms
 
 /**
-  * Created by Hasib on 21.04.2017.
+  * Form containing data to use string.
+  *
+  * @author Hasibullah Faroq
   */
 case class StringForm(value: String)

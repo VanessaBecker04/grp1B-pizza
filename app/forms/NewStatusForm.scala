@@ -1,6 +1,8 @@
 package forms
 
 /**
-  * Created by Hasib on 03.05.2017.
+  * Form containing data to set a new status of an order.
+  *
+  * @author Hasibullah Faroq
   */
 case class NewStatusForm(var orderID: Long, var status: String)

@@ -1,6 +1,8 @@
 package forms
 
 /**
-  * Created by Hasib on 02.05.2017.
+  * Form containing data to use boolean.
+  *
+  * @author Hasibullah Faroq
   */
 case class BooleanForm(value: Boolean)
