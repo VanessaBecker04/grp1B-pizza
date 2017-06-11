@@ -79,7 +79,8 @@ object MenuController extends Controller {
 
   /**
     * Adds a new category to the menu.
-    * @return editCatefory
+    *
+    * @return editCategory
     */
   def addCategory: Action[AnyContent] = Action { implicit request =>
     addCategoryForm.bindFromRequest.fold(
@@ -97,7 +98,7 @@ object MenuController extends Controller {
   }
 
   /**
-    * Infromation of available products can be change.
+    * Updates information of a product.
     *
     * @return editMenu
     */
@@ -112,6 +113,12 @@ object MenuController extends Controller {
       })
   }
 
+  /**
+    * Updates information of a category.
+    *
+    * @return editCategory
+    */
+
   def updateCategory: Action[AnyContent] = Action { implicit request =>
     editCategoryForm.bindFromRequest.fold(
       formWithErrors => {
@@ -124,7 +131,8 @@ object MenuController extends Controller {
   }
 
   /**
-    * Category can be delete.
+    * Deletes a category and deletes/disables any products within the specified category.
+    *
     * @return editCategory
     */
   def rmCategory: Action[AnyContent] = Action { implicit request =>
@@ -139,9 +147,8 @@ object MenuController extends Controller {
   }
 
   /**
-    * Products who aren't ordered now, can be delete.
-    * Products who already be ordred, can't be completely delete.
-    * This products are only delete in the overvie but not in the database
+    * Products which haven't been ordered yet will be deleted.
+    * Products which have been ordered will be deactivated.
     *
     * @return editMenu
     */
@@ -156,7 +163,7 @@ object MenuController extends Controller {
       })
   }
 
-  /** Shows the editor for the menu.
+  /** Shows the editMenu view to edit the menu/products.
     *
     * @return editMenu
     */
@@ -169,7 +176,7 @@ object MenuController extends Controller {
   }
 
   /**
-    * Shows the editer for the category.
+    * Shows the editCategory view to edit a category.
     *
     * @return editCategory
     */
@@ -182,7 +189,8 @@ object MenuController extends Controller {
   }
 
   /**
-    *Shows the menu.
+    *Shows the showMenu view.
+    *
     * @return showMenu
     */
   def showMenu: Action[AnyContent] = Action { implicit request =>

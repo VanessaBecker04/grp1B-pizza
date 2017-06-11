@@ -6,9 +6,9 @@ import play.api.Play.current
 import play.api.db.DB
 
 /**
-  * Database access via user interfaces for the order Database. (Orderhistory)
+  * Database access via user interfaces for the order Database (Orderhistory).
   *
-  * Created by Hasibullah Faroq und Maximilian Öttl on 14.12.2016.
+  * Created by Hasibullah Faroq and Maximilian Öttl on 14.12.2016.
   */
 
 trait OrderDaoT {
@@ -30,7 +30,7 @@ trait OrderDaoT {
   }
 
   /**
-    * Deletes an order of the database.
+    * Deletes an order of the database OrderHistory.
     *
     * @param id id of order
     * @return success of deletion

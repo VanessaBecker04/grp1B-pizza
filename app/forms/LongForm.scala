@@ -1,7 +1,7 @@
 package forms
 
 /**
-  * Form containing data to modify an element.
+  * Form containing data to use a long value.
   *
   * @author Maximilan Öttl
   * @version 1.0, 24.04.2017

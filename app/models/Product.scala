@@ -7,6 +7,6 @@ package models
   * @param size   Size of the product.
   * @param number Numer of the product.
   *
-  * @author Maximilian Oettl
+  * @author Maximilian Öttl
   */
 case class Product(name: String, size:String, number: Int)

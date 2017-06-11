@@ -10,7 +10,7 @@ import play.api.mvc.{Action, AnyContent, Controller}
 object Application extends Controller {
 
   /**
-    * Shows the welcomeUser view or the index view
+    * Shows the welcomeUser view or the index view.
     *
     * @return main web page or welcome User view
     */

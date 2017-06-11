@@ -27,7 +27,7 @@ trait MenuServiceT {
     menuDao.addToMenu(Menu(-1, name, price, unit, category, false, true))
   }
   /**
-    * Adds a new category to the database category.
+    * Adds a new category to the database menu.
     *
     * @param name     Name of the new category.
     * @param unit     Unit of the new category.
@@ -68,7 +68,7 @@ trait MenuServiceT {
   def rmFromMenu(id: Long): Boolean = menuDao.rmFromMenu(id)
 
   /**
-    * Remove a category of the database category.
+    * Remove a category of the database menu.
     *
     * @param category Name of the category.
     * @return         True worth whether the deletion was successful.
@@ -126,9 +126,9 @@ trait MenuServiceT {
   }
 
   /**
-    * Returns a list of adable categories.
+    * Returns a list of addable categories.
     *
-    * @return List of adable categories.
+    * @return List of addable categories.
     */
   def listOfAddableCategories: List[Menu] = {
     var categories = new ListBuffer[Menu]

@@ -13,10 +13,10 @@ trait UserServiceT {
   val userDao: UserDaoT = UserDao
 
   /**
-    * Adds a new user to the system.
+    * Adds a new user to the database.
     *
-    * @param name name of the new user.
-    * @return the new user.
+    * @param name name of the new user
+    * @return the new user
     */
   def addUser(email: String, password: String, forename: String, name: String, address: String, zipcode: Int, city: String, role: String): User = {
     // create User
@@ -27,10 +27,10 @@ trait UserServiceT {
   }
 
   /**
-    * Edits a user of the system.
+    * Edits a user of the database.
     *
-    * @param name name of the edited user.
-    * @return the edited user.
+    * @param name name of the edited user
+    * @return the edited user
     */
   def editUser(customerID: Long, email: String, password: String, forename: String, name: String, address: String, zipcode: Int, city: String, role: String): User = {
     // create User
@@ -41,10 +41,10 @@ trait UserServiceT {
   }
 
   /**
-    * Removes a user by id from the system.
+    * Removes a user by id from the database.
     *
-    * @param id users id.
-    * @return a boolean success flag.
+    * @param id user id
+    * @return a boolean success flag
     */
   def deleteUser(id: Long): Boolean = userDao.deleteUser(id)
 
@@ -58,7 +58,7 @@ trait UserServiceT {
   }
 
   /**
-    * Logs in a user into the system.
+    * Logs in a user.
     *
     * @param email    email
     * @param password password

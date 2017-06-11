@@ -3,7 +3,7 @@ package forms
 import java.util.Date
 
 /**
-  * Form containing data to create an orderprocess for a customer. (Bill)
+  * Form containing data to create an order for a customer (Bill).
   *
   * @author Hasibullah Faroq
   *

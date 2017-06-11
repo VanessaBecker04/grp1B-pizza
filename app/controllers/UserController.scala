@@ -63,7 +63,7 @@ object UserController extends Controller {
   }
 
   /**
-    * Adds a new user with the given data to the system.
+    * Adds a new user with the given data to the database.
     *
     * @return welcome page for new user
     */
@@ -120,7 +120,7 @@ object UserController extends Controller {
   }
 
   /**
-    * Edits a specified user with the given data from the system.
+    * Edits a specified user with the given data from the database.
     *
     * @return success of edit
     */
@@ -145,7 +145,7 @@ object UserController extends Controller {
   }
 
   /**
-    * Deletes a specified user from the system.
+    * Deletes a specified user from the database.
     *
     * @return success of deletion
     */
@@ -193,7 +193,7 @@ object UserController extends Controller {
   }
 
   /**
-    * List all users currently available in the system.
+    * Lists all users in the database.
     */
   def showUsers: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.showUsers(UserService.registeredUsers))
@@ -255,7 +255,7 @@ object UserController extends Controller {
   }
 
   /**
-    * Shows the editUser view for employees.
+    * Shows the editUsers view for employees.
     */
   def editUsers: Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {

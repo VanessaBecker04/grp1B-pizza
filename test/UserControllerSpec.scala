@@ -67,7 +67,7 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptFailed?errorcode=emailused")
     }
 
-    "add a user as an user" in memDB {
+    "add a user as a user" in memDB {
       val request = FakeRequest(POST, "/addUser").withFormUrlEncodedBody(
         "Email" -> "paula@gmx.de",
         "Passwort" -> "1",

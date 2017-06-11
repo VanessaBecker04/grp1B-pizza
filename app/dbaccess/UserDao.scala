@@ -86,7 +86,7 @@ trait UserDaoT {
   }
 
   /**
-    * Returns the customerID of the loggedinUser if successful. Returns errorcode if login was not successful.
+    * Returns the customerID of the logged in User if successful. Returns error code if login was not successful.
     *
     * @return customerID
     */

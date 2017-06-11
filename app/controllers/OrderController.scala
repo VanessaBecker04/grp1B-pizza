@@ -28,7 +28,7 @@ object OrderController extends Controller {
 
 
   /**
-    *Adds a new order history of the customer into the system.
+    *Adds a new order to the database.
     *
     * @return Expected delivery time
     */
@@ -58,7 +58,7 @@ object OrderController extends Controller {
   }
 
   /**
-    * Shows a new page with information about the order, sum of the order and the average sum of all orders.
+    * Shows all orders from the user plus the total/average sum of his orders.
     *
     * @return orders, sumOfOrders, averageOrderSum
     */
@@ -80,9 +80,10 @@ object OrderController extends Controller {
   }
 
   /**
-    * Shows the status of the order.
+    * Shows all orders in the database plus the total/average sum of all orders.
+    * User must be an employee otherwise a permission denied message will be shown.
     *
-    * @return orders, sumOfOrders, averageOrderSum, newStatusForm
+    * @return orders, sumOfOrders, averageOrderSum, newStatusForm or Error page
     */
   def showOrdersEmployee(): Action[AnyContent] = Action { implicit request =>
     if (request2session.get("role").get == "Mitarbeiter") {
@@ -102,9 +103,9 @@ object OrderController extends Controller {
   }
 
   /**
-    * Shows the orders, the sum and the average.
+    * Shows all orders from a specified user in the database plus the total/average sum of his orders.
     *
-    * @return orders, sumOfOrders and averageOrderSum or Error page
+    * @return orders, sumOfOrders and averageOrderSum
     */
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
     userOrdersForm.bindFromRequest.fold(
@@ -149,8 +150,8 @@ object OrderController extends Controller {
 
   /**
     * Cancels an order and deletes them from the OrderHistory table.
-    * @param orderID
-    * @return
+    *
+    * @param orderID order id to be deleted
     */
   def cancelOrderHistory(orderID: Long): Action[AnyContent] = Action { implicit request =>
     services.OrderService.rmFromHistory(orderID)

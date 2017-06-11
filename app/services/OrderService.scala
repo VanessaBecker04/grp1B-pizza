@@ -97,7 +97,7 @@ trait OrderServiceT {
   def rmFromHistory(id: Long): Boolean = orderDao.rmFromHistory(id)
 
   /**
-    * Gets a list of all registered users.
+    * Returns a list of all registered users.
     *
     * @return list of users.
     */
@@ -106,7 +106,7 @@ trait OrderServiceT {
   }
 
   /**
-    * Gets a list of all orders from users.
+    * Returns a list of all orders from users.
     *
     * @param id Number of the order.
     * @return   list of users.
@@ -116,12 +116,12 @@ trait OrderServiceT {
   }
 
   /**
-    * Statute of an order.
+    * Sets a new status for an order.
     *
     * @param orderID    Number of the order.
-    * @param newStatus  New status uf the order.
+    * @param newStatus  New status of the order.
     */
-  def setStatusForOrder(orderID: Long, newStatus: String) = orderDao.setStatusForOrder(orderID, newStatus)
+  def setStatusForOrder(orderID: Long, newStatus: String): Unit = orderDao.setStatusForOrder(orderID, newStatus)
 }
 
 object OrderService extends OrderServiceT

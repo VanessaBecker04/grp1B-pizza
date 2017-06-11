@@ -1,12 +1,12 @@
 package forms
 
 /**
-  * Form containing data to create an invoice.
+  * Form containing data to add products.
   *
-  * @author Hasibullah Faroq
+  * @author Maximilian Öttl
   *
-  * @param names    Name of the product of the invoice.
-  * @param sizes    Size of the product of the invoice.
-  * @param numbers  Number of the product of the invoice.
+  * @param names    Name of the product
+  * @param sizes    Size of the product
+  * @param numbers  Number of the product
   */
 case class CreateBillForm(names: List[String], sizes: List[String], numbers: List[Int])
