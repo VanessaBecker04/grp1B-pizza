@@ -14,6 +14,7 @@ import scala.collection.mutable.ListBuffer
   * Created by Hasibullah Faroq on 28.11.2016.
   */
 object BillController extends Controller {
+
   /**
     * Form for User Data
     */

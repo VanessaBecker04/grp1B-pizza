@@ -10,5 +10,4 @@ object Company {
   val name = "Pizza Suez"
   val subtitle = "Frische Pizza aus dem Steinofen"
   val zip: Int = 82319
-
 }

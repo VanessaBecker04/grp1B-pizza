@@ -6,7 +6,7 @@ package models
   * @author Hasibullah Faroq
   */
 object DeliveryTime {
+
   var kilometersperminute: Double = 0.5
   var bakeTime: Int = 10
 }
-

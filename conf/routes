@@ -30,8 +30,6 @@ POST        /addCategory         controllers.MenuController.addCategory
 POST        /updateCategory      controllers.MenuController.updateCategory
 POST        /rmCategory          controllers.MenuController.rmCategory
 
-
-
 POST        /addToBill           controllers.BillController.addToBill
 GET         /setOrder            controllers.BillController.setOrder(orderedProducts: String, sumOfOrder: Double)
 GET         /showBill            controllers.BillController.showBill
@@ -45,13 +43,6 @@ GET         /showOrdersEmployeeU controllers.OrderController.showOrdersEmployeeU
 GET         /editOrders          controllers.OrderController.editOrders
 GET         /cancelOrderHistory  controllers.OrderController.cancelOrderHistory(orderID: Long)
 GET         /setStatusForOrder   controllers.OrderController.setStatusForOrder
-
-# REST API
-GET         /api                 rest.Api.api
-GET         /api/users           rest.Users.users
-GET         /api/user/:id        rest.Users.user(id: Long)
-POST        /api/user            rest.Users.addUser
-DELETE      /api/user/:id        rest.Users.rmUser(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
