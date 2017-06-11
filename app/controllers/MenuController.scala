@@ -1,13 +1,14 @@
 package controllers
 
-import forms.{CreateProductForm, LongForm, EditMenuForm, CreateCategoryForm, EditCategoryForm, StringForm}
+import forms._
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text, of, longNumber}
-import play.api.data.format.Formats.{doubleFormat, booleanFormat}
+import play.api.data.Forms.{longNumber, mapping, of, text}
+import play.api.data.format.Formats.{booleanFormat, doubleFormat}
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
 
-/** Kontroller für die Speisekarte, aus welchem der Kunde seine Wunschprodukte auswählen kann und für den Editor der Speisekarte
+/**
+  * Kontroller für die Speisekarte, aus welchem der Kunde seine Wunschprodukte auswählen kann und für den Editor der Speisekarte
   * Created by Hasibullah Faroq on 21.11.2016.
   */
 object MenuController extends Controller {
@@ -91,7 +92,8 @@ object MenuController extends Controller {
       })
   }
 
-  /** Verändert einzelne Attribute eines schon vorhandenen Produktes in der Speisekarte
+  /**
+    * Verändert einzelne Attribute eines schon vorhandenen Produktes in der Speisekarte
     *
     * @return editMenu(Editor für die Speisekarte)
     */
@@ -117,7 +119,8 @@ object MenuController extends Controller {
       })
   }
 
-  /** Löscht ein Produkt komplett von der Speisekarte, jedoch nur wenn zuvor dieser nicht schon einmal bestellt wurde.
+  /**
+    * Löscht ein Produkt komplett von der Speisekarte, jedoch nur wenn zuvor dieser nicht schon einmal bestellt wurde.
     * Falls jedoch schon mal bestellt wurde wird diese bloß deaktiviert, somit verschwindet sie aus der Bestellübersicht
     * aber nicht aus der Datenbank Menu.
     *
@@ -145,7 +148,8 @@ object MenuController extends Controller {
       })
   }
 
-  /** Zeigt den Editor für die Speisekarte an.
+  /**
+    * Zeigt den Editor für die Speisekarte an.
     *
     * @return editMenu
     */
@@ -165,7 +169,8 @@ object MenuController extends Controller {
     }
   }
 
-  /** Zeigt die Speisekarte an.
+  /**
+    * Zeigt die Speisekarte an.
     *
     * @return showMenu
     */
