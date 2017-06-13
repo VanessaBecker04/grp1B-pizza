@@ -4,7 +4,7 @@ import models.User
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import play.api.test.Helpers.{GET, POST, OK, SEE_OTHER, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
+import play.api.test.Helpers.{GET, POST, OK, SEE_OTHER, BAD_REQUEST, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
 import play.api.test.{FakeApplication, FakeRequest, WithApplication}
 
 @RunWith(classOf[JUnitRunner])
@@ -32,6 +32,20 @@ class UserControllerSpec extends Specification {
       val result = UserController.addUser()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/welcomeUser")
+    }
+
+    "add user bad request" in memDB {
+      val request = FakeRequest(POST, "/addUser").withFormUrlEncodedBody(
+        "Passwort" -> "1",
+        "Vorname" -> "Paula",
+        "Name" -> "Huber",
+        "Straße und Hausnummer" -> "Zeisigweg 4",
+        "Postleitzahl" -> "82346",
+        "Stadt" -> "München",
+        "Rolle" -> "Kunde"
+      )
+      val result = UserController.addUser()(request)
+      status(result) must equalTo(BAD_REQUEST)
     }
 
     "add a user outside of delivery area" in memDB {
@@ -135,6 +149,20 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptSuccessful?successcode=useredited")
     }
 
+    "edit user bad request" in memDB {
+      val request = FakeRequest(POST, "/editUser").withFormUrlEncodedBody(
+        "Passwort" -> "1",
+        "Vorname" -> "Paula",
+        "Name" -> "Huber",
+        "Straße und Hausnummer" -> "Zeisigweg 4",
+        "Postleitzahl" -> "82346",
+        "Stadt" -> "München",
+        "Rolle" -> "Kunde"
+      )
+      val result = UserController.editUser()(request)
+      status(result) must equalTo(BAD_REQUEST)
+    }
+
     "edit a user to outside of delivery area" in memDB {
       val request = FakeRequest(POST, "/editUser").withFormUrlEncodedBody(
         "Kunden-ID" -> "-10",
@@ -159,6 +187,13 @@ class UserControllerSpec extends Specification {
       val result = UserController.deleteUser()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/attemptSuccessful?successcode=userdeleted")
+    }
+
+    "delete user bad request" in memDB {
+      val request = FakeRequest(POST, "/deleteUser").withFormUrlEncodedBody(
+      )
+      val result = UserController.deleteUser()(request)
+      status(result) must equalTo(BAD_REQUEST)
     }
 
     "show welcomeUser View" in new WithApplication {
@@ -211,6 +246,14 @@ class UserControllerSpec extends Specification {
       val result = UserController.loginUser()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/welcomeUser")
+    }
+
+    "add user bad request" in memDB {
+      val request = FakeRequest(POST, "/loginUser").withFormUrlEncodedBody(
+        "Passwort" -> "Susanne82343"
+      )
+      val result = UserController.loginUser()(request)
+      status(result) must equalTo(BAD_REQUEST)
     }
 
     "log in user with preexisting order" in memDB {

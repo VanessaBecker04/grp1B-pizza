@@ -70,7 +70,7 @@ object UserController extends Controller {
   def addUser: Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.register(formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         val deliveryTime = services.OrderService.calculateDeliveryTime(userData.zipcode)
@@ -127,7 +127,7 @@ object UserController extends Controller {
   def editUser: Action[AnyContent] = Action { implicit request =>
     editUserForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editUsers(null, null, formWithErrors, null))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         val deliveryTime = services.OrderService.calculateDeliveryTime(userData.zipcode)
@@ -152,7 +152,7 @@ object UserController extends Controller {
   def deleteUser: Action[AnyContent] = Action { implicit request =>
     deleteUserForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editUsers(null, null, null, formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         services.UserService.deleteUser(userData.value)
@@ -207,7 +207,7 @@ object UserController extends Controller {
   def loginUser: Action[AnyContent] = Action { implicit request =>
     loginForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.login(formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       loginData => {
         val loggedinUser = services.UserService.loginUser(loginData.email, loginData.password)

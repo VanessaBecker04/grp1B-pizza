@@ -33,7 +33,6 @@ object MenuController extends Controller {
       "Neuer Preis" -> of[Double],
       "Aktivieren" -> of[Boolean])
   (EditMenuForm.apply)(EditMenuForm.unapply))
-
   val addCategoryForm = Form(
     mapping(
       "Name" -> text,
@@ -48,7 +47,6 @@ object MenuController extends Controller {
     mapping(
       "Kategorie" -> text)
     (StringForm.apply)(StringForm.unapply))
-
 
   /**
     * Add a new product to the menu.

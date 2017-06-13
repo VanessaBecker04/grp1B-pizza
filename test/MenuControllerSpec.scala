@@ -91,7 +91,7 @@ class MenuControllerSpec extends Specification {
       redirectLocation(result) must beSome("/editMenu")
     }
 
-    "updater Product bad request" in memDB {
+    "update Product bad request" in memDB {
       val request = FakeRequest(POST, "/updateInMenu").withFormUrlEncodedBody(
         "Neuer Name" -> "Rucola",
         "Neuer Preis" -> "0.25"
