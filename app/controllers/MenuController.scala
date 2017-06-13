@@ -59,7 +59,7 @@ object MenuController extends Controller {
   def addToMenu: Action[AnyContent] = Action { implicit request =>
     menuForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(List.empty, List.empty, formWithErrors, null, null))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         var unit: String = ""
@@ -84,7 +84,7 @@ object MenuController extends Controller {
   def addCategory: Action[AnyContent] = Action { implicit request =>
     addCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(List.empty, List.empty, formWithErrors, null, null))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         if (!MenuService.listOfOrderableCategories.exists(c => c.category == userData.name)) {
@@ -104,7 +104,7 @@ object MenuController extends Controller {
   def updateInMenu: Action[AnyContent] = Action { implicit request =>
     updateForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(List.empty, List.empty, null, null, formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         services.MenuService.updateInMenu(userData.id, userData.name, userData.price, userData.active)
@@ -115,7 +115,7 @@ object MenuController extends Controller {
   def updateCategory: Action[AnyContent] = Action { implicit request =>
     editCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(List.empty, List.empty, null, formWithErrors, null))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         services.MenuService.editCategory(userData.oldCategory, userData.newCategory)
@@ -130,7 +130,7 @@ object MenuController extends Controller {
   def rmCategory: Action[AnyContent] = Action { implicit request =>
     rmCategoryForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editCategory(List.empty, List.empty, null, null, formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         services.MenuService.rmCategory(userData.value)
@@ -148,7 +148,7 @@ object MenuController extends Controller {
   def rmFromMenu: Action[AnyContent] = Action { implicit request =>
     rmForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editMenu(List.empty, List.empty, null, formWithErrors, null))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         services.MenuService.rmFromMenu(userData.value)

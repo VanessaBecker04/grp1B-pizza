@@ -38,4 +38,9 @@
         <h1>Ihre eingegebene Kategorie existiert bereits und kann daher nicht hinzugefügt werden.</h1>
         <p><a href="/editCategory">Zurück zur Kategorienverwaltung</a></p>
     }
+    @if(errorcode.equals("badRequest")) {
+        <h1>Es ist ein Fehler aufgetreten.</h1>
+        <p><a href="/">Hauptmenü</a></p>
+    }
+
 }
