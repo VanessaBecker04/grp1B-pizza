@@ -83,6 +83,16 @@ class MenuServiceSpec extends Specification {
       MenuService.listOfAllProducts.length must be equalTo 6
     }
 
+    "return length of existing Menu after adding new Product to Menu" in memDB {
+      MenuService.addToMenu("Salami", 0.26, "cm", "Pizza")
+      MenuService.listOfAllProducts.length must be equalTo 7
+    }
+
+    "return length of existing Menu after deleting existing Product from Menu" in memDB {
+      MenuService.rmFromMenu(101)
+      MenuService.listOfAllProducts.length must be equalTo 5
+    }
+
     "set Product ordered" in memDB {
       var categoryOrdered: Boolean = false
       MenuService.setProductOrdered(List(101))
@@ -100,16 +110,52 @@ class MenuServiceSpec extends Specification {
       MenuService.listOfEditableProducts.length must be equalTo 6
     }
 
+    "return List of editable Products after adding a new Product" in memDB {
+      MenuService.addToMenu("Schinken", 0.26, "cm", "Pizza")
+      MenuService.listOfEditableProducts.length must be equalTo 7
+    }
+
+    "return List of editable Products after deleting an existing Product" in memDB {
+      MenuService.rmFromMenu(101)
+      MenuService.listOfEditableProducts.length must be equalTo 5
+    }
+
     "return List of orderable Products" in memDB {
       MenuService.listOfOrderableProducts.length must be equalTo 6
+    }
+
+    "return List of orderable Products after adding a new Product" in memDB {
+      MenuService.addToMenu("Schinken", 0.26, "cm", "Pizza")
+      MenuService.listOfEditableProducts.length must be equalTo 7
+    }
+
+    "return List of orderable Products after deleting an existing Product" in memDB {
+      MenuService.rmFromMenu(101)
+      MenuService.listOfEditableProducts.length must be equalTo 5
     }
 
     "return List of addable Categories" in memDB {
       MenuService.listOfAddableCategories.length must be equalTo 3
     }
 
+    "return List of addable Categories after added new Category" in memDB {
+      MenuService.addCategory("Alkohol", "Stk")
+      MenuService.listOfAddableCategories.length must be equalTo 4
+    }
+
+    "return List of addable Categories after deleting existing Category" in memDB {
+      MenuService.rmCategory("Pizza")
+      MenuService.listOfAddableCategories.length must be equalTo 2
+    }
+
     "return List of orderable Categories" in memDB {
       MenuService.listOfOrderableCategories.length must be equalTo 3
+    }
+
+    "return List of orderable Categories after adding a new Category and Product" in memDB {
+      MenuService.addCategory("Alkohol", "Stk")
+      MenuService.addToMenu("Bier", 4.26, "Stk", "Alkohol")
+      MenuService.listOfOrderableCategories.length must be equalTo 4
     }
 
 

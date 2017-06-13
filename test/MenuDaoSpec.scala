@@ -83,6 +83,16 @@ class MenuDaoSpec extends Specification {
       MenuDao.listOfProducts.length must be equalTo 6
     }
 
+    "return length of existing Menu after adding new Product to Menu" in memDB {
+      MenuDao.addToMenu(Menu(-1, "Salami", 0.26, "cm", "Pizza", false, true))
+      MenuDao.listOfProducts.length must be equalTo 7
+    }
+
+    "return length of existing Menu after deleting existing Product from Menu" in memDB {
+      MenuDao.rmFromMenu(101)
+      MenuDao.listOfProducts.length must be equalTo 5
+    }
+
     "set Product ordered" in memDB {
       var categoryOrdered: Boolean = false
       MenuDao.setProductOrdered(List(101))

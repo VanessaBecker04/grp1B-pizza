@@ -36,7 +36,7 @@ trait MenuDaoT {
   }
 
   /**
-    *Adds a new category to the menu.
+    * Adds a new category to the menu.
     * @param menu object menu
     * @return menu
     */
@@ -53,7 +53,7 @@ trait MenuDaoT {
   }
 
   /**
-    *Changes information about products in the databaase.
+    * Changes information about products in the database.
     *
     * @param id     id of product database
     * @param name   new name fot the existing product
@@ -95,10 +95,10 @@ trait MenuDaoT {
   }
 
   /**
-    * Changes the name of a category. ??
+    * Changes the name of a category.
     *
-    * @param oldCategory
-    * @param newCategory
+    * @param oldCategory current name of category
+    * @param newCategory new name of category
     */
   def editCategory(oldCategory: String, newCategory: String): Unit = {
     DB.withConnection { implicit c =>
@@ -107,13 +107,13 @@ trait MenuDaoT {
   }
 
   /**
-    * ??
+    * Returns a list of all product.
     *
-    * @return
+    * @return list of products
     */
   def listOfProducts: List[Menu] = {
     DB.withConnection { implicit c =>
-      val selectFromMenu = SQL("Select * from Menu;")
+      val selectFromMenu = SQL("Select id, name, price, unit, category, ordered, active from Menu;")
       // Transform the resulting Stream[Row] to a List[(Menu,Menu)]
       selectFromMenu().map(row => Menu(row[Long]("id"), row[String]("name"),
         row[Double]("price"), row[String]("unit"), row[String]("category"), row[Boolean]("ordered"), row[Boolean]("active"))).toList

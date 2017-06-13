@@ -14,6 +14,7 @@ import scala.collection.mutable.ListBuffer
   * Created by Hasibullah Faroq on 28.11.2016.
   */
 object BillController extends Controller {
+
   /**
     * Form for User Data
     */
@@ -26,7 +27,7 @@ object BillController extends Controller {
   )
 
   /**
-    * Passes the order data to the database.
+    * Passes the order data to the session and calculates the cart.
     *
     * @return  attemptFailed, login or showBill
     */
@@ -60,10 +61,10 @@ object BillController extends Controller {
     })
   }
 
-
   /**
-    * Passes the user data to the next page.
-    * @param orderedProducts ordered produkts
+    * Passes the user data to the next page (cart).
+    *
+    * @param orderedProducts ordered products
     * @param sumOfOrder sum of order
     * @return User data, order, sum of the order
     */
@@ -100,7 +101,7 @@ object BillController extends Controller {
   }
 
   /**
-    * Forward the customer to the shopping cart.
+    * Forwards the customer to the shopping cart.
     *
     * @return showBill(shopping cart)
     */
@@ -109,7 +110,8 @@ object BillController extends Controller {
   }
 
   /**
-    * Cancel the Order and forward the customer to the shopping cart.
+    * Cancels the Order and forwards the customer to the menu.
+    *
     * @return Order data
     */
   def cancelOrder: Action[AnyContent] = Action { implicit request =>
@@ -123,4 +125,3 @@ object BillController extends Controller {
     )
   }
 }
-
