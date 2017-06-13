@@ -1,11 +1,11 @@
-import controllers.OrderController
+import controllers.{MenuController, OrderController}
 import dbaccess.OrderDao
 import models.OrderHistory
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import play.api.test.{FakeApplication, FakeRequest, WithApplication}
-import play.api.test.Helpers.{POST, OK, SEE_OTHER, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
+import play.api.test.Helpers.{BAD_REQUEST, OK, POST, SEE_OTHER, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
 import services.{MenuService, OrderService}
 
 @RunWith(classOf[JUnitRunner])
@@ -81,6 +81,14 @@ class OrderControllerSpec extends Specification {
       contentAsString(result) must contain ("6.21")
     }
 
+    "show user orders if employee bad request" in memDB {
+      OrderDao.addToHistory(OrderHistory(-1, -20, "Susanne Emil, Ulrichstr. 1, 82343 Pöcking", "1x Margarita (medium)", 6.21, "20.05.2017", "in Bearbeitung"))
+      val request = FakeRequest(POST, "/showOrdersEmployee").withFormUrlEncodedBody(
+      )
+      val result = OrderController.showOrdersEmployeeU()(request)
+      status(result) must equalTo(BAD_REQUEST)
+    }
+
     "show deliveryTime View" in new WithApplication {
       val request = FakeRequest(POST, "/showDeliveryTime").withSession(
         "deliveryTime" -> "16"
@@ -128,5 +136,14 @@ class OrderControllerSpec extends Specification {
       redirectLocation(result) must beSome("/showOrdersEmployee")
       OrderService.showOrdersUser(-20).exists(o => o.status == "in Auslieferung") must beTrue
     }
+    "set status for order bad request" in memDB {
+      OrderDao.addToHistory(OrderHistory(-1, -20, "Susanne Emil, Ulrichstr. 1, 82343 Pöcking", "1x Margarita (medium)", 6.21, "20.05.2017", "in Bearbeitung"))
+      val request = FakeRequest(POST, "/setStatusForOrder").withFormUrlEncodedBody(
+        "Neuer Status" -> "in Auslieferung"
+      )
+      val result = OrderController.setStatusForOrder()(request)
+      status(result) must equalTo(BAD_REQUEST)
+    }
+
   }
 }

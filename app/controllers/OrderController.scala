@@ -110,7 +110,7 @@ object OrderController extends Controller {
   def showOrdersEmployeeU: Action[AnyContent] = Action { implicit request =>
     userOrdersForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.editOrders(services.UserService.registeredUsers, formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
       userData => {
         var sumOfOrders: Double = 0
@@ -165,7 +165,7 @@ object OrderController extends Controller {
   def setStatusForOrder(): Action[AnyContent] = Action { implicit request =>
     newStatusForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest(views.html.showOrdersEmployee(List.empty, 0, 0, formWithErrors))
+        BadRequest(views.html.attemptFailed("badRequest"))
       },
     userData => {
       services.OrderService.setStatusForOrder(userData.orderID, userData.status)
