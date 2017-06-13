@@ -134,6 +134,19 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/setOrder?orderedProducts=1x+Regina+%28medium%29&sumOfOrder=7.290000000000001")
     }
 
+    "add Order with two Product. One with number >= 1 and another One with number < 1 bad request" in memDB {
+      val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
+        "names[0]" -> "Regina",
+        "sizes[0]" -> "medium",
+        "numbers[0]" -> "1",
+        "names[1]" -> "Margarita",
+        "sizes[1]" -> "large",
+        "numbers[1]" -> "hallo"
+      )
+      val result = BillController.addToBill()(request)
+      status(result) must equalTo(BAD_REQUEST)
+    }
+
     "show showBill View" in new WithApplication {
       val request = FakeRequest(GET, "/showBill")
       val result = BillController.showBill()(request)
