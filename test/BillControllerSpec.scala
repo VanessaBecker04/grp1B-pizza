@@ -6,7 +6,7 @@ import controllers.BillController
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import play.api.test.Helpers.{GET, OK, POST, SEE_OTHER, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
+import play.api.test.Helpers.{GET, OK, POST, SEE_OTHER, BAD_REQUEST, contentAsString, defaultAwaitTimeout, redirectLocation, running, status}
 import play.api.test.{FakeApplication, FakeRequest, WithApplication}
 
 @RunWith(classOf[JUnitRunner])
@@ -31,6 +31,16 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/setOrder?orderedProducts=2x+Regina+%28medium%29&sumOfOrder=14.580000000000002")
     }
 
+    "add simple Order with one Product to Cart bad request" in memDB {
+      val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
+        "names[0]" -> "Regina",
+        "sizes[0]" -> "medium",
+        "numbers[0]" -> "hallo"
+      )
+      val result = BillController.addToBill()(request)
+      status(result) must equalTo(BAD_REQUEST)
+    }
+
     "add Order with two Product to Cart" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
@@ -43,6 +53,19 @@ class BillControllerSpec extends Specification {
       val result = BillController.addToBill()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/setOrder?orderedProducts=2x+Regina+%28medium%29%2C+3x+Margarita+%28large%29&sumOfOrder=36.660000000000004")
+    }
+
+    "add Order with two Product to Cart bad request" in memDB {
+      val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
+        "names[0]" -> "Regina",
+        "sizes[0]" -> "medium",
+        "numbers[0]" -> "2",
+        "names[1]" -> "Margarita",
+        "sizes[1]" -> "large",
+        "numbers[1]" -> "hallo"
+      )
+      val result = BillController.addToBill()(request)
+      status(result) must equalTo(BAD_REQUEST)
     }
 
     "add simple Order with one Product with number < 1" in memDB {
