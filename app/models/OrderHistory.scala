@@ -1,7 +1,6 @@
 package models
 
-/**
-  * Entity of the order.
+/** Entity of the order.
   *
   * @param orderID          Number of the order.
   * @param customerID       Number of the customer.

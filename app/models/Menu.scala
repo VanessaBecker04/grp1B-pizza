@@ -1,7 +1,6 @@
 package models
 
-/**
-  * Entity of the menu.
+/** Entity of the menu.
   *
   * @param id       ID of the product.
   * @param name     Name of the product.

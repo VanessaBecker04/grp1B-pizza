@@ -81,7 +81,7 @@ class OrderControllerSpec extends Specification {
       contentAsString(result) must contain ("6.21")
     }
 
-    "show user orders if employee bad request" in memDB {
+    "cause a bad request when showing all orders without being logged in" in memDB {
       OrderDao.addToHistory(OrderHistory(-1, -20, "Susanne Emil, Ulrichstr. 1, 82343 Pöcking", "1x Margarita (medium)", 6.21, "20.05.2017", "in Bearbeitung"))
       val request = FakeRequest(POST, "/showOrdersEmployee").withFormUrlEncodedBody(
       )
@@ -136,7 +136,7 @@ class OrderControllerSpec extends Specification {
       redirectLocation(result) must beSome("/showOrdersEmployee")
       OrderService.showOrdersUser(-20).exists(o => o.status == "in Auslieferung") must beTrue
     }
-    "set status for order bad request" in memDB {
+    "cause a bad request when an order is edited with missing values" in memDB {
       OrderDao.addToHistory(OrderHistory(-1, -20, "Susanne Emil, Ulrichstr. 1, 82343 Pöcking", "1x Margarita (medium)", 6.21, "20.05.2017", "in Bearbeitung"))
       val request = FakeRequest(POST, "/setStatusForOrder").withFormUrlEncodedBody(
         "Neuer Status" -> "in Auslieferung"
@@ -144,6 +144,5 @@ class OrderControllerSpec extends Specification {
       val result = OrderController.setStatusForOrder()(request)
       status(result) must equalTo(BAD_REQUEST)
     }
-
   }
 }

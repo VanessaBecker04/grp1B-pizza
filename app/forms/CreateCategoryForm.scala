@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to add a category.
+/** Form containing data to add a category.
   *
   * @author Maximilian Öttl
   *

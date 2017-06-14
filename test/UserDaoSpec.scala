@@ -48,7 +48,7 @@ class UserDaoSpec extends Specification {
     }
 
     "login user" in memDB {
-      UserDao.loginUser("padrone@suez.de", "Suez82346").id must be equalTo -10
+      UserDao.loginUser("padrone@suez.de", "Suez82346").right.get.id must be equalTo -10
     }
   }
 }

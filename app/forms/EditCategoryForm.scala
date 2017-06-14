@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to edit a category.
+/** Form containing data to edit a category.
   *
   * @author Hasibullah Faroq
   *

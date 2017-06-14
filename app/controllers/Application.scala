@@ -2,15 +2,13 @@ package controllers
 
 import play.api.mvc.{Action, AnyContent, Controller}
 
-/**
-  * Main controller of the Pizza Service application.
+/** Main controller of the Pizza Service application.
   *
   * @author ob, scs, Maximilian Öttl
   */
 object Application extends Controller {
 
-  /**
-    * Shows the welcomeUser view or the index view.
+  /** Shows the welcomeUser view or the index view.
     *
     * @return main web page or welcome User view
     */
@@ -22,8 +20,7 @@ object Application extends Controller {
     }
   }
 
-  /**
-    * Shows the register page of the application.
+  /** Shows the register page of the application.
     *
     * @return register web page
     */
@@ -31,8 +28,7 @@ object Application extends Controller {
     Ok(views.html.register(controllers.UserController.userForm))
   }
 
-  /**
-    * Shows the login page of the application.
+  /** Shows the login page of the application.
     *
     * @return login web page
     */
@@ -40,8 +36,7 @@ object Application extends Controller {
     Ok(views.html.login(controllers.UserController.loginForm))
   }
 
-  /**
-    * Shows the contact page of the application.
+  /** Shows the contact page of the application.
     *
     * @return contact web page
     */

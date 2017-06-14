@@ -37,8 +37,7 @@ class UserServiceSpec extends Specification {
     }
 
     "login user" in memDB {
-      UserService.loginUser("padrone@suez.de", "Suez82346").id must be equalTo -10
+      UserService.loginUser("padrone@suez.de", "Suez82346").right.get.id must be equalTo -10
     }
-
   }
 }

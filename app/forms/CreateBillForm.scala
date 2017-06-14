@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to add products.
+/** Form containing data to add products.
   *
   * @author Maximilian Öttl
   *

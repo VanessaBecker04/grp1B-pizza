@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to create a product.
+/** Form containing data to create a product.
   *
   * @author Hasibullah Faroq
   *

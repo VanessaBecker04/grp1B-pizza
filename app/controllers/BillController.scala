@@ -9,15 +9,13 @@ import play.api.data.Forms.{mapping, list, text, number}
 import play.api.mvc.{Action, AnyContent, Controller}
 import scala.collection.mutable.ListBuffer
 
-/**
-  * Controller for the bill creation.
-  * Created by Hasibullah Faroq on 28.11.2016.
+/** Controller for the bill creation.
+  *
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 object BillController extends Controller {
 
-  /**
-    * Form for User Data
-    */
+  /** Form for User Data */
   val billform = Form(
     mapping(
       "names" -> list(text),
@@ -26,12 +24,11 @@ object BillController extends Controller {
     )(CreateBillForm.apply)(CreateBillForm.unapply)
   )
 
-  /**
-    * Passes the order data to the session and calculates the cart.
+  /** Passes the order data to the session and calculates the cart.
     *
     * @return  attemptFailed, login or showBill
     */
-  def addToBill: Action[AnyContent] = Action { implicit request =>
+  def addToBill(): Action[AnyContent] = Action { implicit request =>
     var countAll = 0
     var count = 0
     var order = new ListBuffer[Product]
@@ -61,8 +58,7 @@ object BillController extends Controller {
     })
   }
 
-  /**
-    * Passes the user data to the next page (cart).
+  /** Passes the user data to the next page (cart).
     *
     * @param orderedProducts ordered products
     * @param sumOfOrder sum of order
@@ -100,8 +96,7 @@ object BillController extends Controller {
     }
   }
 
-  /**
-    * Forwards the customer to the shopping cart.
+  /** Forwards the customer to the shopping cart.
     *
     * @return showBill(shopping cart)
     */
@@ -109,8 +104,7 @@ object BillController extends Controller {
     Ok(views.html.showBill())
   }
 
-  /**
-    * Cancels the Order and forwards the customer to the menu.
+  /** Cancels the Order and forwards the customer to the menu.
     *
     * @return Order data
     */

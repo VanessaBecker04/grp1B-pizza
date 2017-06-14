@@ -1,7 +1,3 @@
-/**
-  * Created by Hasib on 30.05.2017.
-  */
-
 import controllers.BillController
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
@@ -20,7 +16,7 @@ class BillControllerSpec extends Specification {
 
   "BillController" should {
 
-    "add simple Order with one Product to Cart" in memDB {
+    "add one product to the cart" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -31,7 +27,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/setOrder?orderedProducts=2x+Regina+%28medium%29&sumOfOrder=14.580000000000002")
     }
 
-    "add simple Order with one Product to Cart bad request" in memDB {
+    "cause a bad request when an non-existing product is added to the cart" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -41,7 +37,7 @@ class BillControllerSpec extends Specification {
       status(result) must equalTo(BAD_REQUEST)
     }
 
-    "add Order with two Product to Cart" in memDB {
+    "add two products to the cart" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -55,7 +51,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/setOrder?orderedProducts=2x+Regina+%28medium%29%2C+3x+Margarita+%28large%29&sumOfOrder=36.660000000000004")
     }
 
-    "add Order with two Product to Cart bad request" in memDB {
+    "cause a bad request when a second non-existing product is added to the cart" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -68,7 +64,7 @@ class BillControllerSpec extends Specification {
       status(result) must equalTo(BAD_REQUEST)
     }
 
-    "add simple Order with one Product with number < 1" in memDB {
+    "show an 'at least one product necessary' hint when the cart is empty" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -79,7 +75,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptFailed?errorcode=atLeastOneProduct")
     }
 
-    "set Order" in memDB {
+    "save an order to the session and show the bill" in memDB {
       val request = FakeRequest(GET, "/setOrder").withSession(
         "user" -> "-20",
         "forename" -> "John",
@@ -93,7 +89,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/showBill")
     }
 
-    "set Order user is empty" in memDB {
+    "save an order to the session and redirect to login when user is not logged in" in memDB {
       val request = FakeRequest(GET, "/setOrder").withSession(
         "forename" -> "John",
         "name" -> "Claude",
@@ -106,7 +102,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptFailed?errorcode=loginrequired")
     }
 
-    "add Order with two Product with number < 1" in memDB {
+    "show an 'at least one product necessary' hint when the cart is empty because two products have been added with amount < 1" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -120,7 +116,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptFailed?errorcode=atLeastOneProduct")
     }
 
-    "add Order with two Product. One with number >= 1 and another One with number < 1" in memDB {
+    "add one product to the cart when two products have been added (amount 0 & 1)" in memDB {
       val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
         "names[0]" -> "Regina",
         "sizes[0]" -> "medium",
@@ -134,20 +130,7 @@ class BillControllerSpec extends Specification {
       redirectLocation(result) must beSome("/setOrder?orderedProducts=1x+Regina+%28medium%29&sumOfOrder=7.290000000000001")
     }
 
-    "add Order with two Product. One with number >= 1 and another One with number < 1 bad request" in memDB {
-      val request = FakeRequest(POST, "/addToBill").withFormUrlEncodedBody(
-        "names[0]" -> "Regina",
-        "sizes[0]" -> "medium",
-        "numbers[0]" -> "1",
-        "names[1]" -> "Margarita",
-        "sizes[1]" -> "large",
-        "numbers[1]" -> "hallo"
-      )
-      val result = BillController.addToBill()(request)
-      status(result) must equalTo(BAD_REQUEST)
-    }
-
-    "show showBill View" in new WithApplication {
+    "show the showBill view" in new WithApplication {
       val request = FakeRequest(GET, "/showBill")
       val result = BillController.showBill()(request)
       status(result) must equalTo(OK)

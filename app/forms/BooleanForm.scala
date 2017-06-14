@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to use a boolean value.
+/** Form containing data to use a boolean value.
   *
   * @author Hasibullah Faroq
   */

@@ -1,7 +1,6 @@
 package models
 
-/**
-  * The Pizza Service company.
+/** The Pizza Service company.
   *
   * @author ob, scs
   */

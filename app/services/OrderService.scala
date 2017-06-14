@@ -3,18 +3,16 @@ package services
 import dbaccess.{OrderDao, OrderDaoT}
 import models.{Bill, Company, DeliveryTime, OrderHistory}
 
-/**
-  * Class for service to invoice-related actions (orderbill).
+/** Class for service to invoice-related actions (orderbill).
   *
-  * @author Hasibullah Faroq
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 
 trait OrderServiceT {
 
   val orderDao: OrderDaoT = OrderDao
 
-  /**
-    * Calculation of the total sum of the order.
+  /** Calculation of the total sum of the order.
     *
     * @param cart Cart ordered products
     * @return     Total sum of the order.
@@ -45,8 +43,7 @@ trait OrderServiceT {
     (orderedProducts.toString(), wholeSum * 100.0 / 100.0)
   }
 
-  /**
-    * Calculation of the delivery time.
+  /** Calculation of the delivery time.
     *
     * @param customerZIP  Zip of the Customer.
     * @return             Delivey time.
@@ -70,8 +67,7 @@ trait OrderServiceT {
       km / kmpm + DeliveryTime.bakeTime
     }
   }
-  /**
-    * Adds a new order from the customer to the orderhistory database.
+  /** Adds a new order from the customer to the orderhistory database.
     *
     * @param customerID      Number of the customer.
     * @param customerData    Data of the customer.
@@ -88,16 +84,14 @@ trait OrderServiceT {
     orderDao.addToHistory(newHistory)
   }
 
-  /**
-    * Removes an order from the orderhistory database.
+  /** Removes an order from the orderhistory database.
     *
     * @param id Number of the order.
     * @return True worth whether the deletion was successful.
     */
   def rmFromHistory(id: Long): Boolean = orderDao.rmFromHistory(id)
 
-  /**
-    * Returns a list of all registered users.
+  /** Returns a list of all registered users.
     *
     * @return list of users.
     */
@@ -105,8 +99,7 @@ trait OrderServiceT {
     orderDao.showOrdersEmployee
   }
 
-  /**
-    * Returns a list of all orders from users.
+  /** Returns a list of all orders from users.
     *
     * @param id Number of the order.
     * @return   list of users.
@@ -115,8 +108,7 @@ trait OrderServiceT {
     orderDao.showOrdersUser(id)
   }
 
-  /**
-    * Sets a new status for an order.
+  /** Sets a new status for an order.
     *
     * @param orderID    Number of the order.
     * @param newStatus  New status of the order.

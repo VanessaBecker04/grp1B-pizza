@@ -6,15 +6,13 @@ import play.api.data.Forms.{mapping, longNumber, text}
 import play.api.mvc.{Action, AnyContent, Controller}
 import scala.collection.mutable.ListBuffer
 
-/**
-  * Controller for the Order.
-  * Created by Hasibullah Faroq, Maximilian Oettl on 14.12.2016.
+/** Controller for the Order.
+  *
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 object OrderController extends Controller {
 
-  /**
-    * Form object for the user data.
-    */
+  /** Form object for the user data */
   val userOrdersForm = Form {
     mapping(
       "CustomerID" -> longNumber
@@ -27,8 +25,7 @@ object OrderController extends Controller {
   )(NewStatusForm.apply)(NewStatusForm.unapply))
 
 
-  /**
-    *Adds a new order to the database.
+  /** Adds a new order to the database.
     *
     * @return Expected delivery time
     */
@@ -57,8 +54,7 @@ object OrderController extends Controller {
     )
   }
 
-  /**
-    * Shows all orders from the user plus the total/average sum of his orders.
+  /** Shows all orders from the user plus the total/average sum of his orders.
     *
     * @return orders, sumOfOrders, averageOrderSum
     */
@@ -79,8 +75,7 @@ object OrderController extends Controller {
     }
   }
 
-  /**
-    * Shows all orders in the database plus the total/average sum of all orders.
+  /** Shows all orders in the database plus the total/average sum of all orders.
     * User must be an employee otherwise a permission denied message will be shown.
     *
     * @return orders, sumOfOrders, averageOrderSum, newStatusForm or Error page
@@ -102,8 +97,7 @@ object OrderController extends Controller {
     }
   }
 
-  /**
-    * Shows all orders from a specified user in the database plus the total/average sum of his orders.
+  /** Shows all orders from a specified user in the database plus the total/average sum of his orders.
     *
     * @return orders, sumOfOrders and averageOrderSum
     */
@@ -126,8 +120,7 @@ object OrderController extends Controller {
       })
   }
 
-  /**
-    * Shows the delivery time of the new order.
+  /** Shows the delivery time of the new order.
     *
     * @return expected delivery time
     */
@@ -135,8 +128,7 @@ object OrderController extends Controller {
     Ok(views.html.deliveryTime())
   }
 
-  /**
-    * Shows the page with all order information.
+  /** Shows the page with all order information.
     *
     * @return All orders
     */
@@ -148,8 +140,7 @@ object OrderController extends Controller {
     }
   }
 
-  /**
-    * Cancels an order and deletes them from the OrderHistory table.
+  /** Cancels an order and deletes them from the OrderHistory table.
     *
     * @param orderID order id to be deleted
     */
@@ -158,8 +149,8 @@ object OrderController extends Controller {
     Redirect(routes.OrderController.showOrdersUser())
   }
 
-  /**
-    * Sets the status of the order.
+  /** Sets the status of the order.
+    *
     * @return status
     */
   def setStatusForOrder(): Action[AnyContent] = Action { implicit request =>

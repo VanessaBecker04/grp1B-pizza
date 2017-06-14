@@ -1,7 +1,3 @@
-/**
-  * Created by Hasib on 04.06.2017.
-  */
-
 import controllers.MenuController
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
@@ -31,7 +27,7 @@ class MenuControllerSpec extends Specification {
       redirectLocation(result) must beSome("/editMenu")
     }
 
-    "add a Product bad request" in memDB {
+    "cause a bad request when an non-existing product is added to the menu" in memDB {
       val request = FakeRequest(POST, "/addToMenu").withFormUrlEncodedBody(
         "Preis je Einheit" -> "0.24",
         "Kategorie" -> "Pizza"
@@ -56,12 +52,12 @@ class MenuControllerSpec extends Specification {
         "Name" -> "Spirituosen",
         "Maßeinheit" -> "Stk"
       )
-      val result = MenuController.addCategory(request)
+      val result = MenuController.addCategory()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/editCategory")
     }
 
-    "add a Category bad request" in memDB {
+    "cause a bad request when a product is added with missing values" in memDB {
       val request = FakeRequest(POST, "/addCategory").withFormUrlEncodedBody(
         "Maßeinheit" -> "Stk"
       )
@@ -74,7 +70,7 @@ class MenuControllerSpec extends Specification {
         "Name" -> "Pizza",
         "Maßeinheit" -> "cm"
       )
-      val result = MenuController.addCategory(request)
+      val result = MenuController.addCategory()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/attemptFailed?errorcode=categoryused")
     }
@@ -86,12 +82,12 @@ class MenuControllerSpec extends Specification {
         "Neuer Preis" -> "0.25",
         "Aktivieren" -> "true"
       )
-      val result = MenuController.updateInMenu(request)
+      val result = MenuController.updateInMenu()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/editMenu")
     }
 
-    "update Product bad request" in memDB {
+    "cause a bad request when a product is edited with missing values" in memDB {
       val request = FakeRequest(POST, "/updateInMenu").withFormUrlEncodedBody(
         "Neuer Name" -> "Rucola",
         "Neuer Preis" -> "0.25"
@@ -105,12 +101,12 @@ class MenuControllerSpec extends Specification {
         "Alter Name" -> "Pizza",
         "Neuer Name" -> "FingerFood"
       )
-      val result = MenuController.updateCategory(request)
+      val result = MenuController.updateCategory()(request)
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome("/editCategory")
     }
 
-    "update Category bad request" in memDB {
+    "cause a bad request when a category is edited with missing values"  in memDB {
       val request = FakeRequest(POST, "/updateCategory").withFormUrlEncodedBody(
         "Neuer Name" -> "FingerFood"
       )
@@ -127,15 +123,13 @@ class MenuControllerSpec extends Specification {
       redirectLocation(result) must beSome("/editMenu")
     }
 
-    "remove a Product bad request" in memDB {
+    "cause a bad request when a non-existing product is deleted" in memDB {
       val request = FakeRequest(POST, "/rmFromMenu").withFormUrlEncodedBody(
         "Produktname" -> "Fungi",
         "Preis je Einheit" -> "0.24",
         "Kategorie" -> "Pizza"
       )
-      val request2 = FakeRequest(POST, "/rmProduct").withFormUrlEncodedBody(
-      )
-      val result = MenuController.rmFromMenu()(request2)
+      val result = MenuController.rmFromMenu()(request)
       status(result) must equalTo(BAD_REQUEST)
     }
 
@@ -148,12 +142,10 @@ class MenuControllerSpec extends Specification {
       redirectLocation(result) must beSome("/editCategory")
     }
 
-    "remove a Category bad request" in memDB {
+    "cause a bad request when no category is specified for the deletion" in memDB {
       val request = FakeRequest(POST, "/rmCategory").withFormUrlEncodedBody(
       )
-      val request2 = FakeRequest(POST, "/rmCategory").withFormUrlEncodedBody(
-      )
-      val result = MenuController.rmCategory(request2)
+      val result = MenuController.rmCategory(request)
       status(result) must equalTo(BAD_REQUEST)
     }
 
@@ -200,5 +192,4 @@ class MenuControllerSpec extends Specification {
       contentAsString(result) must contain("Willkommen zur Speisekarte")
     }
   }
-
 }

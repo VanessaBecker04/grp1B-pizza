@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to create a user.
+/** Form containing data to create a user.
   *
   * @param email    E-Mail-Address of the user.
   * @param password Password of the user.

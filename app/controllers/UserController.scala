@@ -67,7 +67,7 @@ object UserController extends Controller {
     *
     * @return welcome page for new user
     */
-  def addUser: Action[AnyContent] = Action { implicit request =>
+  def addUser(): Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.attemptFailed("badRequest"))
@@ -149,7 +149,7 @@ object UserController extends Controller {
     *
     * @return success of deletion
     */
-  def deleteUser: Action[AnyContent] = Action { implicit request =>
+  def deleteUser(): Action[AnyContent] = Action { implicit request =>
     deleteUserForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.attemptFailed("badRequest"))
@@ -210,34 +210,35 @@ object UserController extends Controller {
         BadRequest(views.html.attemptFailed("badRequest"))
       },
       loginData => {
-        val loggedinUser = services.UserService.loginUser(loginData.email, loginData.password)
-        loggedinUser.id match {
-          case -1 => Redirect(routes.UserController.attemptFailed("loginfailed"))
-          case -2 => Redirect(routes.UserController.attemptFailed("inactive"))
+        val trylogin = services.UserService.loginUser(loginData.email, loginData.password)
+        trylogin match {
+          case Left("invalid") => Redirect(routes.UserController.attemptFailed("loginfailed"))
+          case Left("inactive") => Redirect(routes.UserController.attemptFailed("inactive"))
           case _ =>
+            val user = trylogin.right.get
             if (request2session.get("orderedProducts").isDefined) {
               Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
                 request.session +
-                  ("user" -> loggedinUser.id.toString) +
-                  ("email" -> loggedinUser.email.toString) +
-                  ("forename" -> loggedinUser.forename.toString) +
-                  ("name" -> loggedinUser.name.toString) +
-                  ("address" -> loggedinUser.address.toString) +
-                  ("zipcode" -> loggedinUser.zipcode.toString) +
-                  ("city" -> loggedinUser.city.toString) +
-                  ("role" -> loggedinUser.role.toString)
+                  ("user" -> user.id.toString) +
+                  ("email" -> user.email.toString) +
+                  ("forename" -> user.forename.toString) +
+                  ("name" -> user.name.toString) +
+                  ("address" -> user.address.toString) +
+                  ("zipcode" -> user.zipcode.toString) +
+                  ("city" -> user.city.toString) +
+                  ("role" -> user.role.toString)
               )
             } else {
               Redirect(routes.UserController.welcomeUser()).withSession(
                 request.session +
-                  ("user" -> loggedinUser.id.toString) +
-                  ("email" -> loggedinUser.email.toString) +
-                  ("forename" -> loggedinUser.forename.toString) +
-                  ("name" -> loggedinUser.name.toString) +
-                  ("address" -> loggedinUser.address.toString) +
-                  ("zipcode" -> loggedinUser.zipcode.toString) +
-                  ("city" -> loggedinUser.city.toString) +
-                  ("role" -> loggedinUser.role.toString)
+                  ("user" -> user.id.toString) +
+                  ("email" -> user.email.toString) +
+                  ("forename" -> user.forename.toString) +
+                  ("name" -> user.name.toString) +
+                  ("address" -> user.address.toString) +
+                  ("zipcode" -> user.zipcode.toString) +
+                  ("city" -> user.city.toString) +
+                  ("role" -> user.role.toString)
               )
             }
         }

@@ -1,7 +1,6 @@
 package models
 
-/**
-  * Entity of the user.
+/** Entity of the user.
   *
   * @param id       Database id of the user.
   * @param email    E-Mail-Address of the user.

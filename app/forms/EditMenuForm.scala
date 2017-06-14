@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to edit a property of an existing product.
+/** Form containing data to edit a property of an existing product.
   *
   * @author Hasibullah Faroq
   *

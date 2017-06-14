@@ -1,7 +1,6 @@
 package forms
 
-/**
-  * Form containing data to edit a user.
+/** Form containing data to edit a user.
   *
   * @param customerID   Number of the user which should be changed.
   * @param email        E-Mail-Address of the user which should be changed.

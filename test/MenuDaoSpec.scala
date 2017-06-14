@@ -1,7 +1,3 @@
-/**
-  * Created by Hasib on 04.06.2017.
-  */
-
 import dbaccess.MenuDao
 import models.Menu
 import org.junit.runner.RunWith

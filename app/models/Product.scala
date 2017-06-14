@@ -1,7 +1,6 @@
 package models
 
-/**
-  * Entity of the product.
+/** Entity of the product.
   *
   * @param name   Name of the product.
   * @param size   Size of the product.

@@ -1,7 +1,6 @@
 package models
 
-/**
-  * Entity of the bill.
+/** Entity of the bill.
   *
   * @author Hasibullah Faroq
   */

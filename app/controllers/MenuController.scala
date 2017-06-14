@@ -7,15 +7,13 @@ import play.api.data.format.Formats.{doubleFormat, booleanFormat}
 import play.api.mvc.{Action, AnyContent, Controller}
 import services.MenuService
 
-/**
-  * Controller for the menu.
-  * Created by Hasibullah Faroq on 21.11.2016.
+/** Controller for the menu.
+  *
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 object MenuController extends Controller {
 
-  /**
-    * Form object for the user data.
-    */
+  /** Form object for the user data */
   val menuForm = Form(
     mapping(
       "Produktname" -> text.verifying("Bitte einen Produktnamen eingeben", !_.isEmpty),
@@ -48,13 +46,12 @@ object MenuController extends Controller {
       "Kategorie" -> text)
     (StringForm.apply)(StringForm.unapply))
 
-  /**
-    * Add a new product to the menu.
+  /** Add a new product to the menu.
     *
     * @return editMenu
     */
 
-  def addToMenu: Action[AnyContent] = Action { implicit request =>
+  def addToMenu(): Action[AnyContent] = Action { implicit request =>
     menuForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.attemptFailed("badRequest"))
@@ -75,12 +72,11 @@ object MenuController extends Controller {
       })
   }
 
-  /**
-    * Adds a new category to the menu.
+  /** Adds a new category to the menu.
     *
     * @return editCategory
     */
-  def addCategory: Action[AnyContent] = Action { implicit request =>
+  def addCategory(): Action[AnyContent] = Action { implicit request =>
     addCategoryForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.attemptFailed("badRequest"))
@@ -95,12 +91,11 @@ object MenuController extends Controller {
       })
   }
 
-  /**
-    * Updates information of a product.
+  /** Updates information of a product.
     *
     * @return editMenu
     */
-  def updateInMenu: Action[AnyContent] = Action { implicit request =>
+  def updateInMenu(): Action[AnyContent] = Action { implicit request =>
     updateForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.attemptFailed("badRequest"))
@@ -111,13 +106,12 @@ object MenuController extends Controller {
       })
   }
 
-  /**
-    * Updates information of a category.
+  /** Updates information of a category.
     *
     * @return editCategory
     */
 
-  def updateCategory: Action[AnyContent] = Action { implicit request =>
+  def updateCategory(): Action[AnyContent] = Action { implicit request =>
     editCategoryForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.attemptFailed("badRequest"))
@@ -128,8 +122,7 @@ object MenuController extends Controller {
       })
   }
 
-  /**
-    * Deletes a category and deletes/disables any products within the specified category.
+  /** Deletes a category and deletes/disables any products within the specified category.
     *
     * @return editCategory
     */
@@ -144,8 +137,7 @@ object MenuController extends Controller {
       })
   }
 
-  /**
-    * Products which haven't been ordered yet will be deleted.
+  /** Products which haven't been ordered yet will be deleted.
     * Products which have been ordered will be deactivated.
     *
     * @return editMenu
@@ -173,8 +165,7 @@ object MenuController extends Controller {
     }
   }
 
-  /**
-    * Shows the editCategory view to edit a category.
+  /** Shows the editCategory view to edit a category.
     *
     * @return editCategory
     */
@@ -186,8 +177,7 @@ object MenuController extends Controller {
     }
   }
 
-  /**
-    *Shows the showMenu view.
+  /** Shows the showMenu view.
     *
     * @return showMenu
     */

@@ -3,8 +3,7 @@ package services
 import dbaccess.{UserDao, UserDaoT}
 import models.User
 
-/**
-  * Service class for user related operations.
+/** Service class for user related operations.
   *
   * @author ob, scs, Maximilian Öttl
   */
@@ -12,8 +11,7 @@ trait UserServiceT {
 
   val userDao: UserDaoT = UserDao
 
-  /**
-    * Adds a new user to the database.
+  /** Adds a new user to the database.
     *
     * @param name name of the new user
     * @return the new user
@@ -26,8 +24,7 @@ trait UserServiceT {
     userDao.addUser(newUser)
   }
 
-  /**
-    * Edits a user of the database.
+  /** Edits a user of the database.
     *
     * @param name name of the edited user
     * @return the edited user
@@ -40,16 +37,14 @@ trait UserServiceT {
     userDao.editUser(editedUser)
   }
 
-  /**
-    * Removes a user by id from the database.
+  /** Removes a user by id from the database.
     *
     * @param id user id
     * @return a boolean success flag
     */
   def deleteUser(id: Long): Boolean = userDao.deleteUser(id)
 
-  /**
-    * Gets a list of all registered users.
+  /** Gets a list of all registered users.
     *
     * @return list of users.
     */
@@ -57,14 +52,13 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
-  /**
-    * Logs in a user.
+  /** Logs in a user.
     *
     * @param email    email
     * @param password password
     * @return
     */
-  def loginUser(email: String, password: String): User = {
+  def loginUser(email: String, password: String): Either[String, User] = {
     userDao.loginUser(email, password)
   }
 }

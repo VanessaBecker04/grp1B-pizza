@@ -34,15 +34,9 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/welcomeUser")
     }
 
-    "add user bad request" in memDB {
+    "cause a bad request when a user is added with missing values" in memDB {
       val request = FakeRequest(POST, "/addUser").withFormUrlEncodedBody(
-        "Passwort" -> "1",
-        "Vorname" -> "Paula",
-        "Name" -> "Huber",
-        "Straße und Hausnummer" -> "Zeisigweg 4",
-        "Postleitzahl" -> "82346",
-        "Stadt" -> "München",
-        "Rolle" -> "Kunde"
+        "Passwort" -> "1"
       )
       val result = UserController.addUser()(request)
       status(result) must equalTo(BAD_REQUEST)
@@ -149,15 +143,9 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptSuccessful?successcode=useredited")
     }
 
-    "edit user bad request" in memDB {
+    "cause a bad request when a user is edited with missing values" in memDB {
       val request = FakeRequest(POST, "/editUser").withFormUrlEncodedBody(
-        "Passwort" -> "1",
-        "Vorname" -> "Paula",
-        "Name" -> "Huber",
-        "Straße und Hausnummer" -> "Zeisigweg 4",
-        "Postleitzahl" -> "82346",
-        "Stadt" -> "München",
-        "Rolle" -> "Kunde"
+        "Passwort" -> "1"
       )
       val result = UserController.editUser()(request)
       status(result) must equalTo(BAD_REQUEST)
@@ -189,7 +177,7 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/attemptSuccessful?successcode=userdeleted")
     }
 
-    "delete user bad request" in memDB {
+    "cause a bad request when no user is specified for the deletion" in memDB {
       val request = FakeRequest(POST, "/deleteUser").withFormUrlEncodedBody(
       )
       val result = UserController.deleteUser()(request)
@@ -248,7 +236,7 @@ class UserControllerSpec extends Specification {
       redirectLocation(result) must beSome("/welcomeUser")
     }
 
-    "add user bad request" in memDB {
+    "cause a bad request when trying to log in without an email" in memDB {
       val request = FakeRequest(POST, "/loginUser").withFormUrlEncodedBody(
         "Passwort" -> "Susanne82343"
       )

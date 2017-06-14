@@ -1,7 +1,3 @@
-/**
-  * Created by Hasib on 04.06.2017.
-  */
-
 import models.Menu
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
@@ -157,8 +153,5 @@ class MenuServiceSpec extends Specification {
       MenuService.addToMenu("Bier", 4.26, "Stk", "Alkohol")
       MenuService.listOfOrderableCategories.length must be equalTo 4
     }
-
-
   }
-
 }

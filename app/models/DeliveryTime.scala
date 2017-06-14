@@ -1,7 +1,6 @@
 package models
 
-/**
-  * Object of the delivery time, which manages the delivery speed of the vehicle and the bake time.
+/** Object of the delivery time, which manages the delivery speed of the vehicle and the bake time.
   *
   * @author Hasibullah Faroq
   */

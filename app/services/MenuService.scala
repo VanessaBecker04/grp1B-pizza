@@ -5,17 +5,15 @@ import models.Menu
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  * Class for service to act on menu.
+/** Class for service to act on menu.
   *
-  * @author Hasibullah Faroq.
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 trait MenuServiceT {
 
   val menuDao: MenuDaoT = MenuDao
 
-  /**
-    * Adds a new product to the database menu.
+  /** Adds a new product to the database menu.
     *
     * @param name     Name of the new product.
     * @param price    Price per unit of the new product.
@@ -26,8 +24,7 @@ trait MenuServiceT {
   def addToMenu(name: String, price: Double, unit: String, category: String): Menu = {
     menuDao.addToMenu(Menu(-1, name, price, unit, category, false, true))
   }
-  /**
-    * Adds a new category to the database menu.
+  /** Adds a new category to the database menu.
     *
     * @param name     Name of the new category.
     * @param unit     Unit of the new category.
@@ -37,8 +34,7 @@ trait MenuServiceT {
       menuDao.addCategoryToMenu(Menu(-1, "", 0, unit, name, false, true))
   }
 
-  /**
-    * Modifies individual attributes of the product in the database.
+  /** Modifies individual attributes of the product in the database.
     *
     * @param id     ID of the Product which is saved in the database.
     * @param name   New name for the existing product.
@@ -49,8 +45,7 @@ trait MenuServiceT {
     menuDao.updateInMenu(id, name, price, active)
   }
 
-  /**
-    * Modifies individual attributes of the category in the database.
+  /** Modifies individual attributes of the category in the database.
     *
     * @param oldCategory   Old category.
     * @param newCategory   New category.
@@ -59,24 +54,21 @@ trait MenuServiceT {
     menuDao.editCategory(oldCategory, newCategory)
   }
 
-  /**
-    * Remove a product of the database menu.
+  /** Remove a product of the database menu.
     *
     * @param id Number of the product.
     * @return   True worth whether the deletion was successful.
     */
   def rmFromMenu(id: Long): Boolean = menuDao.rmFromMenu(id)
 
-  /**
-    * Remove a category of the database menu.
+  /** Remove a category of the database menu.
     *
     * @param category Name of the category.
     * @return         True worth whether the deletion was successful.
     */
   def rmCategory(category: String): Boolean = menuDao.rmCategory(category)
 
-  /**
-    * Returns a list of all existing products.
+  /** Returns a list of all existing products.
     *
     * @return List of products.
     */
@@ -84,8 +76,7 @@ trait MenuServiceT {
     menuDao.listOfProducts
   }
 
-  /**
-    * Returns a list of editable products.
+  /** Returns a list of editable products.
     *
     * @return List of etitable products.
     */
@@ -96,8 +87,7 @@ trait MenuServiceT {
     products.toList
   }
 
-  /**
-    * Returns a list of orderable products.
+  /** Returns a list of orderable products.
     *
     * @return List of orderable products.
     */
@@ -108,8 +98,7 @@ trait MenuServiceT {
     products.toList
   }
 
-  /**
-    * Returns a list of all categories.
+  /** Returns a list of all categories.
     *
     * @return List of all categories.
     */
@@ -125,8 +114,7 @@ trait MenuServiceT {
     categories.toList
   }
 
-  /**
-    * Returns a list of addable categories.
+  /** Returns a list of addable categories.
     *
     * @return List of addable categories.
     */
@@ -137,8 +125,7 @@ trait MenuServiceT {
     categories.toList
   }
 
-  /**
-    * Returns a list of orderable categories.
+  /** Returns a list of orderable categories.
     *
     * @return List of orderable categories.
     */
@@ -149,8 +136,7 @@ trait MenuServiceT {
     categories.toList
   }
 
-  /**
-    * Marks the product as ordered.
+  /** Marks the product as ordered.
     *
     * @param products Products which were ordered.
     */

@@ -7,16 +7,14 @@ import models.Menu
 import play.api.Play.current
 import play.api.db.DB
 
-/**
-  * Database access via user interfaces for the menus Database.
+/** Database access via user interfaces for the menus Database.
   *
-  * Created by Hasibullah Faroq on 21.11.2016.
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 
 trait MenuDaoT {
 
-  /**
-    * Adds a new product to the menu.
+  /** Adds a new product to the menu.
     *
     * @param menu menu object
     * @return menu object
@@ -35,8 +33,8 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Adds a new category to the menu.
+  /** Adds a new category to the menu.
+    *
     * @param menu object menu
     * @return menu
     */
@@ -52,8 +50,7 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Changes information about products in the database.
+  /** Changes information about products in the database.
     *
     * @param id     id of product database
     * @param name   new name fot the existing product
@@ -66,8 +63,7 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Deletes a product from the database.
+  /** Deletes a product from the database.
     *
     * @param id id of the product
     * @return  success of deletion
@@ -80,8 +76,7 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Deletes a category from the database.
+  /** Deletes a category from the database.
     *
     * @param category category
     * @return success of the deletion
@@ -94,8 +89,7 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Changes the name of a category.
+  /** Changes the name of a category.
     *
     * @param oldCategory current name of category
     * @param newCategory new name of category
@@ -106,8 +100,7 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Returns a list of all product.
+  /** Returns a list of all product.
     *
     * @return list of products
     */
@@ -120,10 +113,7 @@ trait MenuDaoT {
     }
   }
 
-  /**
-    * Sets the product status to ordered.
-    *
-    */
+  /** Sets the product status to ordered */
   def setProductOrdered(products: List[Long]): Unit = {
     DB.withConnection { implicit c =>
       for (id <- products)

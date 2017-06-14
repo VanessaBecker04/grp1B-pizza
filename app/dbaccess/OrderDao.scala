@@ -5,16 +5,14 @@ import models.OrderHistory
 import play.api.Play.current
 import play.api.db.DB
 
-/**
-  * Database access via user interfaces for the order Database (Orderhistory).
+/** Database access via user interfaces for the order Database (Orderhistory).
   *
-  * Created by Hasibullah Faroq and Maximilian Öttl on 14.12.2016.
+  * @author Maximilian Öttl, Hasibullah Faroq
   */
 
 trait OrderDaoT {
 
-  /**
-    * Adds a new order of the customer to the database Orderhistory.
+  /** Adds a new order of the customer to the database Orderhistory.
     *
     * @param coh Orderhistory object which is back uo in the database
     * @return Orderhistory object
@@ -42,8 +40,7 @@ trait OrderDaoT {
     }
   }
 
-  /**
-    * Returns a list of all orders that were taken by employee.
+  /** Returns a list of all orders that were taken by employee.
     *
     * @return a list of order objects
     */
@@ -57,8 +54,7 @@ trait OrderDaoT {
     }
   }
 
-  /**
-    * Returns a list of all orders of a specified user from the database.
+  /** Returns a list of all orders of a specified user from the database.
     *
     * @return a list of order objects
     */
@@ -72,8 +68,7 @@ trait OrderDaoT {
     }
   }
 
-  /**
-    * Sets the status for an order.
+  /** Sets the status for an order.
     *
     * @param id id of order
     * @param newStatus new Statuss of order
