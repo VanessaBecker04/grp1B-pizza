@@ -211,36 +211,35 @@ object UserController extends Controller {
       },
       loginData => {
         val loggedinUser = services.UserService.loginUser(loginData.email, loginData.password)
-        if (loggedinUser.id == -1) {
-          Redirect(routes.UserController.attemptFailed("loginfailed"))
-        } else if (loggedinUser.id == -2) {
-          Redirect(routes.UserController.attemptFailed("inactive"))
-        } else {
-          if (request2session.get("orderedProducts").isDefined) {
-            Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
-              request.session +
-                ("user" -> loggedinUser.id.toString) +
-                ("email" -> loggedinUser.email.toString) +
-                ("forename" -> loggedinUser.forename.toString) +
-                ("name" -> loggedinUser.name.toString) +
-                ("address" -> loggedinUser.address.toString) +
-                ("zipcode" -> loggedinUser.zipcode.toString) +
-                ("city" -> loggedinUser.city.toString) +
-                ("role" -> loggedinUser.role.toString)
-            )
-          } else {
-            Redirect(routes.UserController.welcomeUser()).withSession(
-              request.session +
-                ("user" -> loggedinUser.id.toString) +
-                ("email" -> loggedinUser.email.toString) +
-                ("forename" -> loggedinUser.forename.toString) +
-                ("name" -> loggedinUser.name.toString) +
-                ("address" -> loggedinUser.address.toString) +
-                ("zipcode" -> loggedinUser.zipcode.toString) +
-                ("city" -> loggedinUser.city.toString) +
-                ("role" -> loggedinUser.role.toString)
-            )
-          }
+        loggedinUser.id match {
+          case -1 => Redirect(routes.UserController.attemptFailed("loginfailed"))
+          case -2 => Redirect(routes.UserController.attemptFailed("inactive"))
+          case _ =>
+            if (request2session.get("orderedProducts").isDefined) {
+              Redirect(routes.BillController.setOrder(request2session.get("orderedProducts").get, request2session.get("sumOfOrder").get.toDouble)).withSession(
+                request.session +
+                  ("user" -> loggedinUser.id.toString) +
+                  ("email" -> loggedinUser.email.toString) +
+                  ("forename" -> loggedinUser.forename.toString) +
+                  ("name" -> loggedinUser.name.toString) +
+                  ("address" -> loggedinUser.address.toString) +
+                  ("zipcode" -> loggedinUser.zipcode.toString) +
+                  ("city" -> loggedinUser.city.toString) +
+                  ("role" -> loggedinUser.role.toString)
+              )
+            } else {
+              Redirect(routes.UserController.welcomeUser()).withSession(
+                request.session +
+                  ("user" -> loggedinUser.id.toString) +
+                  ("email" -> loggedinUser.email.toString) +
+                  ("forename" -> loggedinUser.forename.toString) +
+                  ("name" -> loggedinUser.name.toString) +
+                  ("address" -> loggedinUser.address.toString) +
+                  ("zipcode" -> loggedinUser.zipcode.toString) +
+                  ("city" -> loggedinUser.city.toString) +
+                  ("role" -> loggedinUser.role.toString)
+              )
+            }
         }
       })
   }

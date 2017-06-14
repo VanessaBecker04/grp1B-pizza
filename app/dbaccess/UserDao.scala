@@ -90,18 +90,18 @@ trait UserDaoT {
     *
     * @return customerID
     */
-  def loginUser(email: String, password: String): User = {
+  def loginUser(email: String, password: String): User =  {
     DB.withConnection { implicit c =>
       val selectUser = SQL("Select id from Users where (email = {email}) AND (password = {password})").on(
         'email -> email, 'password -> password).as(scalar[Long].singleOpt)
       val selectInactive = SQL("Select inactive from Users where (email = {email}) AND (password = {password})").on(
         'email -> email, 'password -> password).as(scalar[Boolean].singleOpt)
-      if (selectUser.isEmpty) {
-        User(-1, "0", "0", "0", "0", "0", 0, "0", "0", false)
-      } else if (selectInactive.get) {
-        User(-2, "0", "0", "0", "0", "0", 0, "0", "0", false)
-      } else {
-        returnActiveUser(selectUser.get)
+      selectUser match {
+        case isEmpty => User(-1, "0", "0", "0", "0", "0", 0, "0", "0", false)
+        case _ => selectInactive match {
+            case get => User(-2, "0", "0", "0", "0", "0", 0, "0", "0", false)
+            case _ => returnActiveUser(selectUser.get)
+          }
       }
     }
   }
