@@ -15,3 +15,12 @@ Voreingestellte Nutzer zum Anmelden:
 * Das Registrieren ist nur möglich, wenn der Nutzer im Liefergebiet wohnt und eine ungenutzte Email angibt. Auch hier wird auf entsprechende Fehlermeldungen weitergeleitet.
 
 * Das Bestellen ist nur im eingeloggten Zustand möglich.
+
+
+**Organisation:**
+
+Maximilian Öttl
+***
+* *Implementierung von Cookie bzw. Session Login*
+* *Implementierung von Cookie bzw. Session Data Handling für Registrierung/Warenkorb (Eliminierung von activeUser)*
+* Nötige Änderungen an Zugriffsschutz nach Switch zu Sessions*
