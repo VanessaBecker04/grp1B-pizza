@@ -20,7 +20,46 @@ Voreingestellte Nutzer zum Anmelden:
 **Organisation:**
 
 Maximilian Öttl
-***
 * *Implementierung von Cookie bzw. Session Login*
 * *Implementierung von Cookie bzw. Session Data Handling für Registrierung/Warenkorb (Eliminierung von activeUser)*
-* Nötige Änderungen an Zugriffsschutz nach Switch zu Sessions*
+* *Nötige Änderungen an Zugriffsschutz nach Switch zu Sessions*
+* *UserController testen*
+* *OrderController testen*
+* *UserService testen*
+* *OrderService testen*
+* *UserDao testen*
+* *OrderDao testen*
+* *Checkstyle Fehler beheben*
+
+Hasibullah Faroq
+* *BillController testen*
+* *MenuController testen*
+* *MenuService testen*
+* *OrderService doCalculationForBill & calculateDeliveryTime testen*
+* *MenuDao testen*
+* *Implementierung von Kategorien-Verwaltung*
+* *Implementierung von Bestellung mehrerer Produkte derselben Kategorie*
+* *Implementierung von Cookie bzw. Session Data Handling für OrderHistory (Eliminierung von OrderProcess)*
+
+Rene Karl Baral
+* *Anpassung der Main.css von fixed zu relative Positions*
+
+Vanessa Becker
+* *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*
+* *Website online durchklicken und überlegen was Alles in die Bedienungsanleitung soll.*
+* *Protokollierung der Meetings und Rollenverteilung festhalten.*
+* *Benutzerhandbuch Kunden-Teil*
+* *Application Controller testen*
+* *Mit simulierten "Browser" testen, ob der Aufruf von den Application Methoden funktioniert*
+* *ScalaDocs*
+
+Sandra Sporrer
+* *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*
+* *Website online durchklicken und überlegen was Alles in die Bedienungsanleitung soll.*
+* *Protokollierung der Meetings und Rollenverteilung festhalten.*
+* *Benutzerhandbuch Mitarbeiter-Teil*
+* *Application Controller testen*
+* *BadRequest im Controller testen*
+* *Mit simulierten "Browser" testen, ob der Aufruf von den Application Methoden funktioniert*
+* *ScalaDocs*
+* *CodeStyle*
