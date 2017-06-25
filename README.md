@@ -17,19 +17,12 @@ Voreingestellte Nutzer zum Anmelden:
 * Das Bestellen ist nur im eingeloggten Zustand möglich.
 
 
-**Organisation:**
+**Organisation/Aufgaben:**
 
-Maximilian Öttl
-* *Implementierung von Cookie bzw. Session Login*
-* *Implementierung von Cookie bzw. Session Data Handling für Registrierung/Warenkorb (Eliminierung von activeUser)*
-* *Nötige Änderungen an Zugriffsschutz nach Switch zu Sessions*
-* *UserController testen*
-* *OrderController testen*
-* *UserService testen*
-* *OrderService testen*
-* *UserDao testen*
-* *OrderDao testen*
-* *Checkstyle Fehler beheben*
+|                       | Sprint 1 | Sprint 2 |
+| --------------------- | :-------------: | :-------------: |
+| Maximilian Öttl        | <ul>Rolleneinteilung</li>Wechsel von H2 zu PostgreSQL</li>Heroku, Travis & Codacy Einrichtung</li>Implementierung Warenkorb</li>Bestellung im uneingeloggten Zustand speichern</li>Implementierung von Kategorien-Verwaltung (+ dynamische Anpassung der Benutzeroberfläche je nach Anzahl)</li>Implementierung von Bestellung mehrerer Produkte derselben Kategorie</li>Implementierung von Cookie bzw. Session Login</li>Implementierung von Cookie bzw. Session Data Handling für Registrierung/Warenkorb (Eliminierung von activeUser)</li>Implementierung von Cookie bzw. Session Data Handling für OrderHistory (Eliminierung von OrderProcess)</li>calculateDeliverytime in Service verschieben und setOrder vereinfachen</li>Codeoptimierung (setOrder, Trennung Produkt-/Kategorieverwaltung, OrderBill entfernt, Bestellablauf, Bestellstatus)</li>Fehlerbehebung (Login, Mitarbeiter fügt Nutzer hinzu, UpdateCategory aktualisiert nicht alle Einträge, Registrieren außerhalb Liefergebiet, nötige Änderungen an Zugriffsschutz nach Switch zu Sessions, ...)</li></ul> | <ul>Rolleneinteilung</li>UserController testen</li>OrderController testen</li>UserService testen</li>OrderService testen</li>UserDao testen</li>OrderDao testen</li>Checkstyle Fehler beheben (u.a. Wildcard Imports entfernt)</li>JavaDocs korrigiert + Notationsänderung zu ScalaDocs</li><Unnötige Dateien (Rest, JavaScript) und Leerzeilen entfernt</li>Play auf v2.3.10, Scala auf v2.11.11 und Dependencies aktualisieren</li>
+
 
 Hasibullah Faroq
 * *BillController testen*
@@ -37,12 +30,6 @@ Hasibullah Faroq
 * *MenuService testen*
 * *OrderService doCalculationForBill & calculateDeliveryTime testen*
 * *MenuDao testen*
-* *Implementierung von Kategorien-Verwaltung*
-* *Implementierung von Bestellung mehrerer Produkte derselben Kategorie*
-* *Implementierung von Cookie bzw. Session Data Handling für OrderHistory (Eliminierung von OrderProcess)*
-
-Rene Karl Baral
-* *Anpassung der Main.css von fixed zu relative Positions*
 
 Vanessa Becker
 * *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*
@@ -63,3 +50,6 @@ Sandra Sporrer
 * *Mit simulierten "Browser" testen, ob der Aufruf von den Application Methoden funktioniert*
 * *ScalaDocs*
 * *CodeStyle*
+
+Rene Karl Baral
+* *Anpassung der Main.css von fixed zu relative Positions*
