@@ -40,8 +40,8 @@ Vanessa Becker
 * *Mit simulierten "Browser" testen, ob der Aufruf von den Application Methoden funktioniert*
 * *ScalaDocs*
 
-| Sandra Sporrer       |
-* *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*<ul><li>Website online durchklicken und überlegen welche Tests man alle schreiben könnte.![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li></ul>
+ Sandra Sporrer       
+* *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*
 * *Website online durchklicken und überlegen was Alles in die Bedienungsanleitung soll.*
 * *Protokollierung der Meetings und Rollenverteilung festhalten.*
 * *Benutzerhandbuch Mitarbeiter-Teil*
@@ -50,6 +50,9 @@ Vanessa Becker
 * *Mit simulierten "Browser" testen, ob der Aufruf von den Application Methoden funktioniert*
 * *ScalaDocs*
 * *CodeStyle*
+
+| Sandra Sporrer      | <ul><li>Website online durchklicken und überlegen welche Tests man alle schreiben könnte.![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>Website online durchklicken und überlegen was Alles in die Bedienungsanleitung soll.![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>Protokollierung der Meetings und Rollenverteilung festhalten.*![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>Benutzerhandbuch Mitarbeiter-Teil![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)| <ul><li>Application Controller testen![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>MenuController testen![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>BadRequest im Controller testen![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>Mit simulierten "Browser" testen, ob der Aufruf von den Application Methoden funktioniert![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>ScalaDocs![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li><li>CodeStyle![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li></ul>
+
 
 Rene Karl Baral
 * *Anpassung der Main.css von fixed zu relative Positions*
