@@ -41,7 +41,7 @@ Vanessa Becker
 * *ScalaDocs*
 
 | Sandra Sporrer       |
-* *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*<li>Website online durchklicken und überlegen welche Tests man alle schreiben könnte.![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li>
+* *Website online durchklicken und überlegen welche Tests man alle schreiben könnte.*<ul><li>Website online durchklicken und überlegen welche Tests man alle schreiben könnte.![false](https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-24.png)</li></ul>
 * *Website online durchklicken und überlegen was Alles in die Bedienungsanleitung soll.*
 * *Protokollierung der Meetings und Rollenverteilung festhalten.*
 * *Benutzerhandbuch Mitarbeiter-Teil*
